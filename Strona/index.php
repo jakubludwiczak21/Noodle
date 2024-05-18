@@ -52,7 +52,7 @@
 							<td>Muzyka</td>
 							<td>2</td>
               <td>Tak</td>
-							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="html/kontakt.html">Poproś o dostęp</a></td>
+							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="html/kontakt.php">Poproś o dostęp</a></td>
 							</tr>
         <tr>
               <td>Budowa Pantofelka i laćka</td>
@@ -61,7 +61,7 @@
               <td>Przyroda</td>
               <td>1</td>
               <td>Nie</td>
-							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="html/moje_testy.html">Dołącz</a></td>
+							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="html/moje_testy.php">Dołącz</a></td>
 							</tr>
               <tr>
                 <td>Sprawdzian z nut - Klasa III</td>
@@ -70,7 +70,7 @@
                 <td>Muzyka</td>
                 <td>2</td>
                 <td>Tak</td>
-                <td style="text-align:center;"><a style="width:100%; text-align:center;" href="html/kontakt.html">Poproś o dostęp</a></td>
+                <td style="text-align:center;"><a style="width:100%; text-align:center;" href="html/kontakt.php">Poproś o dostęp</a></td>
                 </tr>
           <tr>
                 <td>Budowa Pantofelka i laćka</td>
@@ -79,7 +79,7 @@
                 <td>Przyroda</td>
                 <td>1</td>
                 <td>Nie</td>
-                <td style="text-align:center;"><a style="width:100%; text-align:center;" href="html/moje_testy.html">Dołącz</a></td>
+                <td style="text-align:center;"><a style="width:100%; text-align:center;" href="html/moje_testy.php">Dołącz</a></td>
                 </tr>
 
 										</tbody></table>
