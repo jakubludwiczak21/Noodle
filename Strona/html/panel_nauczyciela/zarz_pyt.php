@@ -44,23 +44,24 @@
                     <legend>Wypełnij formularz:</legend>
                     <form action="" method="GET" class="zarzadzaj">
                         <label for="przedmiot">Przedmiot:</label>
-                        <input type="text" id="przedmiot" name="przedmiot" placeholder="Przedmiot" value="<?php echo isset($_GET['przedmiot']) ? $_GET['przedmiot'] : ''; ?>">
                         <label for="kategoria">Kategoria:</label>
-                        <input type="text" id="kategoria" name="kategoria" placeholder="Kategoria" value="<?php echo isset($_GET['kategoria']) ? $_GET['kategoria'] : ''; ?>">
                         <label for="typ">Typ Pytania:</label>
+                        <label for="poziom">Trudność:</label>
+                        <label for="prywatnosc">Widoczność pytania:</label>
+                        <input type="text" id="przedmiot" name="przedmiot" placeholder="Przedmiot" value="<?php echo isset($_GET['przedmiot']) ? $_GET['przedmiot'] : ''; ?>">
+                        <input type="text" id="kategoria" name="kategoria" placeholder="Kategoria" value="<?php echo isset($_GET['kategoria']) ? $_GET['kategoria'] : ''; ?>">
                         <select id="typ" name="typ">
                             <option value="">-- Wybierz --</option>
                             <option value="zamkniete" <?php echo isset($_GET['typ']) && $_GET['typ'] === 'zamkniete' ? 'selected' : ''; ?>>Zamknięte</option>
                             <option value="zamkniete_wiele" <?php echo isset($_GET['typ']) && $_GET['typ'] === 'zamkniete_wiele' ? 'selected' : ''; ?>>Zamknięte (Wielokrotny wybór)</option>
                         </select>
-                        <label for="poziom">Trudność:</label>
                         <select id="poziom" name="poziom">
                             <option value="">-- Wybierz --</option>
                             <option value="latwe" <?php echo isset($_GET['poziom']) && $_GET['poziom'] === 'latwe' ? 'selected' : ''; ?>>Łatwe</option>
                             <option value="srednie" <?php echo isset($_GET['poziom']) && $_GET['poziom'] === 'srednie' ? 'selected' : ''; ?>>Średnie</option>
                             <option value="trudne" <?php echo isset($_GET['poziom']) && $_GET['poziom'] === 'trudne' ? 'selected' : ''; ?>>Trudne</option>
                         </select>
-                        <label for="prywatnosc">Widoczność pytania:</label>
+
                         <select id="prywatnosc" name="prywatnosc">
                             <option value="">-- Wybierz --</option>
                             <option value="tylkoja" <?php echo isset($_GET['prywatnosc']) && $_GET['prywatnosc'] === 'tylkoja' ? 'selected' : ''; ?>>Tylko dla mnie</option>
@@ -68,8 +69,8 @@
                         </select>
                         <hr class="full-width" style="width: 90%; margin: auto;">
                         <label for="tresc" style="align-self: center;">Szukaj</label>
-                        <input type="text" id="tresc" name="tresc" placeholder="Wyszukaj pytanie po nazwie" value="<?php echo isset($_GET['tresc']) ? $_GET['tresc'] : ''; ?>">
-                        <input type="submit" value="Filtruj">
+                        <input type="text" id="tresc" name="tresc" style="grid-column: 2 / 5;" placeholder="Wyszukaj pytanie po nazwie" value="<?php echo isset($_GET['tresc']) ? $_GET['tresc'] : ''; ?>">
+                        <input type="submit" style="grid-column: 5 / 6;" value="Filtruj">
                     </form>
                 </fieldset>
                 <br>
