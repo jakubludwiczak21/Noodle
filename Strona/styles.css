@@ -477,9 +477,132 @@ select{
   margin-bottom: 15px;
 }
 
-
+.teststicky{
+  display: flex;
+  background-color: #f8f8f8;
+  border-radius: 15px;
+  position: sticky;
+  padding: 1em;
+  justify-content: space-between;
+  align-items:center;
+  z-index: 9999;
+}
 .dol{
   display: flex;
   justify-content: center;
-  align-items: self-start;
+  align-items: flex-start;
+}
+
+.rounded-container {
+  border: 1px solid #70707070;
+  border-radius: 15px;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 80%;
+}
+
+.rounded-container .number-box {
+  width: 1em;
+  height: 1em;
+  border-radius: 25%;
+  padding: 1.5em;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  margin: 0.5em;
+}
+
+.pytanie {
+  width: 100%;
+  border: 1px solid #70707070;
+  border-radius: 15px;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin: 0.5em;
+  background-color: #f3f3f3;
+}
+
+.test {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;
+}
+
+.numerpyt {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.odpowiedzi {
+  margin-bottom: 1.5em; 
+}
+
+.odpowiedzi input[type="radio"] {
+  transform: scale(1.5); 
+  margin: 0.7em;
+  margin-right: 1.4em; 
+  width: auto;
+}
+.odpowiedzi input[type="checkbox"] {
+  transform: scale(1.5); 
+  margin: 0.7em; 
+  margin-right: 1.4em;
+  width: auto;
+}
+.odpowiedzi textarea {
+  margin-top: 1em; 
+
+}
+
+.odpowiedzi label {
+  font-size: 110%;
+  display: inline-block;
+}
+
+.pytanie > label[for="tresc"] {
+  display: block;
+  padding-bottom: 1em; 
+}
+
+
+.zdjodp{
+  display:block;
+  margin:auto;
+  max-width: 500px;
+  max-height:500px;
+}
+
+.number-box {
+  cursor: pointer;
+  border: 1px solid #70707070;
+}
+.number-box.filled {
+  border: 1px solid #00FF00; 
+}
+.number-box:hover {
+  background-color: #e0e0e0; 
+}
+
+.rounded-button {
+  display: inline-block;
+  border-radius: 25px;
+  background-color: lightgray;
+  padding: 10px 20px;
+
+}
+
+.rounded-button a {
+  text-decoration: none;
+  color: #333;
+}
+
+.rounded-button:hover{
+  background-color: rgb(196, 196, 196);
 }
