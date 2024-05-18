@@ -49,7 +49,7 @@
 							<td>Jan Kowalski</td>
 							<td>Muzyka</td>
 							<td>2</td>
-							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="html/moje_testy.html">Dołącz</a></td>
+							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="test.php">Dołącz</a></td>
 
 							</tr>
         <tr>
@@ -58,7 +58,7 @@
               <td>Anna Nowak</td>
               <td>Przyroda</td>
               <td>1</td>
-							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="html/moje_testy.html">Dołącz</a></td>
+							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="test.php">Dołącz</a></td>
 							</tr>
 
 										</tbody></table>
