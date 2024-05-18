@@ -37,10 +37,11 @@
                 <form method="POST">
                     <label class="full-width" for="kod">Kod testu</label>
                     <input class="full-width" type="text" name="kod" id="kod" required>
-                    <div style="display: flex;padding-left:10%;align-items: center;"><label style="padding-left:10%;" for="zaloguj" ><a href="kontakt.html">Problem z dołączeniem?</a></label></div>
+                    <div style="display: flex;padding-left:10%;align-items: center;"><label style="padding-left:10%;" for="zaloguj" ><a href="kontakt.php">Problem z dołączeniem?</a></label></div>
                     <input type="submit" value="Zatwierdź" name="zaloguj" class="zaloguj" id="zaloguj">
                 </form>
         </div>
+        <p><a href="test.php">Dodawanie pytan i testów (Link Roboczy)</a></p>
   </div>
   </div>
   <div class="footer" id="stopka">
