@@ -58,7 +58,22 @@
                     <input type="text" id="nazwa_testu" name="nazwa_testu" placeholder="Nazwa Testu" style="grid-column: 3 / 7;">
 
                     <label for="przedmiot_testu" style="grid-column: 1 / 3;">Przedmiot:</label>
-                    <input type="text" id="przedmiot_testu" name="przedmiot_testu" placeholder="Przedmiot" style="grid-column: 3 / 7;">
+                    <select id="przedmiot" name="przedmiot" style="grid-column: 3 / 7;" required>
+                        <?php
+                            $selected = isset($_GET['przedmiot']) ? $_GET['przedmiot'] : '0'; 
+                            $sql = "SELECT * FROM przedmioty";
+                            $result = $conn->query($sql);
+
+                            
+                            if ($result->num_rows > 0) {
+                                while($row = $result->fetch_assoc()) {
+                                    echo '<option value="' . $row['nazwa'] . '" ' . ($selected == $row['nazwa'] ? 'selected' : '') . '>' . $row['nazwa'] . '</option>';
+                                }
+                            } else {
+                                echo '<option value="">Brak przedmiotów</option>';
+                            }
+                        ?>
+                    </select>
 
                     <label for="prywatnosc_testu" style="grid-column: 1 / 3;">Prywatność:</label>
                     <select id="prywatnosc_testu" name="prywatnosc_testu" style="grid-column: 3 / 7;">
