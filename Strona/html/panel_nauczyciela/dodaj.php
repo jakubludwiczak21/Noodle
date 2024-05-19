@@ -281,7 +281,6 @@ $('#liczba').on('input', function() {
 			for($i = 1; $i <= $_liczba_odpowiedzi; $i++) {
 				$wariant = $_POST["wariant$i"];
 
-				// Sprawdź czy odpowiedź jest poprawna (checkbox zaznaczony)
 				$poprawnosc = isset($_POST["poprawnosc$i"]) ? 1 : 0;
 
 				$sql_add_answer = "INSERT INTO `Odpowiedzi` (`id_pytania`, `tresc`, `poprawnosc`) VALUES ('$question_id', '$wariant', '$poprawnosc')";
