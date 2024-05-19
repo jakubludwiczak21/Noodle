@@ -7,6 +7,17 @@
 	<title>Noodle™</title>
 	<link rel="stylesheet" href="../../styles.css">
 </head>
+<?php
+	$servername = "localhost";
+	$username = "root";
+	$password = "";
+	$dbname = "baza";
+
+	$conn = new mysqli($servername, $username, $password, $dbname);
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	}
+?>
 <body>
 	<div class="wrapper">
 		<div class="header-content" id="head">
@@ -60,13 +71,42 @@
 							</select>
 
 							<label for="przedmiot">Przedmiot:</label>
-							<input type="text" id="przedmiot" name="przedmiot" placeholder="Przedmiot" value="" style="grid-column: 5 / 7;"required >
+							<select id="przedmiot" name="przedmiot" style="grid-column: 5 / 7;" required>
+								<?php
+									$selected = isset($_GET['przedmiot']) ? $_GET['przedmiot'] : '0'; 
+									$sql = "SELECT * FROM przedmioty";
+									$result = $conn->query($sql);
 
+									echo '<option value="0" ' . ($selected == '0' ? 'selected' : '') . '>Brak</option>'; 
+									if ($result->num_rows > 0) {
+										while($row = $result->fetch_assoc()) {
+											echo '<option value="' . $row['nazwa'] . '" ' . ($selected == $row['nazwa'] ? 'selected' : '') . '>' . $row['nazwa'] . '</option>';
+										}
+									} else {
+										echo '<option value="">Brak przedmiotów</option>';
+									}
+								?>
+							</select>
 							<label for="liczba">Liczba wariantów:</label>
 							<input type="number" id="liczba" name="liczba" style="grid-column: 2 / 4;" placeholder="Liczba wariantów" value="3" min="2" max="5"required >
 
 							<label for="kategoria">Kategoria:</label>
-							<input type="text" id="kategoria" name="kategoria" placeholder="Kategoria" value="" style="grid-column: 5 / 7;"required >
+							<select id="kategoria" name="kategoria" style="grid-column: 5 / 7;" required>
+								<?php
+									$selected = isset($_GET['kategoria']) ? $_GET['kategoria'] : '0'; 
+									$sql = "SELECT * FROM kategoria";
+									$result = $conn->query($sql);
+
+									echo '<option value="0" ' . ($selected == '0' ? 'selected' : '') . '>Brak</option>'; 
+									if ($result->num_rows > 0) {
+										while($row = $result->fetch_assoc()) {
+											echo '<option value="' . $row['nazwa'] . '" ' . ($selected == $row['nazwa'] ? 'selected' : '') . '>' . $row['nazwa'] . '</option>';
+										}
+									} else {
+										echo '<option value="">Brak przedmiotów</option>';
+									}
+								?>
+							</select>
 
 							<label for="poziom">Trudność:</label>
 							<select id="poziom" name="poziom" style="grid-column: 2 / 4;"required>
