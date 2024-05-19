@@ -6,6 +6,49 @@
 	<script src="../../jquery-3.7.1min.js"></script>
 	<title>Noodle™</title>
 	<link rel="stylesheet" href="../../styles.css">
+
+
+    <style>
+        .table-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+            flex-wrap: wrap;
+            padding: 20px; 
+        }
+        .table-buttons button {
+            background-color: #333; 
+            border: 3px solid;
+            border-color: black;
+            color: white; 
+            padding: 10px 20px; 
+            margin: 10px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            transition: background-color 0.3s; 
+            position: 
+        }
+
+        .table-buttons button:hover {
+            background-color: #ff9900; 
+        }
+        .popup2 button {
+            background-color: #333; 
+            color: white; 
+            border: 3px solid;
+            border-color: black;
+            padding: 10px 20px; 
+            margin: 10px 5px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            transition: background-color 0.3s; 
+        }
+
+        .popup2 button:hover {
+            background-color: #ff9900; 
+        }
+    </style>
+
 </head>
 <body>
 	<div class="wrapper">
@@ -37,8 +80,15 @@
 						<li><a href="zarz_testami.php" class="aktualna-strona">Zarządzaj testami</a></li>
 					</ul>
 				</div>
-        <h2 class="h2-zarzadzajtestami">Zarządzaj testami</h2>
-                <table id="testyTable">
+
+                <div class="table-buttons">
+                    <button onclick="toggleVisibility('testTemplates')">Szablony testów</button>
+                    <button onclick="toggleVisibility('activeTests')">Testy aktywne</button>
+                    <button onclick="toggleVisibility('finishedTests')">Testy zakończone</button>
+                </div>
+
+            <h2 class="h2-zarzadzajtestami" id="testTemplatesTitle" style="display:none;">Szablony testów</h2>
+                <table id="testTemplates" style="display:none;">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -100,6 +150,108 @@
                             </tr>
                         </tbody>
                 </table>
+
+                <h2 class="h2-zarzadzajtestami" id="activeTestsTitle" style="display:none;">Testy aktywne</h2>
+                <table id="activeTests" style="display:none;">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tytuł</th>
+                            <th>Przedmiot</th>
+                            <th>Od</th>
+                            <th>Do</th>
+                            <th>Czas trwania</th>
+                            <th>Akcje</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Odkrycia geograficzne</td>
+                            <td>Matematyka</td>
+                            <td>2023-05-01</td>
+                            <td>2023-05-10</td>
+                            <td>30min</td>
+                            <td>
+                                <button class="test-action-button2" onclick="editResults(1)">Zobacz/Edytuj wyniki</button>
+                                <button class="test-action-button3" onclick="deleteTest(1)">Usuń</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Odkrycia geograficzne</td>
+                            <td>Fizyka</td>
+                            <td>2023-06-15</td>
+                            <td>2023-06-25</td>
+                            <td>40min</td>
+                            <td>
+                            <button class="test-action-button2" onclick="editResults(1)">Zobacz/Edytuj wyniki</button>
+                                <button class="test-action-button3" onclick="deleteTest(1)">Usuń</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Odkrycia geograficzne</td>
+                            <td>Chemia</td>
+                            <td>2023-07-01</td>
+                            <td>2023-07-05</td>
+                            <td>20min</td>
+                            <td>
+                            <button class="test-action-button2" onclick="editResults(1)">Zobacz/Edytuj wyniki</button>
+                                <button class="test-action-button3" onclick="deleteTest(1)">Usuń</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2 class="h2-zarzadzajtestami" id="finishedTestsTitle" style="display:none;">Testy zakończone</h2>
+                <table id="finishedTests" style="display:none;">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tytuł</th>
+                            <th>Przedmiot</th>
+                            <th>Od</th>
+                            <th>Do</th>
+                            <th>Akcje</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Podstawy chemii</td>
+                            <td>Matematyka</td>
+                            <td>2023-05-01</td>
+                            <td>2023-05-10</td>
+                            <td>
+                            <button class="test-action-button2" onclick="editResults(1)">Zobacz/Edytuj wyniki</button>
+                                <button class="test-action-button3" onclick="deleteTest(1)">Usuń</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Podstawy chemii</td>
+                            <td>Fizyka</td>
+                            <td>2023-06-15</td>
+                            <td>2023-06-25</td>
+                            <td>
+                            <button class="test-action-button2" onclick="editResults(1)">Zobacz/Edytuj wyniki</button>
+                                <button class="test-action-button3" onclick="deleteTest(1)">Usuń</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Podstawy chemii</td>
+                            <td>Chemia</td>
+                            <td>2023-07-01</td>
+                            <td>2023-07-05</td>
+                            <td>
+                                <button class="test-action-button2" onclick="editResults(1)">Zobacz/Edytuj wyniki</button>
+                                <button class="test-action-button3" onclick="deleteTest(1)">Usuń</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 			</div>
     	</div>
 
@@ -111,9 +263,53 @@
                 <input type="date" id="startDate" name="startDate" required><br><br>
                 <label for="endDate">Data zakończenia:</label><br>
                 <input type="date" id="endDate" name="endDate" required><br><br>
+                <label for="duration">Czas trwania testu (minuty):</label><br>
+                <input type="number" id="duration" name="duration" min="1" required><br><br>
                 <button type="button" onclick="submitDates()">Aktywuj</button>
                 <button type="button" onclick="closePopup()">Anuluj</button>
             </form>
+        </div>
+
+        <div class="popup2" id="resultsPopup" style="display:none; position:fixed; left:50%; top:50%; transform:translate(-50%, -50%); z-index:100; background:white; padding:20px; border-radius:8px;">
+            <h2 class="h2-popup">Wyniki Testu: Przykładowy test</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Imię</th>
+                        <th>Nazwisko</th>
+                        <th>Punkty</th>
+                        <th>Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example Row (you might populate this with JavaScript or server-side code) -->
+                    <tr>
+                        <td>1</td>
+                        <td>Jan</td>
+                        <td>Kowalski</td>
+                        <td>85/100</td>
+                        <td><button onclick="editResult(1)">Edytuj</button></td>
+                    </tr>
+
+                    <tr>
+                        <td>2</td>
+                        <td>Adam</td>
+                        <td>Kowalski</td>
+                        <td>50/100</td>
+                        <td><button onclick="editResult(2)">Edytuj</button></td>
+                    </tr>
+
+                    <tr>
+                        <td>3</td>
+                        <td>Krzysztof</td>
+                        <td>Kowalski</td>
+                        <td>20/100</td>
+                        <td><button onclick="editResult(3)">Edytuj</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" onclick="closeResultsPopup()">Zamknij</button>
         </div>
 
 
@@ -145,17 +341,18 @@
         }
 
         function activateTest(testId) {
-            $("#overlay").show(); // Show the overlay
-            $("#datePopup").show(); // Show the popup
+            $("#overlay").show(); 
+            $("#datePopup").show(); 
             $("#dateForm").off('submit').on('submit', function(e) {
                 e.preventDefault();
-                submitDates(testId); // Pass the test ID to submit function
+                submitDates(testId); 
             });
         }
 
         function submitDates(testId) {
             var startDate = $("#startDate").val();
             var endDate = $("#endDate").val();
+            var duration = $("#duration").val();
             if (new Date(startDate) > new Date(endDate)) {
                 alert("The end date must be after the start date.");
                 return;
@@ -183,6 +380,49 @@
         // Ustaw wartość pola daty rozpoczęcia na aktualną datę
         document.getElementById('startDate').value = today;
     });
+
+    function toggleVisibility(tableId) {
+        
+        var allTables = ['testTemplates', 'activeTests', 'finishedTests'];
+        var titleSuffix = 'Title'; 
+        
+        for (var i = 0; i < allTables.length; i++) {
+            var currentTable = document.getElementById(allTables[i]);
+            var currentTitle = document.getElementById(allTables[i] + titleSuffix);
+
+            if (allTables[i] === tableId) {
+                if (currentTable.style.display === 'none') {
+                    currentTable.style.display = '';
+                    currentTitle.style.display = '';
+                } else {
+                    currentTable.style.display = 'none';
+                    currentTitle.style.display = 'none';
+                }
+            } else {
+                currentTable.style.display = 'none';
+                currentTitle.style.display = 'none';
+            }
+        }
+    }
+
+    function editResults(testId) {
+        // Display the popup
+        $("#overlay").show(); // Use existing overlay
+        $("#resultsPopup").show(); // Show the results popup
+
+        // Optional: Fetch results from the server using AJAX and populate the table
+        // Example: fetchResults(testId);
+    }
+
+    function closeResultsPopup() {
+        $("#overlay").hide(); // Hide the overlay
+        $("#resultsPopup").hide(); // Hide the results popup
+    }
+
+    function editResult(resultId) {
+        alert('Edycja wyniku dla ID: ' + resultId);
+        // You can add more logic here, like opening a detailed edit form
+    }
 
 
 
