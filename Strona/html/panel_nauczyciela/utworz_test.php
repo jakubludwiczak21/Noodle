@@ -45,6 +45,7 @@
             <div class="innermenu" id="">
                 <ul style="display: flex; justify-content: space-evenly;">
                     <li><a href="dodaj.php">Dodaj Pytanie</a></li>
+                    <li><a href="dodaj_kat.php">Dodaj przedmiot i kategorie</a></li>
                     <li><a href="zarz_pyt.php" >Zarządzaj pytaniami</a></li>
                     <li><a href="utworz_test.php" class="aktualna-strona">Utwórz test</a></li>
                     <li><a href="zarz_testami.php">Zarządzaj testami</a></li>

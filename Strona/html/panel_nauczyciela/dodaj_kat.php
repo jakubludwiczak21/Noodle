@@ -44,8 +44,8 @@
 				<div class="innermenu" id="">
 					<ul style="display: flex;justify-content: space-evenly;">
 						<li><a href="dodaj.php">Dodaj Pytanie</a></li>
-						<li><a href="dodaj_kat.php">Dodaj przedmiot i kategorie</a></li>
-						<li><a href="zarz_pyt.php" class="aktualna-strona">Zarządzaj pytaniami</a></li>
+						<li><a href="dodaj_kat.php" class="aktualna-strona">Dodaj przedmiot i kategorie</a></li>
+						<li><a href="zarz_pyt.php" >Zarządzaj pytaniami</a></li>
 						<li><a href="utworz_test.php">Utwórz test</a></li>
 						<li><a href="zarz_testami.php">Zarządzaj testami</a></li>
 					</ul>
@@ -53,122 +53,35 @@
 				<div class="haslo" style="justify-content: flex-start;">
 
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<p>Zarządzaj pytaniami</p>
+					<p>Zarządzaj przedmiotami i kategoriami</p>
 					<br><br>
-					<fieldset style="width: 80%;">
+					<div class="kat" style="display: flex;width:80%;justify-content:space-evenly">
+					<div>
+					<fieldset>
 						<legend>Wypełnij formularz:</legend>
 						<form action="" method="GET" class="zarzadzaj">
 
 
-							<p class="mid-width" style="grid-column: 1 / 3;">Filtruj</p>
+							<p class="mid-width" style="grid-column: 1 / 3;">Dodaj Kategorie</p>
 							<p class="mid-width" style="grid-column: 4 / 6;"></p>
 
-						
-							<label for="przedmiot">Przedmiot:</label>
-							<label for="kategoria">Kategoria:</label>
-							<label for="typ">Typ Pytania:</label>
-							<label for="poziom">Trudność:</label>
-							<label for="prywatnosc">Widoczość pytania:</label>
-					
-							
-							<select id="przedmiot" name="przedmiot">
-								<?php
-									$selected = isset($_GET['przedmiot']) ? $_GET['przedmiot'] : '0'; 
-									$sql = "SELECT * FROM przedmioty";
-									$result = $conn->query($sql);
+				
 
-									echo '<option value="0" ' . ($selected == '0' ? 'selected' : '') . '>Brak</option>'; 
-									if ($result->num_rows > 0) {
-										while($row = $result->fetch_assoc()) {
-											echo '<option value="' . $row['nazwa'] . '" ' . ($selected == $row['nazwa'] ? 'selected' : '') . '>' . $row['nazwa'] . '</option>';
-										}
-									} else {
-										echo '<option value="">Brak przedmiotów</option>';
-									}
-								?>
-							</select>
 
-							
-							<select id="kategoria" name="kategoria">
-								<?php
-									$selected = isset($_GET['kategoria']) ? $_GET['kategoria'] : '0'; 
-									$sql = "SELECT * FROM kategoria";
-									$result = $conn->query($sql);
-
-									echo '<option value="0" ' . ($selected == '0' ? 'selected' : '') . '>Brak</option>'; 
-									if ($result->num_rows > 0) {
-										while($row = $result->fetch_assoc()) {
-											echo '<option value="' . $row['nazwa'] . '" ' . ($selected == $row['nazwa'] ? 'selected' : '') . '>' . $row['nazwa'] . '</option>';
-										}
-									} else {
-										echo '<option value="">Brak przedmiotów</option>';
-									}
-								?>
-							</select>
-
-							<select id="typ" name="typ">
-								<?php
-									$selected = isset($_GET['typ']) ? $_GET['typ'] : '0';
-									$sql = "SELECT * FROM typ_pytania";
-									$result = $conn->query($sql);
-
-									echo '<option value="0" ' . ($selected == '0' ? 'selected' : '') . '>Brak</option>'; 
-									if ($result->num_rows > 0) {
-										while($row = $result->fetch_assoc()) {
-											echo '<option value="' . $row['nazwa_typu'] . '" ' . ($selected == $row['nazwa_typu'] ? 'selected' : '') . '>' . $row['nazwa_typu'] . '</option>';
-										}
-									} else {
-										echo '<option value="">Brak przedmiotów</option>';
-									}
-								?>
-							</select>
-
-							<select id="poziom" name="poziom">
-								<?php
-									$selected = isset($_GET['poziom']) ? $_GET['poziom'] : '0';
-									$sql = "SELECT * FROM poziom";
-									$result = $conn->query($sql);
-
-									echo '<option value="0" ' . ($selected == '0' ? 'selected' : '') . '>Brak</option>'; 
-									if ($result->num_rows > 0) {
-										while($row = $result->fetch_assoc()) {
-											echo '<option value="' . $row['trudnosc_nazwa'] . '" ' . ($selected == $row['trudnosc_nazwa'] ? 'selected' : '') . '>' . $row['trudnosc_nazwa'] . '</option>';
-										}
-									} else {
-										echo '<option value="">Brak przedmiotów</option>';
-									}
-								?>
-							</select>
-
-							
-							<select id="prywatnosc" name="prywatnosc">
-								<option value="0">Brak</option>
-								<option value="tylkoja">Tylko dla mnie</option>
-								<option value="wszyscy">Dla wszystkich</option>
-							</select>
-
-							<hr class="full-width" style="width: 90%; margin: auto;">
-
-							<label for="tresc" style="align-self: center;">Szukaj</label>
 							<?php
 								$selected = isset($_GET['tresc']) ? $_GET['tresc'] : ''; 
-								echo '<input type="text" id="tresc" name="tresc" placeholder="Wyszukaj pytanie po nazwie" value="' . $selected . '" style="grid-column: 2 / 5;" >';
+								echo '<input type="text" id="tresc" name="tresc" placeholder="Wpisz nazwę kategorii" value="' . $selected . '" style="grid-column: 1 / 5;" >';
 							?>
 							
-							<input type="submit" style="grid-column: 5 / 6;" value="Filtruj">
+							<input type="submit" style="grid-column: 5 / 6;" value="Dodaj">
 						</form>
 					</fieldset>
 					<br>
-					<div class="pytania">
+					<div class="pytania" style="width: 100%;">
 						<table>
 							<tbody>
 								<tr>
-									<th class="szerokie">Treść</th>
-									<th>Przedmiot</th>
-									<th>Kategoria</th>
-									<th>Typ</th>
-									<th>Trudność</th>
-									<th>Widoczość</th>
+									<th class="szerokie">Nazwa Kategorii</th>
 									<th colspan="2">Operacje</th>
 								</tr>
 
@@ -212,12 +125,7 @@
                                         while($row = $result->fetch_assoc()) {
                                             echo '
                                             <tr>
-                                                <td>' . $row['tresc'] . '</td>
-                                                <td>' . $row['przedmiot'] . '</td>
                                                 <td>' . $row['kategoria'] . '</td>
-                                                <td>' . $row['typ'] . '</td>
-                                                <td>' . $row['trudnosc'] . '</td>
-                                                <td>' . ($row['widocznosc'] === '1' ? 'Tylko dla mnie' : 'Dla wszystkich') . '</td>
                                                 <td style="text-align:center;">
 													<a href="dodaj.php?id=' . $row['id'] . '">Edytuj</a>
 												</td>
@@ -244,6 +152,106 @@
 								
 							</tbody>
 						</table>
+					</div>
+					</div>
+					<div>
+					<fieldset>
+						<legend>Wypełnij formularz:</legend>
+						<form action="" method="GET" class="zarzadzaj">
+
+
+							<p class="mid-width" style="grid-column: 1 / 3;">Dodaj Przedmiot</p>
+							<p class="mid-width" style="grid-column: 4 / 6;"></p>
+
+				
+
+
+							<?php
+								$selected = isset($_GET['tresc']) ? $_GET['tresc'] : ''; 
+								echo '<input type="text" id="tresc" name="tresc" placeholder="Wpisz nazwę przedmiotu" value="' . $selected . '" style="grid-column: 1 / 5;" >';
+							?>
+							
+							<input type="submit" style="grid-column: 5 / 6;" value="Dodaj">
+						</form>
+					</fieldset>
+					<br>
+					<div class="pytania" style="width: 100%;">
+						<table>
+							<tbody>
+								<tr>
+									<th class="szerokie">Nazwa Przedmiotu</th>
+									<th colspan="2">Operacje</th>
+								</tr>
+
+                                <?php
+                                    $sql = "SELECT pytania.id, pytania.tresc, przedmioty.nazwa AS przedmiot, kategoria.nazwa AS kategoria, typ_pytania.nazwa_typu AS typ, poziom.trudnosc_nazwa AS trudnosc, pytania.prywatnosc AS widocznosc 
+									FROM Pytania 
+									INNER JOIN Przedmioty ON pytania.przedmiot_id = przedmioty.id 
+									INNER JOIN Kategoria ON pytania.kategoria_id = kategoria.id 
+									INNER JOIN Typ_pytania ON pytania.typ_pytania = typ_pytania.id 
+									INNER JOIN Poziom ON pytania.poziom_id = poziom.id";
+							
+									
+									if (isset($_GET['przedmiot']) && $_GET['przedmiot'] != '0') {
+										$sql .= " WHERE przedmioty.nazwa LIKE '%" . $_GET['przedmiot'] . "%'";
+									}
+									if (isset($_GET['kategoria']) && $_GET['kategoria'] != '0') {
+										$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
+										$sql .= " kategoria.nazwa LIKE '%" . $_GET['kategoria'] . "%'";
+									}
+									if (isset($_GET['typ']) && $_GET['typ'] != '0') {
+										$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
+										$sql .= " typ_pytania.nazwa_typu = '" . $_GET['typ'] . "'";
+									}
+									if (isset($_GET['poziom']) && $_GET['poziom'] != '0') {
+										$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
+										$sql .= " poziom.trudnosc_nazwa = '" . $_GET['poziom'] . "'";
+									}
+									if (isset($_GET['prywatnosc']) && $_GET['prywatnosc'] != '0') {
+										$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
+										$sql .= " pytania.prywatnosc = '" . $_GET['prywatnosc'] . "'";
+									}
+									if (isset($_GET['tresc']) && $_GET['tresc'] != '') {
+										$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
+										$sql .= " pytania.tresc = '" . $_GET['tresc'] . "'";
+									}
+
+
+                                    $result = $conn->query($sql);
+
+                                    if ($result->num_rows > 0) {
+                                        while($row = $result->fetch_assoc()) {
+                                            echo '
+                                            <tr>
+                                                <td>' . $row['przedmiot'] . '</td>
+                                                <td style="text-align:center;">
+													<a href="dodaj.php?id=' . $row['id'] . '">Edytuj</a>
+												</td>
+												<form method="POST" class="zarzadzaj">
+													<input type="hidden" name="question_id" value="'.$row['id'].'">
+													<td style="text-align:center;">
+														<button type="submit" name="delete_question" class="delete" style="color: red;">Usuń</button>
+													</td>
+												</form>
+
+                                      
+                                            </form></td>    
+                                            </tr>';
+                                        }
+                                    }
+                                    else {
+                                        echo '<tr><td colspan="7">Brak pytań do wyświetlenia.</td></tr>';
+                                    }
+
+                                ?>
+
+								
+								
+								
+							</tbody>
+						</table>
+					</div>
+					</div>
 					</div>
 				</div>
 			</div>
