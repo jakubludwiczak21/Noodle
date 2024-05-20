@@ -49,7 +49,7 @@
 						<li><a href="zarz_testami.php">Zarządzaj testami</a></li>
 					</ul>
 				</div>
-				<div class="haslo">
+				<div class="haslo" style="justify-content: flex-start;">
 
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<p>Zarządzaj pytaniami</p>
