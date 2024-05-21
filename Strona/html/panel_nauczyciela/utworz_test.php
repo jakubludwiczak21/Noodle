@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Utwórz test</title>
     <link rel="stylesheet" href="../../styles.css">
-    <script src="../../jquery-3.7.1.min.js"></script>
+    <script src="../../jquery-3.7.1min.js"></script>
 </head>
 
 <?php
@@ -85,8 +85,8 @@
                 </fieldset>
                 <br>
                 <div class="pytania">
-                    <form id="question-form">
-                        <table>
+                    <form id="question-form"style="display: block;width:100%">
+                        <table style="width: 100%;">
                             <thead>
                             <tr>
                                 <th class="szerokie">Treść</th>
@@ -201,9 +201,17 @@
 
     var headHeight = $('#head').height() + parseInt($('#head').css('padding-top')) + parseInt($('#head').css('padding-bottom'));
     var stopkaHeight = $('#stopka').height() + parseInt($('#stopka').css('padding-top')) + parseInt($('#stopka').css('padding-bottom'));
-    var bodyHeight = $('body').height();
-    var wrapperHeight = bodyHeight - headHeight - stopkaHeight;
-    $('.wrapper').css('min-height', wrapperHeight + 'px');
+    var menuMargin = parseInt($('#menu').css('margin-top')) + parseInt($('#menu').css('margin-bottom'));
+
+
+
+    var H = headHeight + stopkaHeight + menuMargin;
+    $("#menu").css('min-height', "calc(100vh - " + H + "px)");
+
+
+    var T = $('#head').height();
+    $(".sidebar").css('top', T + "px");
+    
 </script>
 </body>
 </html>
