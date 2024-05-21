@@ -86,39 +86,9 @@
 								</tr>
 
                                 <?php
-                                    $sql = "SELECT pytania.id, pytania.tresc, przedmioty.nazwa AS przedmiot, kategoria.nazwa AS kategoria, typ_pytania.nazwa_typu AS typ, poziom.trudnosc_nazwa AS trudnosc, pytania.prywatnosc AS widocznosc 
-									FROM Pytania 
-									INNER JOIN Przedmioty ON pytania.przedmiot_id = przedmioty.id 
-									INNER JOIN Kategoria ON pytania.kategoria_id = kategoria.id 
-									INNER JOIN Typ_pytania ON pytania.typ_pytania = typ_pytania.id 
-									INNER JOIN Poziom ON pytania.poziom_id = poziom.id";
-							
-									
-									if (isset($_GET['przedmiot']) && $_GET['przedmiot'] != '0') {
-										$sql .= " WHERE przedmioty.nazwa LIKE '%" . $_GET['przedmiot'] . "%'";
-									}
-									if (isset($_GET['kategoria']) && $_GET['kategoria'] != '0') {
-										$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
-										$sql .= " kategoria.nazwa LIKE '%" . $_GET['kategoria'] . "%'";
-									}
-									if (isset($_GET['typ']) && $_GET['typ'] != '0') {
-										$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
-										$sql .= " typ_pytania.nazwa_typu = '" . $_GET['typ'] . "'";
-									}
-									if (isset($_GET['poziom']) && $_GET['poziom'] != '0') {
-										$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
-										$sql .= " poziom.trudnosc_nazwa = '" . $_GET['poziom'] . "'";
-									}
-									if (isset($_GET['prywatnosc']) && $_GET['prywatnosc'] != '0') {
-										$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
-										$sql .= " pytania.prywatnosc = '" . $_GET['prywatnosc'] . "'";
-									}
-									if (isset($_GET['tresc']) && $_GET['tresc'] != '') {
-										$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
-										$sql .= " pytania.tresc = '" . $_GET['tresc'] . "'";
-									}
-
-
+                                    $sql = "SELECT kategoria.id, kategoria.nazwa AS kategoria
+									FROM kategoria";
+						
                                     $result = $conn->query($sql);
 
                                     if ($result->num_rows > 0) {
@@ -184,12 +154,8 @@
 								</tr>
 
                                 <?php
-                                    $sql = "SELECT pytania.id, pytania.tresc, przedmioty.nazwa AS przedmiot, kategoria.nazwa AS kategoria, typ_pytania.nazwa_typu AS typ, poziom.trudnosc_nazwa AS trudnosc, pytania.prywatnosc AS widocznosc 
-									FROM Pytania 
-									INNER JOIN Przedmioty ON pytania.przedmiot_id = przedmioty.id 
-									INNER JOIN Kategoria ON pytania.kategoria_id = kategoria.id 
-									INNER JOIN Typ_pytania ON pytania.typ_pytania = typ_pytania.id 
-									INNER JOIN Poziom ON pytania.poziom_id = poziom.id";
+                                    $sql = "SELECT przedmioty.id, przedmioty.nazwa AS przedmiot
+											FROM przedmioty";
 							
 									
 									if (isset($_GET['przedmiot']) && $_GET['przedmiot'] != '0') {
