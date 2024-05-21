@@ -83,6 +83,116 @@
                         <option value="1">Publiczny</option>
                     </select>
                 </fieldset>
+
+
+                <p>Zarządzaj pytaniami</p>
+					<br><br>
+					<fieldset style="width: 80%;">
+						<legend>Wypełnij formularz:</legend>
+						<form action="" method="GET" class="zarzadzaj">
+
+
+							<p class="mid-width" style="grid-column: 1 / 3;">Filtruj</p>
+							<p class="mid-width" style="grid-column: 4 / 6;"></p>
+
+						
+							<label for="przedmiot">Przedmiot:</label>
+							<label for="kategoria">Kategoria:</label>
+							<label for="typ">Typ Pytania:</label>
+							<label for="poziom">Trudność:</label>
+							<label for="prywatnosc">Widoczość pytania:</label>
+					
+							
+							<select id="przedmiot" name="przedmiot">
+								<?php
+									$selected = isset($_GET['przedmiot']) ? $_GET['przedmiot'] : '0'; 
+									$sql = "SELECT * FROM przedmioty";
+									$result = $conn->query($sql);
+
+									echo '<option value="0" ' . ($selected == '0' ? 'selected' : '') . '>Brak</option>'; 
+									if ($result->num_rows > 0) {
+										while($row = $result->fetch_assoc()) {
+											echo '<option value="' . $row['nazwa'] . '" ' . ($selected == $row['nazwa'] ? 'selected' : '') . '>' . $row['nazwa'] . '</option>';
+										}
+									} else {
+										echo '<option value="">Brak przedmiotów</option>';
+									}
+								?>
+							</select>
+
+							
+							<select id="kategoria" name="kategoria">
+								<?php
+									$selected = isset($_GET['kategoria']) ? $_GET['kategoria'] : '0'; 
+									$sql = "SELECT * FROM kategoria";
+									$result = $conn->query($sql);
+
+									echo '<option value="0" ' . ($selected == '0' ? 'selected' : '') . '>Brak</option>'; 
+									if ($result->num_rows > 0) {
+										while($row = $result->fetch_assoc()) {
+											echo '<option value="' . $row['nazwa'] . '" ' . ($selected == $row['nazwa'] ? 'selected' : '') . '>' . $row['nazwa'] . '</option>';
+										}
+									} else {
+										echo '<option value="">Brak przedmiotów</option>';
+									}
+								?>
+							</select>
+
+							<select id="typ" name="typ">
+								<?php
+									$selected = isset($_GET['typ']) ? $_GET['typ'] : '0';
+									$sql = "SELECT * FROM typ_pytania";
+									$result = $conn->query($sql);
+
+									echo '<option value="0" ' . ($selected == '0' ? 'selected' : '') . '>Brak</option>'; 
+									if ($result->num_rows > 0) {
+										while($row = $result->fetch_assoc()) {
+											echo '<option value="' . $row['nazwa_typu'] . '" ' . ($selected == $row['nazwa_typu'] ? 'selected' : '') . '>' . $row['nazwa_typu'] . '</option>';
+										}
+									} else {
+										echo '<option value="">Brak przedmiotów</option>';
+									}
+								?>
+							</select>
+
+							<select id="poziom" name="poziom">
+								<?php
+									$selected = isset($_GET['poziom']) ? $_GET['poziom'] : '0';
+									$sql = "SELECT * FROM poziom";
+									$result = $conn->query($sql);
+
+									echo '<option value="0" ' . ($selected == '0' ? 'selected' : '') . '>Brak</option>'; 
+									if ($result->num_rows > 0) {
+										while($row = $result->fetch_assoc()) {
+											echo '<option value="' . $row['trudnosc_nazwa'] . '" ' . ($selected == $row['trudnosc_nazwa'] ? 'selected' : '') . '>' . $row['trudnosc_nazwa'] . '</option>';
+										}
+									} else {
+										echo '<option value="">Brak przedmiotów</option>';
+									}
+								?>
+							</select>
+
+							
+							<select id="prywatnosc" name="prywatnosc">
+								<option value="0">Brak</option>
+								<option value="tylkoja">Tylko dla mnie</option>
+								<option value="wszyscy">Dla wszystkich</option>
+							</select>
+
+							<hr class="full-width" style="width: 90%; margin: auto;">
+
+							<label for="tresc" style="align-self: center;">Szukaj</label>
+							<?php
+								$selected = isset($_GET['tresc']) ? $_GET['tresc'] : ''; 
+								echo '<input type="text" id="tresc" name="tresc" placeholder="Wyszukaj pytanie po nazwie" value="' . $selected . '" style="grid-column: 2 / 5;" >';
+							?>
+							
+							<input type="submit" style="grid-column: 5 / 6;" value="Filtruj">
+						</form>
+					</fieldset>
+					<br>
+
+
                 <br>
                 <div class="pytania">
                     <form id="question-form"style="display: block;width:100%">
@@ -133,6 +243,10 @@
                             }
                             if (!empty($_GET['prywatnosc'])) {
                                 $sql .= " AND pytania.prywatnosc = '" . $_GET['prywatnosc'] . "'";
+                            }
+                            if (isset($_GET['tresc']) && $_GET['tresc'] != '') {
+                                $sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
+                                $sql .= " pytania.tresc = '" . $_GET['tresc'] . "'";
                             }
 
                             $result = $conn->query($sql);
