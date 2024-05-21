@@ -5,22 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Utwórz test</title>
     <link rel="stylesheet" href="../../styles.css">
-    <script src="../../jquery-3.7.1min.js"></script>
+    <script src="../../jquery-3.7.1.min.js"></script>
 </head>
 
 <?php
-                            $servername = "localhost";
-                            $username = "root";
-                            $password = "";
-                            $dbname = "baza";
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "baza";
 
-                            $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-                            if ($conn->connect_error) {
-                                die("Connection failed: " . $conn->connect_error);
-                            }
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
 
 ?>
+
 
 <body>
 <div class="wrapper">
@@ -45,60 +47,20 @@
             <div class="innermenu" id="">
                 <ul style="display: flex; justify-content: space-evenly;">
                     <li><a href="dodaj.php">Dodaj Pytanie</a></li>
-                    <li><a href="dodaj_kat.php">Dodaj przedmiot i kategorie</a></li>
                     <li><a href="zarz_pyt.php" >Zarządzaj pytaniami</a></li>
                     <li><a href="utworz_test.php" class="aktualna-strona">Utwórz test</a></li>
                     <li><a href="zarz_testami.php">Zarządzaj testami</a></li>
                 </ul>
             </div>
             <div class="haslo">
-                <h2 style="margin-top: 1em;">Utwórz Test</h2>
-                
-                <fieldset class="zarzadzaj" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; align-items: center; width: 80%; margin: auto;">
-                    <label for="nazwa_testu" style="grid-column: 1 / 3;">Nazwa Testu:</label>
-                    <input type="text" id="nazwa_testu" name="nazwa_testu" placeholder="Nazwa Testu" style="grid-column: 3 / 7;">
+                <p>Zarządzaj pytaniami</p>
+                <br><br>
+                <fieldset style="width: 80%;">
+                    <label for="nazwa_testu">Nazwa Testu:</label>
+                    <input type="text" id="nazwa_testu" name="nazwa_testu" placeholder="Nazwa Testu">
 
-                    <label for="przedmiot_testu" style="grid-column: 1 / 3;">Przedmiot:</label>
-                    <select id="przedmiot" name="przedmiot" style="grid-column: 3 / 7;" required>
-                        <?php
-                            $selected = isset($_GET['przedmiot']) ? $_GET['przedmiot'] : '0'; 
-                            $sql = "SELECT * FROM przedmioty";
-                            $result = $conn->query($sql);
-
-                            
-                            if ($result->num_rows > 0) {
-                                while($row = $result->fetch_assoc()) {
-                                    echo '<option value="' . $row['nazwa'] . '" ' . ($selected == $row['nazwa'] ? 'selected' : '') . '>' . $row['nazwa'] . '</option>';
-                                }
-                            } else {
-                                echo '<option value="">Brak przedmiotów</option>';
-                            }
-                        ?>
-                    </select>
-
-                    <label for="prywatnosc_testu" style="grid-column: 1 / 3;">Prywatność:</label>
-                    <select id="prywatnosc_testu" name="prywatnosc_testu" style="grid-column: 3 / 7;">
-                        <option value="0">Prywatny</option>
-                        <option value="1">Publiczny</option>
-                    </select>
-                </fieldset>
-					<fieldset style="width: 80%;">
-						<legend>Filtruj pytania:</legend>
-						<form action="" method="GET" class="zarzadzaj">
-
-
-							<p class="mid-width" style="grid-column: 1 / 3;">Filtruj</p>
-							<p class="mid-width" style="grid-column: 4 / 6;"></p>
-
-						
-							<label for="przedmiot">Przedmiot:</label>
-							<label for="kategoria">Kategoria:</label>
-							<label for="typ">Typ Pytania:</label>
-							<label for="poziom">Trudność:</label>
-							<label for="prywatnosc">Widoczość pytania:</label>
-					
-							
-							<select id="przedmiot" name="przedmiot">
+                    <label for="przedmiot_testu">Przedmiot:</label>
+                    <select id="przedmiot_testu" name="_testu" style="grid-column: 5 / 7;" required>
 								<?php
 									$selected = isset($_GET['przedmiot']) ? $_GET['przedmiot'] : '0'; 
 									$sql = "SELECT * FROM przedmioty";
@@ -115,84 +77,16 @@
 								?>
 							</select>
 
-							
-							<select id="kategoria" name="kategoria">
-								<?php
-									$selected = isset($_GET['kategoria']) ? $_GET['kategoria'] : '0'; 
-									$sql = "SELECT * FROM kategoria";
-									$result = $conn->query($sql);
-
-									echo '<option value="0" ' . ($selected == '0' ? 'selected' : '') . '>Brak</option>'; 
-									if ($result->num_rows > 0) {
-										while($row = $result->fetch_assoc()) {
-											echo '<option value="' . $row['nazwa'] . '" ' . ($selected == $row['nazwa'] ? 'selected' : '') . '>' . $row['nazwa'] . '</option>';
-										}
-									} else {
-										echo '<option value="">Brak przedmiotów</option>';
-									}
-								?>
-							</select>
-
-							<select id="typ" name="typ">
-								<?php
-									$selected = isset($_GET['typ']) ? $_GET['typ'] : '0'; 
-									$sql = "SELECT * FROM typ_pytania";
-									$result = $conn->query($sql);
-
-									echo '<option value="0" ' . ($selected == '0' ? 'selected' : '') . '>Brak</option>';
-									if ($result->num_rows > 0) {
-										while($row = $result->fetch_assoc()) {
-											echo '<option value="' . $row['nazwa_typu'] . '" ' . ($selected == $row['nazwa_typu'] ? 'selected' : '') . '>' . $row['nazwa_typu'] . '</option>';
-										}
-									} else {
-										echo '<option value="">Brak przedmiotów</option>';
-									}
-								?>
-							</select>
-
-							<select id="poziom" name="poziom">
-								<?php
-									$selected = isset($_GET['poziom']) ? $_GET['poziom'] : '0';
-									$sql = "SELECT * FROM poziom";
-									$result = $conn->query($sql);
-
-									echo '<option value="0" ' . ($selected == '0' ? 'selected' : '') . '>Brak</option>'; 
-									if ($result->num_rows > 0) {
-										while($row = $result->fetch_assoc()) {
-											echo '<option value="' . $row['trudnosc_nazwa'] . '" ' . ($selected == $row['trudnosc_nazwa'] ? 'selected' : '') . '>' . $row['trudnosc_nazwa'] . '</option>';
-										}
-									} else {
-										echo '<option value="">Brak przedmiotów</option>';
-									}
-								?>
-							</select>
-
-							
-							<select id="prywatnosc" name="prywatnosc">
-								<option value="0">Brak</option>
-								<option value="tylkoja">Tylko dla mnie</option>
-								<option value="wszyscy">Dla wszystkich</option>
-							</select>
-
-							<hr class="full-width" style="width: 90%; margin: auto;">
-
-							<label for="tresc" style="align-self: center;">Szukaj</label>
-							<?php
-								$selected = isset($_GET['tresc']) ? $_GET['tresc'] : ''; 
-								echo '<input type="text" id="tresc" name="tresc" placeholder="Wyszukaj pytanie po nazwie" value="' . $selected . '" style="grid-column: 2 / 5;" >'; // Ustaw wartość pola input na pobraną wartość
-							?>
-							
-							<input type="submit" style="grid-column: 5 / 6;" value="Filtruj">
-						</form>
-					</fieldset>
-
+                    <label for="prywatnosc_testu">Prywatność:</label>
+                    <select id="prywatnosc_testu" name="prywatnosc_testu">
+                        <option value="0">Prywatny</option>
+                        <option value="1">Publiczny</option>
+                    </select>
+                </fieldset>
                 <br>
-
-
-
                 <div class="pytania">
-                    <form id="question-form" style="display: block;width:100%">
-                        <table style="width: 100%;">
+                    <form id="question-form">
+                        <table>
                             <thead>
                             <tr>
                                 <th class="szerokie">Treść</th>
@@ -206,6 +100,16 @@
                             </thead>
                             <tbody>
                             <?php
+                            $servername = "localhost";
+                            $username = "root";
+                            $password = "";
+                            $dbname = "baza";
+
+                            $conn = new mysqli($servername, $username, $password, $dbname);
+
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                            }
 
                             $sql = "SELECT pytania.id, pytania.tresc, przedmioty.nazwa AS przedmiot, kategoria.nazwa AS kategoria, typ_pytania.nazwa_typu AS typ, poziom.trudnosc_nazwa AS trudnosc, pytania.prywatnosc AS widocznosc
                                     FROM Pytania
@@ -229,10 +133,6 @@
                             }
                             if (!empty($_GET['prywatnosc'])) {
                                 $sql .= " AND pytania.prywatnosc = '" . $_GET['prywatnosc'] . "'";
-                            }
-                            if (isset($_GET['tresc']) && $_GET['tresc'] != "") {
-                                $sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
-                                $sql .= " pytania.tresc = '" . $_GET['tresc'] . "'";
                             }
 
                             $result = $conn->query($sql);
@@ -258,9 +158,9 @@
                             </tbody>
                         </table>
                     </form>
-                    <button id="add-test-button" style="padding: 1em;font-family: calibri;width: 30%;font-size: large;border: 1px solid #70707070;border-radius: 10px;">Dodaj Test</button>
                 </div>
                 <br>
+                <button id="add-test-button" style="padding: 1em;font-family: calibri;width: 30%;font-size: large;border: 1px solid #70707070;border-radius: 10px;">Dodaj Test</button>
             </div>
         </div>
     </div>
@@ -269,16 +169,6 @@
     </div>
 </div>
 <script>
-    var headHeight = $('#head').height() + parseInt($('#head').css('padding-top')) + parseInt($('#head').css('padding-bottom'));
-    var stopkaHeight = $('#stopka').height() + parseInt($('#stopka').css('padding-top')) + parseInt($('#stopka').css('padding-bottom'));
-    var menuMargin = parseInt($('#menu').css('margin-top')) + parseInt($('#menu').css('margin-bottom'));
-    
-    var H = headHeight + stopkaHeight + menuMargin;
-		$("#menu").css('min-height', "calc(100vh - " + H + "px)");
-
-		var T = $('#head').height();
-		$(".sidebar").css('top', T + "px");
-
     document.getElementById('add-test-button').addEventListener('click', function () {
         var form = document.createElement('form');
         form.method = 'POST';
@@ -309,19 +199,11 @@
         return input;
     }
 
-    $(document).ready(function() {
-        $('table').on('click', 'a.delete', function(e) {
-            e.preventDefault();
-            var confirmDelete = confirm('Czy na pewno chcesz usunąć ten rząd?');
-            if (confirmDelete) {
-                $(this).closest('tr').remove();
-                console.log('Usunięto pytanie o ID: ' + $(this).closest('tr').attr('id'));
-            }
-        });
-    });
-
-
-
+    var headHeight = $('#head').height() + parseInt($('#head').css('padding-top')) + parseInt($('#head').css('padding-bottom'));
+    var stopkaHeight = $('#stopka').height() + parseInt($('#stopka').css('padding-top')) + parseInt($('#stopka').css('padding-bottom'));
+    var bodyHeight = $('body').height();
+    var wrapperHeight = bodyHeight - headHeight - stopkaHeight;
+    $('.wrapper').css('min-height', wrapperHeight + 'px');
 </script>
 </body>
 </html>
