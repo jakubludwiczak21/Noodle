@@ -53,26 +53,42 @@
 				<div class="haslo" style="justify-content: flex-start;">
 
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<p>Zarządzaj przedmiotami i kategoriami</p>
+					<p style="margin-bottom:1em">Zarządzaj przedmiotami i kategoriami</p>
 					<br><br>
-					<div class="kat" style="display: flex;width:80%;justify-content:space-evenly">
-					<div>
+					<div class="kat" style="display: flex;min-width:80%;justify-content:space-evenly">
+					<div style="max-width:40%">
 					<fieldset>
 						<legend>Wypełnij formularz:</legend>
 						<form action="" method="GET" class="zarzadzaj">
 
 
-							<p class="mid-width" style="grid-column: 1 / 3;">Dodaj Kategorie</p>
-							<p class="mid-width" style="grid-column: 4 / 6;"></p>
+							<p class="mid-width" style="grid-column: 1 / 7;">Dodaj Kategorie i przypisz do przedmiotu</p>
+					
 
 				
 
 
 							<?php
 								$selected = isset($_GET['tresc']) ? $_GET['tresc'] : ''; 
-								echo '<input type="text" id="tresc" name="tresc" placeholder="Wpisz nazwę kategorii" value="' . $selected . '" style="grid-column: 1 / 5;" >';
+								echo '<input type="text" id="tresc" name="tresc" placeholder="Wpisz nazwę kategorii" value="' . $selected . '" style="grid-column: 1 / 3;" >';
 							?>
 							
+							<select id="przedmiot_testu" name="_testu" style="grid-column: 3 / 5;" required>
+								<?php
+									$selected = isset($_GET['przedmiot']) ? $_GET['przedmiot'] : '0'; 
+									$sql = "SELECT * FROM przedmioty";
+									$result = $conn->query($sql);
+
+									echo '<option value="0" ' . ($selected == '0' ? 'selected' : '') . '>Brak</option>'; 
+									if ($result->num_rows > 0) {
+										while($row = $result->fetch_assoc()) {
+											echo '<option value="' . $row['nazwa'] . '" ' . ($selected == $row['nazwa'] ? 'selected' : '') . '>' . $row['nazwa'] . '</option>';
+										}
+									} else {
+										echo '<option value="">Brak przedmiotów</option>';
+									}
+								?>
+							</select>
 							<input type="submit" style="grid-column: 5 / 6;" value="Dodaj">
 						</form>
 					</fieldset>
@@ -124,14 +140,13 @@
 						</table>
 					</div>
 					</div>
-					<div>
+					<div style="max-width:40%">
 					<fieldset>
 						<legend>Wypełnij formularz:</legend>
 						<form action="" method="GET" class="zarzadzaj">
 
 
-							<p class="mid-width" style="grid-column: 1 / 3;">Dodaj Przedmiot</p>
-							<p class="mid-width" style="grid-column: 4 / 6;"></p>
+							<p class="mid-width" style="grid-column: 1 / 7;">Dodaj Przedmiot</p>
 
 				
 

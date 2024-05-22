@@ -55,7 +55,7 @@
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<p>Zarządzaj pytaniami</p>
 					<br><br>
-					<fieldset style="width: 80%;">
+					<fieldset style="width: 80%;margin-bottom:1em;">
 						<legend>Wypełnij formularz:</legend>
 						<form action="" method="GET" class="zarzadzaj">
 

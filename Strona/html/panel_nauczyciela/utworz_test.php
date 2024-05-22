@@ -47,20 +47,21 @@
             <div class="innermenu" id="">
                 <ul style="display: flex; justify-content: space-evenly;">
                     <li><a href="dodaj.php">Dodaj Pytanie</a></li>
+                    <li><a href="dodaj_kat.php">Dodaj przedmiot i kategorie</a></li>
                     <li><a href="zarz_pyt.php" >Zarządzaj pytaniami</a></li>
                     <li><a href="utworz_test.php" class="aktualna-strona">Utwórz test</a></li>
                     <li><a href="zarz_testami.php">Zarządzaj testami</a></li>
                 </ul>
             </div>
             <div class="haslo">
-                <p>Zarządzaj pytaniami</p>
+                <p style="margin-bottom:1em">Utwórz Test</p>
                 <br><br>
-                <fieldset style="width: 80%;">
-                    <label for="nazwa_testu">Nazwa Testu:</label>
-                    <input type="text" id="nazwa_testu" name="nazwa_testu" placeholder="Nazwa Testu">
+                <fieldset style="width: 80%;display:grid;gap:1em">
+                    <label for="nazwa_testu" style="grid-column: 1 / 2;align-self:center;">Nazwa Testu:</label>
+                    <input type="text" id="nazwa_testu" name="nazwa_testu" placeholder="Nazwa Testu" style="grid-column: 3 / 7;">
 
-                    <label for="przedmiot_testu">Przedmiot:</label>
-                    <select id="przedmiot_testu" name="_testu" style="grid-column: 5 / 7;" required>
+                    <label for="przedmiot_testu" style="grid-column: 1 / 2;align-self:center;">Przedmiot:</label>
+                    <select id="przedmiot_testu" name="_testu" style="grid-column: 3 / 7;" required>
 								<?php
 									$selected = isset($_GET['przedmiot']) ? $_GET['przedmiot'] : '0'; 
 									$sql = "SELECT * FROM przedmioty";
@@ -75,19 +76,19 @@
 										echo '<option value="">Brak przedmiotów</option>';
 									}
 								?>
-							</select>
+					</select>
 
-                    <label for="prywatnosc_testu">Prywatność:</label>
-                    <select id="prywatnosc_testu" name="prywatnosc_testu">
+                    <label for="prywatnosc_testu" style="grid-column: 1 / 2;align-self:center;">Prywatność:</label>
+                    <select id="prywatnosc_testu" style="grid-column: 3/7" name="prywatnosc_testu">
                         <option value="0">Prywatny</option>
                         <option value="1">Publiczny</option>
                     </select>
                 </fieldset>
 
 
-                <p>Zarządzaj pytaniami</p>
+                <p style="margin-top:2em;margin-bottom:1em">Filtruj i wybierz pytania</p>
 					<br><br>
-					<fieldset style="width: 80%;">
+					<fieldset style="width: 80%;margin-bottom:1em">
 						<legend>Wypełnij formularz:</legend>
 						<form action="" method="GET" class="zarzadzaj">
 
