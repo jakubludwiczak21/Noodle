@@ -59,21 +59,16 @@
 					<div style="max-width:40%">
 					<fieldset>
 						<legend>Wypełnij formularz:</legend>
-						<form action="" method="GET" class="zarzadzaj">
+						<form action="" method="POST" class="zarzadzaj">
 
 
 							<p class="mid-width" style="grid-column: 1 / 7;">Dodaj Kategorie i przypisz do przedmiotu</p>
 					
 
-				
 
-
-							<?php
-								$selected = isset($_GET['tresc']) ? $_GET['tresc'] : ''; 
-								echo '<input type="text" id="tresc" name="tresc" placeholder="Wpisz nazwę kategorii" value="' . $selected . '" style="grid-column: 1 / 3;" >';
-							?>
+							<input type="text" name="category_name" placeholder="Wpisz nazwę kategorii" style="grid-column: 1 / 3;" >  
 							
-							<select id="przedmiot_testu" name="_testu" style="grid-column: 3 / 5;" required>
+							<select name="subject_select" style="grid-column: 3 / 5;" required>
 								<?php
 									$selected = isset($_GET['przedmiot']) ? $_GET['przedmiot'] : '0'; 
 									$sql = "SELECT * FROM przedmioty";
@@ -89,7 +84,7 @@
 									}
 								?>
 							</select>
-							<input type="submit" style="grid-column: 5 / 6;" value="Dodaj">
+							<input type="submit"  name="category_add" style="grid-column: 5 / 6;" value="Dodaj">
 						</form>
 					</fieldset>
 					<br>
@@ -103,7 +98,7 @@
 
                                 <?php
                                     $sql = "SELECT kategoria.id, kategoria.nazwa AS kategoria
-									FROM kategoria";
+									FROM kategoria;";
 						
                                     $result = $conn->query($sql);
 
@@ -112,13 +107,10 @@
                                             echo '
                                             <tr>
                                                 <td>' . $row['kategoria'] . '</td>
-                                                <td style="text-align:center;">
-													<a href="dodaj.php?id=' . $row['id'] . '">Edytuj</a>
-												</td>
 												<form method="POST" class="zarzadzaj">
-													<input type="hidden" name="question_id" value="'.$row['id'].'">
+													<input type="hidden" name="category_id" value="'.$row['id'].'">
 													<td style="text-align:center;">
-														<button type="submit" name="delete_question" class="delete" style="color: red;">Usuń</button>
+														<button type="submit" name="delete_category" class="delete" style="color: red;">Usuń</button>
 													</td>
 												</form>
 
@@ -143,7 +135,7 @@
 					<div style="max-width:40%">
 					<fieldset>
 						<legend>Wypełnij formularz:</legend>
-						<form action="" method="GET" class="zarzadzaj">
+						<form action="" method="POST" class="zarzadzaj">
 
 
 							<p class="mid-width" style="grid-column: 1 / 7;">Dodaj Przedmiot</p>
@@ -151,12 +143,11 @@
 				
 
 
-							<?php
-								$selected = isset($_GET['tresc']) ? $_GET['tresc'] : ''; 
-								echo '<input type="text" id="tresc" name="tresc" placeholder="Wpisz nazwę przedmiotu" value="' . $selected . '" style="grid-column: 1 / 5;" >';
-							?>
 							
-							<input type="submit" style="grid-column: 5 / 6;" value="Dodaj">
+							<input type="text" id="subject_name" name="subject_name" placeholder="Wpisz nazwę przedmiotu" style="grid-column: 1 / 5;" >
+							
+							
+							<input type="submit" name="subject_add" style="grid-column: 5 / 6;" value="Dodaj">
 						</form>
 					</fieldset>
 					<br>
@@ -171,32 +162,6 @@
                                 <?php
                                     $sql = "SELECT przedmioty.id, przedmioty.nazwa AS przedmiot
 											FROM przedmioty";
-							
-									
-									if (isset($_GET['przedmiot']) && $_GET['przedmiot'] != '0') {
-										$sql .= " WHERE przedmioty.nazwa LIKE '%" . $_GET['przedmiot'] . "%'";
-									}
-									if (isset($_GET['kategoria']) && $_GET['kategoria'] != '0') {
-										$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
-										$sql .= " kategoria.nazwa LIKE '%" . $_GET['kategoria'] . "%'";
-									}
-									if (isset($_GET['typ']) && $_GET['typ'] != '0') {
-										$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
-										$sql .= " typ_pytania.nazwa_typu = '" . $_GET['typ'] . "'";
-									}
-									if (isset($_GET['poziom']) && $_GET['poziom'] != '0') {
-										$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
-										$sql .= " poziom.trudnosc_nazwa = '" . $_GET['poziom'] . "'";
-									}
-									if (isset($_GET['prywatnosc']) && $_GET['prywatnosc'] != '0') {
-										$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
-										$sql .= " pytania.prywatnosc = '" . $_GET['prywatnosc'] . "'";
-									}
-									if (isset($_GET['tresc']) && $_GET['tresc'] != '') {
-										$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
-										$sql .= " pytania.tresc = '" . $_GET['tresc'] . "'";
-									}
-
 
                                     $result = $conn->query($sql);
 
@@ -204,14 +169,11 @@
                                         while($row = $result->fetch_assoc()) {
                                             echo '
                                             <tr>
-                                                <td>' . $row['przedmiot'] . '</td>
-                                                <td style="text-align:center;">
-													<a href="dodaj.php?id=' . $row['id'] . '">Edytuj</a>
-												</td>
+                                                <td>' . $row['przedmiot'] . '</td>                                    
 												<form method="POST" class="zarzadzaj">
-													<input type="hidden" name="question_id" value="'.$row['id'].'">
+													<input type="hidden" name="subject_id" value="'.$row['id'].'">
 													<td style="text-align:center;">
-														<button type="submit" name="delete_question" class="delete" style="color: red;">Usuń</button>
+														<button type="submit" name="delete_subject" class="delete" style="color: red;">Usuń</button>
 													</td>
 												</form>
 
@@ -221,7 +183,7 @@
                                         }
                                     }
                                     else {
-                                        echo '<tr><td colspan="7">Brak pytań do wyświetlenia.</td></tr>';
+                                        echo '<tr><td colspan="7">Brak przedmiotów do wyświetlenia.</td></tr>';
                                     }
 
                                 ?>
@@ -275,24 +237,82 @@ $(document).ready(function() {
 </html>
 
 <?php
-if (isset($_POST['delete_question'])) {
-        $record_id = $_POST['question_id'];
 
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "baza";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+	die("Connection failed: " . $conn->connect_error);
+}
+
+if(isset($_POST['subject_add'])) {
+	echo "GUWNO Z DUPY";
+	$_subject_name = $_POST['subject_name'];
+
+	$sql_add ="INSERT INTO `przedmioty` (`id`, `nazwa`) VALUES (NULL, '$_subject_name');";
+
+	if($result = $conn->query($sql_add)) {
+		
+	}
+	else echo "Nie dodano przedmiotu";
+}
+
+
+if(isset($_POST['category_add'])) {
+	echo "SZMATA JEBANA";
+    $_subject_name = $_POST['subject_select'];
+    $_category = $_POST['category_name'];
+
+    $category_add = "INSERT INTO `kategoria` (`id`, `nazwa`) VALUES (NULL, '$_category');";
+
+    if($result = $conn->query($category_add)) {
+        $subject_id_query = "SELECT id FROM przedmioty WHERE nazwa = '$_subject_name';";
+        $subject_id_result = $conn->query($subject_id_query);
+        if($subject_id_result->num_rows > 0) {
+            $subject_row = $subject_id_result->fetch_assoc();
+            $_subject_id = $subject_row['id'];
+
+            $category_id_query = "SELECT id FROM kategoria WHERE nazwa = '$_category';";
+            $category_id_result = $conn->query($category_id_query);
+            if($category_id_result->num_rows > 0) {
+                $category_row = $category_id_result->fetch_assoc();
+                $_category_id = $category_row['id'];
+
+                $category_subject = "INSERT INTO `kategoria_przedmiot` (`id_kategorii`, `id_przedmiotu`) VALUES ('$_category_id', '$_subject_id');";
+                if($conn->query($category_subject)) {
+                    echo "Kategoria została pomyślnie przypisana do przedmiotu.";
+                } else {
+                    echo "Błąd podczas przypisywania kategorii do przedmiotu: " . $conn->error;
+                }
+            } else {
+                echo "Nie znaleziono ID kategorii.";
+            }
+        } else {
+            echo "Nie znaleziono ID przedmiotu.";
         }
+    } else {
+        echo "Błąd podczas dodawania kategorii: " . $conn->error;
+    }
+}
 
-        $sql = "DELETE FROM odpowiedzi WHERE id_pytania = $record_id";
+
+
+
+
+if (isset($_POST['delete_category'])) {
+        $record_id = $_POST['category_id'];
+
+        $sql = "DELETE FROM kategoria WHERE kategoria.id = $record_id";
 
         if ($conn->query($sql)) {
-            echo "Answers deleted successfully";
-
-			if($conn->query("DELETE FROM pytania WHERE id = $record_id")) {
-				echo "Question deleted successfully";
-			}
+            echo "Category deleted successfully";
+			
         } 
 		else {
-            echo "Error deleting record: " . $conn->error;
+            echo "Nie można usunąć kategorii z powiązanymi pytaniami: " . $conn->error;
         }
 
         $conn->close();
