@@ -290,6 +290,18 @@ CREATE TABLE `uzytkownicy` (
   `typ_konta` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
+
+CREATE TABLE `kategoria_przedmiot` (
+  `id_kategorii` int(11) NOT NULL,
+  `id_przedmiotu` int(11) NOT NULL,
+  PRIMARY KEY (`id_kategorii`, `id_przedmiotu`),
+  FOREIGN KEY (`id_kategorii`) REFERENCES `kategoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`id_przedmiotu`) REFERENCES `przedmioty` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
 --
 -- Dumping data for table `uzytkownicy`
 --
