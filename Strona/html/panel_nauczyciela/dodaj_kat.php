@@ -249,20 +249,19 @@ if ($conn->connect_error) {
 }
 
 if(isset($_POST['subject_add'])) {
-	echo "GUWNO Z DUPY";
 	$_subject_name = $_POST['subject_name'];
 
 	$sql_add ="INSERT INTO `przedmioty` (`id`, `nazwa`) VALUES (NULL, '$_subject_name');";
 
 	if($result = $conn->query($sql_add)) {
-		
+		echo "<meta http-equiv='refresh' content='0'>";
 	}
+	
 	else echo "Nie dodano przedmiotu";
 }
 
 
 if(isset($_POST['category_add'])) {
-	echo "SZMATA JEBANA";
     $_subject_name = $_POST['subject_select'];
     $_category = $_POST['category_name'];
 
@@ -284,6 +283,7 @@ if(isset($_POST['category_add'])) {
                 $category_subject = "INSERT INTO `kategoria_przedmiot` (`id_kategorii`, `id_przedmiotu`) VALUES ('$_category_id', '$_subject_id');";
                 if($conn->query($category_subject)) {
                     echo "Kategoria została pomyślnie przypisana do przedmiotu.";
+					echo "<meta http-equiv='refresh' content='0'>";
                 } else {
                     echo "Błąd podczas przypisywania kategorii do przedmiotu: " . $conn->error;
                 }
@@ -300,6 +300,26 @@ if(isset($_POST['category_add'])) {
 
 
 
+if (isset($_POST['delete_subject'])) {
+	$record_id = $_POST['subject_id'];
+
+	$sql = "DELETE FROM przedmioty WHERE przedmioty.id = $record_id";
+
+	if ($conn->query($sql)) {
+		echo "Category deleted successfully";
+		echo "<meta http-equiv='refresh' content='0'>";
+		
+	} 
+	else {
+		echo "Nie można usunąć kategorii z powiązanymi pytaniami: " . $conn->error;
+	}
+
+	$conn->close();
+} 
+else {
+	echo "No record ID provided";
+}
+
 
 
 if (isset($_POST['delete_category'])) {
@@ -309,6 +329,7 @@ if (isset($_POST['delete_category'])) {
 
         if ($conn->query($sql)) {
             echo "Category deleted successfully";
+			echo "<meta http-equiv='refresh' content='0'>";
 			
         } 
 		else {
@@ -316,8 +337,10 @@ if (isset($_POST['delete_category'])) {
         }
 
         $conn->close();
+		echo "<meta http-equiv='refresh' content='0'>";
     } 
 	else {
         echo "No record ID provided";
     }
+	
 ?>

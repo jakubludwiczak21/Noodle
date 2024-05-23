@@ -297,6 +297,7 @@ if (isset($_POST['delete_question'])) {
 
         if ($conn->query($sql)) {
             echo "Answers deleted successfully";
+			echo "<meta http-equiv='refresh' content='0'>";
 
 			if($conn->query("DELETE FROM pytania WHERE id = $record_id")) {
 				echo "Question deleted successfully";
