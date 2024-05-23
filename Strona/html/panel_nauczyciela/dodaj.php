@@ -333,6 +333,7 @@ $('#liczba').on('input', function() {
 				$sql_add_answer = "INSERT INTO `Odpowiedzi` (`id_pytania`, `tresc`, `poprawnosc`) VALUES ('$question_id', '$wariant', '$poprawnosc')";
 			
 				$conn->query($sql_add_answer);
+				echo "<meta http-equiv='refresh' content='0'>";
 			}
 
 		}
