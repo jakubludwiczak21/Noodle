@@ -172,7 +172,8 @@ $(document).ready(function() {
             });
             var checkbox = $('<input>').attr({
                 type: typPytania === 'zamkniete' ? 'radio' : 'checkbox',
-                name: 'poprawnosc' + i,  // Użyj tego samego atrybutu name dla wszystkich przycisków radio
+                name: 'poprawnosc',  // Użyj tego samego atrybutu name dla wszystkich przycisków radio
+				value: i,
                 placeholder: 'Poprawność',
                 class: 'check',
                 style: 'grid-column: 6 / 7;justify-self: center;align-self: center;'
@@ -322,11 +323,15 @@ $('#liczba').on('input', function() {
 
 			for($i = 1; $i <= $_liczba_odpowiedzi; $i++) {
 				$wariant = $_POST["wariant$i"];
-
-				$poprawnosc = isset($_POST["poprawnosc$i"]) ? 1 : 0;
-
+			
+				if(isset($_POST["poprawnosc"]) && $_POST["poprawnosc"] == $i) {
+					$poprawnosc = 1;
+				} else {
+					$poprawnosc = 0;
+				}
+			
 				$sql_add_answer = "INSERT INTO `Odpowiedzi` (`id_pytania`, `tresc`, `poprawnosc`) VALUES ('$question_id', '$wariant', '$poprawnosc')";
-
+			
 				$conn->query($sql_add_answer);
 			}
 
