@@ -101,54 +101,57 @@
                         </tr>
                     </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Wstęp do matematyki</td>
-                                <td>Matematyka</td>
-                                <td>2023-10-01</td>
-                                <td>Prywatny</td>
-                                <td>
-                                    <button class="test-action-button1" onclick="activateTest(1)">Aktywuj test</button>
-                                    <button class="test-action-button2" onclick="editTest(1)">Edytuj</button>
-                                    <button class="test-action-button3" onclick="deleteTest(1)">Usuń</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Odkrycia geograficzne</td>
-                                <td>Historia</td>
-                                <td>2023-09-15</td>
-                                <td>Publiczny</td>
-                                <td>
-                                    <button class="test-action-button1" onclick="activateTest(2)">Aktywuj test</button>
-                                    <button class="test-action-button2" onclick="editTest(2)">Edytuj</button>
-                                    <button class="test-action-button3" onclick="deleteTest(2)">Usuń</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Podstawy chemii</td>
-                                <td>Chemia</td>
-                                <td>2023-08-20</td>
-                                <td>Prywatny</td>
-                                <td>
-                                    <button class="test-action-button1" onclick="activateTest(3)">Aktywuj test</button>
-                                    <button class="test-action-button2" onclick="editTest(3)">Edytuj</button>
-                                    <button class="test-action-button3" onclick="deleteTest(3)">Usuń</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Wprowadzenie do fizyki</td>
-                                <td>Fizyka</td>
-                                <td>2023-07-05</td>
-                                <td>Publiczny</td>
-                                <td>
-                                    <button class="test-action-button1" onclick="activateTest(4)">Aktywuj test</button>
-                                    <button class="test-action-button2" onclick="editTest(4)">Edytuj</button>
-                                    <button class="test-action-button3" onclick="deleteTest(4)">Usuń</button>
-                                </td>
-                            </tr>
+
+                            <?php
+
+
+                                $servername = "localhost";
+                                $username = "root";
+                                $password = "";
+                                $dbname = "baza";
+
+                                $conn = new mysqli($servername, $username, $password, $dbname);
+                                if ($conn->connect_error) {
+                                    die("Connection failed: " . $conn->connect_error);
+                                }
+
+
+                                    $sql = "SELECT  testy_stworzone.id AS id, 
+                                                    testy_stworzone.autor AS autor,
+                                                    testy_stworzone.przedmiot AS przedmiot,
+                                                    testy_stworzone.prywatnosc AS prywatnosc,
+                                                    testy_stworzone.tytuł AS tytul,
+                                                    testy_stworzone.data_stworzenia AS data_stwo
+                                            FROM testy_stworzone;";
+                                            //INNER JOIN Przedmioty ON testy_stworzone.przedmiot = przedmioty.id 
+                                            //INNER JOIN uzytkownicy ON uzytkownicy.id = testy_stworzone.autor;";
+
+
+                                    $result = $conn->query($sql);
+
+                                    if ($result->num_rows > 0) {
+                                        while($row = $result->fetch_assoc()) {
+                                            echo '
+                                            <tr>
+                                                <td>' . $row['id'] . '</td>
+                                                <td>' . $row['tytul'] . '</td>
+                                                <td>' . $row['przedmiot'] . '</td>
+                                                <td>' . $row['data_stwo'] . '</td>
+                                                <td>' . ($row['prywatnosc'] === '1' ? 'Tylko dla mnie' : 'Dla wszystkich') . '</td>
+                                                <td>
+                                                    <button class="test-action-button1" onclick="activateTest(1)">Aktywuj test</button>
+                                                    <button class="test-action-button2" onclick="editTest(1)">Edytuj</button>
+                                                    <button class="test-action-button3" onclick="deleteTest(1)">Usuń</button>
+                                                </td>                        
+                                            </form></td>    
+                                            </tr>';
+                                        }
+                                    }
+                                    else {
+                                        echo '<tr><td>Brak pytań do wyświetlenia.</td></tr>';
+                                    }
+
+                            ?>
                         </tbody>
                 </table>
 
