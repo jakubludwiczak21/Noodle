@@ -148,8 +148,9 @@
                                         }
                                     }
                                     else {
-                                        echo '<tr><td>Brak pytań do wyświetlenia.</td></tr>';
+                                        echo '<tr><td>Brak testów do wyświetlenia.</td></tr>';
                                     }
+                                    $conn->close();
 
                             ?>
                         </tbody>
@@ -169,42 +170,57 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Odkrycia geograficzne</td>
-                            <td>Matematyka</td>
-                            <td>2023-05-01</td>
-                            <td>2023-05-10</td>
-                            <td>30min</td>
-                            <td>
-                                <button class="test-action-button2" onclick="editResults(1)">Zobacz/Edytuj wyniki</button>
-                                <button class="test-action-button3" onclick="deleteTest(1)">Usuń</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Odkrycia geograficzne</td>
-                            <td>Fizyka</td>
-                            <td>2023-06-15</td>
-                            <td>2023-06-25</td>
-                            <td>40min</td>
-                            <td>
-                            <button class="test-action-button2" onclick="editResults(1)">Zobacz/Edytuj wyniki</button>
-                                <button class="test-action-button3" onclick="deleteTest(1)">Usuń</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Odkrycia geograficzne</td>
-                            <td>Chemia</td>
-                            <td>2023-07-01</td>
-                            <td>2023-07-05</td>
-                            <td>20min</td>
-                            <td>
-                            <button class="test-action-button2" onclick="editResults(1)">Zobacz/Edytuj wyniki</button>
-                                <button class="test-action-button3" onclick="deleteTest(1)">Usuń</button>
-                            </td>
-                        </tr>
+                        <?php
+                            $servername = "localhost";
+                            $username = "root";
+                            $password = "";
+                            $dbname = "baza";
+
+                            $conn = new mysqli($servername, $username, $password, $dbname);
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                            }
+
+
+                                $sql = "SELECT testy_przeprowadzane.id AS id, 
+                                                testy_stworzone.tytuł AS tytul, 
+                                                przedmioty.nazwa AS przedmiot,
+                                                testy_przeprowadzane.od AS od,
+                                                testy_przeprowadzane.do AS do 
+                                        FROM testy_przeprowadzane 
+                                        INNER JOIN testy_stworzone ON testy_stworzone.id = testy_przeprowadzane.id_testu 
+                                        INNER JOIN przedmioty ON testy_stworzone.przedmiot = przedmioty.id
+                                        WHERE do >= CURRENT_DATE;";
+
+                                    
+
+
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    while($row = $result->fetch_assoc()) {
+                                        echo '
+                                        <tr>
+                                            <td>' . $row['id'] . '</td>
+                                            <td>' . $row['tytul'] . '</td>
+                                            <td>' . $row['przedmiot'] . '</td>
+                                            <td>' . $row['od'] . '</td>
+                                            <td>' . $row['do'] . '</td>
+                                            <td> Czas trwania do poprawy </td>
+                                            <td>
+                                                <button class="test-action-button2" onclick="editResults(1)">Zobacz/Edytuj wyniki</button>
+                                                <button class="test-action-button3" onclick="deleteTest(1)">Usuń</button>
+                                            </td>                        
+                                        </form></td>    
+                                        </tr>';
+                                    }
+                                }
+                                else {
+                                    echo '<tr><td>Brak testów do wyświetlenia.</td></tr>';
+                                }
+                                $conn->close();
+
+                        ?>
                     </tbody>
                 </table>
 
@@ -221,39 +237,56 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Podstawy chemii</td>
-                            <td>Matematyka</td>
-                            <td>2023-05-01</td>
-                            <td>2023-05-10</td>
-                            <td>
-                            <button class="test-action-button2" onclick="editResults(1)">Zobacz/Edytuj wyniki</button>
-                                <button class="test-action-button3" onclick="deleteTest(1)">Usuń</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Podstawy chemii</td>
-                            <td>Fizyka</td>
-                            <td>2023-06-15</td>
-                            <td>2023-06-25</td>
-                            <td>
-                            <button class="test-action-button2" onclick="editResults(1)">Zobacz/Edytuj wyniki</button>
-                                <button class="test-action-button3" onclick="deleteTest(1)">Usuń</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Podstawy chemii</td>
-                            <td>Chemia</td>
-                            <td>2023-07-01</td>
-                            <td>2023-07-05</td>
-                            <td>
-                                <button class="test-action-button2" onclick="editResults(1)">Zobacz/Edytuj wyniki</button>
-                                <button class="test-action-button3" onclick="deleteTest(1)">Usuń</button>
-                            </td>
-                        </tr>
+                        <?php
+                            $servername = "localhost";
+                            $username = "root";
+                            $password = "";
+                            $dbname = "baza";
+
+                            $conn = new mysqli($servername, $username, $password, $dbname);
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                            }
+
+
+                                $sql = "SELECT testy_przeprowadzane.id AS id, 
+                                                testy_stworzone.tytuł AS tytul, 
+                                                przedmioty.nazwa AS przedmiot,
+                                                testy_przeprowadzane.od AS od,
+                                                testy_przeprowadzane.do AS do 
+                                        FROM testy_przeprowadzane 
+                                        INNER JOIN testy_stworzone ON testy_stworzone.id = testy_przeprowadzane.id_testu 
+                                        INNER JOIN przedmioty ON testy_stworzone.przedmiot = przedmioty.id
+                                        WHERE do < CURRENT_DATE;";
+
+                                    
+
+
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    while($row = $result->fetch_assoc()) {
+                                        echo '
+                                        <tr>
+                                            <td>' . $row['id'] . '</td>
+                                            <td>' . $row['tytul'] . '</td>
+                                            <td>' . $row['przedmiot'] . '</td>
+                                            <td>' . $row['od'] . '</td>
+                                            <td>' . $row['do'] . '</td>
+                                            <td>
+                                                <button class="test-action-button2" onclick="editResults(1)">Zobacz/Edytuj wyniki</button>
+                                                <button class="test-action-button3" onclick="deleteTest(1)">Usuń</button>
+                                            </td>                        
+                                        </form></td>    
+                                        </tr>';
+                                    }
+                                }
+                                else {
+                                    echo '<tr><td>Brak testów do wyświetlenia.</td></tr>';
+                                }
+                                $conn->close();
+
+                        ?>
                     </tbody>
                 </table>
 			</div>
