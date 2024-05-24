@@ -53,7 +53,8 @@
                     <li><a href="zarz_testami.php">Zarządzaj testami</a></li>
                 </ul>
             </div>
-            <div class="haslo">
+            <div class="haslo" style="justify-content: flex-start;">
+                &nbsp;&nbsp;&nbsp;&nbsp;
                 <p style="margin-bottom:1em">Utwórz Test</p>
                 <br><br>
                 <fieldset style="width: 80%;display:grid;gap:1em">
