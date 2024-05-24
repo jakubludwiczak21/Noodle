@@ -62,7 +62,7 @@
                     <input type="text" id="nazwa_testu" name="nazwa_testu" placeholder="Nazwa Testu" style="grid-column: 3 / 7;">
 
                     <label for="przedmiot_testu" style="grid-column: 1 / 2;align-self:center;">Przedmiot:</label>
-                    <select id="przedmiot_testu" name="_testu" style="grid-column: 3 / 7;" required>
+                    <select id="przedmiot_testu" name="przedmiot_testu" style="grid-column: 3 / 7;" required>
 								<?php
 									$selected = isset($_GET['przedmiot']) ? $_GET['przedmiot'] : '0'; 
 									$sql = "SELECT * FROM przedmioty";
@@ -81,8 +81,8 @@
 
                     <label for="prywatnosc_testu" style="grid-column: 1 / 2;align-self:center;">Prywatność:</label>
                     <select id="prywatnosc_testu" style="grid-column: 3/7" name="prywatnosc_testu">
-                        <option value="0">Prywatny</option>
-                        <option value="1">Publiczny</option>
+                        <option value="1">Prywatny</option>
+                        <option value="0">Publiczny</option>
                     </select>
                 </fieldset>
 
@@ -333,26 +333,53 @@
 </html>
 
 <?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "baza";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nazwaTestu = $_POST['nazwa_testu'];
-    $przedmiotTestu = $_POST['przedmiot_testu'];
-    $prywatnoscTestu = $_POST['prywatnosc_testu'];
+    $nazwaTestu = $_POST['nazwa_testu'];  
+    echo $_POST['prywatnosc_testu'];
+    $prywatnosc_testu = $_POST['prywatnosc_testu'];
+    echo $prywatnosc_testu;
     $questionIds = isset($_POST['question_ids']) ? $_POST['question_ids'] : [];
 
-    // Connect to database
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "baza";
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $get_przedmiot = $_POST['przedmiot_testu'];
+    $select_query = "SELECT id FROM Przedmioty WHERE nazwa = '$get_przedmiot'";
+    $result = $conn->query($select_query);
 
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+    if ($result) {
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $_przedmiot_id = $row['id'];
+        } else {
+            $insert_query = "INSERT INTO `przedmioty` (`nazwa`) VALUES ('$get_przedmiot')";
+            if ($conn->query($insert_query) === TRUE) {
+                $_przedmiot_id = $conn->insert_id;
+            } else {
+                echo "Error: " . $conn->error;
+            }
+        }
+    } else {
+        echo "Error: " . $conn->error;
     }
 
+
+    $autor = 1; //  wersja robocza do zmiany gdy bedzie gotowe logowanie
+
     // Insert new test into testy_stworzone
-    $sql = "INSERT INTO testy_stworzone (autor, przedmiot, prywatnosc, tytuł, data_stworzenia) VALUES (1, 1, 1, ?, NOW())";
+    $sql = "INSERT INTO testy_stworzone (autor, przedmiot, prywatnosc, tytuł, data_stworzenia) VALUES ('$autor',  '$_przedmiot_id', '$prywatnosc_testu', ?, NOW())";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $nazwaTestu);
     $stmt->execute();
@@ -369,6 +396,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $conn->close();
+    echo "<meta http-equiv='refresh' content='0'>";
 }
 ?>
 
