@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../panel_nauczyciela/panel_nauczyciela.php");
+    exit();
+}
+
+echo "Welcome, " . htmlspecialchars($_SESSION['username']) . "!";
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,6 +49,11 @@
 				<li>
 					<a href="../kontakt.php">Kontakt</a>
 				</li>
+
+				<li>
+    				<a href="../logowanie/logout.php">Wyloguj</a>
+				</li>
+
 			</ul>
       		</div>
 
