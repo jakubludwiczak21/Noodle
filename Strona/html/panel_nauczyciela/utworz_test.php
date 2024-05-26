@@ -388,7 +388,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
 
-    $autor = 1; //  wersja robocza do zmiany gdy bedzie gotowe logowanie
+    $autor = $_SESSION['user_id'];
 
     // Insert new test into testy_stworzone
     $sql = "INSERT INTO testy_stworzone (autor, przedmiot, prywatnosc, tytuł, data_stworzenia) VALUES ('$autor',  '$_przedmiot_id', '$prywatnosc_testu', ?, NOW())";

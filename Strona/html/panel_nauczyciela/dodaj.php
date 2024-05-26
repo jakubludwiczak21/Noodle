@@ -296,7 +296,7 @@ $('#liczba').on('input', function() {
 		
 		//wersja robocza
 		$_zdjecie = '';
-		$_autor = '1';
+		$_autor = $_SESSION['user_id'];
 
 		switch ($_POST['poziom']) {
 			case "latwe":
