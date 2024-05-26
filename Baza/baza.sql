@@ -301,6 +301,27 @@ CREATE TABLE `kategoria_przedmiot` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
+-- Tablica do przechowywania hasel uzytkownikow
+
+CREATE TABLE `uzytkownicy_hasla` (
+  `id_uzytkownika` int(11) NOT NULL,
+  `haslo` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_uzytkownika`),
+  CONSTRAINT `uzytkownicy_hasla_ibfk_1` FOREIGN KEY (`id_uzytkownika`) REFERENCES `uzytkownicy` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+--  Tablica do przechowywania loginow uzytkownikow
+
+CREATE TABLE `uzytkownicy_loginy` (
+  `id_uzytkownika` int(11) NOT NULL,
+  `login` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_uzytkownika`),
+  UNIQUE KEY `login` (`login`),
+  CONSTRAINT `uzytkownicy_loginy_ibfk_1` FOREIGN KEY (`id_uzytkownika`) REFERENCES `uzytkownicy` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
 
 --
 -- Dumping data for table `uzytkownicy`
