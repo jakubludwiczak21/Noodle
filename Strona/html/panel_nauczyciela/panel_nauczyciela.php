@@ -81,3 +81,50 @@ var T = $('#head').height();
 </script>
 </body>
 </html>
+
+
+<?php
+  session_start();
+  $servername = "localhost";
+  $username = "root";
+  $password = "";
+  $dbname = "baza";
+
+  $conn = new mysqli($servername, $username, $password, $dbname);
+  if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+  }
+
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $login = $_POST['login'];
+    $password = $_POST['haslo'];
+    echo $password;
+
+    $stmt = $conn->prepare("SELECT u.id, u.imie, u.nazwisko, l.login, h.haslo FROM uzytkownicy u 
+                            INNER JOIN uzytkownicy_hasla h ON u.id = h.id_uzytkownika 
+                            INNER JOIN uzytkownicy_loginy l ON u.id = l.id_uzytkownika 
+                            WHERE l.login = ?");
+    $stmt->bind_param("s", $login);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 1) {   
+        $row = $result->fetch_assoc();
+        echo $row['haslo'];
+        if ($password == $row['haslo']) { // dla bezpieczeństwa powinno się użyc if (password_verify($password, $row['haslo'])) {   ale nie mamy hasowania haseł w bazie danych uwzględnionego
+            $_SESSION['user_id'] = $row['id'];
+            $_SESSION['username'] = $row['imie'] . ' ' . $row['nazwisko'];
+            header("Location: dodaj.php");
+            exit();
+        } else {
+            echo "Invalid password.";
+        }
+    } else {
+        echo "No user found with that login.";
+    }
+
+    $stmt->close();
+  }
+
+  $conn->close();
+?>
