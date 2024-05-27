@@ -22,7 +22,7 @@
         <li><a href="../../index.php">Strona główna</a></li>
         <li><a href="../dolacz_kod.php">Dołącz do testu</a></li>
         <li><a href="../moje_testy.php">Moje testy</a></li>
-        <li><a href="../panel_nauczyciela.php"  class="aktualna-strona">Panel nauczyciela</a></li>
+        <li><a href="../panel_nauczyciela/panel_nauczyciela.php"  class="aktualna-strona">Panel nauczyciela</a></li>
       </ul>
 
 
@@ -43,12 +43,12 @@
                     <input type="submit" value="Zaloguj" name="zaloguj" class="zaloguj">
                 </form>
         </div>
-        <p><a href="dodaj.php">Dodawanie pytan i testów (Link Roboczy)</a></p>
+        <!--<p><a href="dodaj.php">Dodawanie pytan i testów (Link Roboczy)</a></p> -->
     </div>
     
   </div>
   <div class="footer" id="stopka">
-    <p>&copy; Strona testowa. Wszelkie prawa zastrzeżone.</p>
+    <p>&copy; Strona testowa. Wszelkie prawa zastrzeżone.</p> 
   </div>
 
 </div>

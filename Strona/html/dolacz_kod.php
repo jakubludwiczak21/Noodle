@@ -41,7 +41,7 @@
                     <input type="submit" value="Zatwierdź" name="zaloguj" class="zaloguj" id="zaloguj">
                 </form>
         </div>
-        <p><a href="test.php">Dodawanie pytan i testów (Link Roboczy)</a></p>
+        <p><a href="test.php">Przykładowy test (Link Roboczy)</a></p>
   </div>
   </div>
   <div class="footer" id="stopka">

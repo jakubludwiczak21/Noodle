@@ -6,7 +6,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-echo "Welcome, " . htmlspecialchars($_SESSION['username']) . "!";
+//echo "Welcome, " . htmlspecialchars($_SESSION['username']) . "!";
 ?>
 
 
@@ -48,9 +48,14 @@ echo "Welcome, " . htmlspecialchars($_SESSION['username']) . "!";
             <li><a href="../../index.php">Strona główna</a></li>
             <li><a href="../dolacz_kod.php">Dołącz do testu</a></li>
             <li><a href="../moje_testy.php">Moje testy</a></li>
-            <li><a href="../panel_nauczyciela.php" class="aktualna-strona">Panel nauczyciela</a></li>
+            <li><a href="../panel_nauczyciela/panel_nauczyciela.php" class="aktualna-strona">Panel nauczyciela</a></li>
         </ul>
         <ul>
+
+            <li>
+                <a href="../logowanie/logout.php">Wyloguj</a>
+            </li>
+
             <li><a href="../kontakt.php">Kontakt</a></li>
         </ul>
     </div>
