@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="jquery-3.7.1min.js"></script>
+<script src="../../jquery-3.7.1min.js"></script>
 <title>Noodle™</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body>

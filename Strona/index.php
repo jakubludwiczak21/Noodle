@@ -82,7 +82,6 @@ var T = $('#head').height();
 </body>
 </html>
 
-
 <?php
   session_start();
   $servername = "localhost";
@@ -98,9 +97,9 @@ var T = $('#head').height();
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $login = $_POST['login'];
     $password = $_POST['haslo'];
-    echo $password;
+    //echo $password;
 
-    $stmt = $conn->prepare("SELECT u.id, u.imie, u.nazwisko, l.login, h.haslo FROM uzytkownicy u 
+    $stmt = $conn->prepare("SELECT u.id, u.imie, u.nazwisko, u.typ_konta, l.login, h.haslo FROM uzytkownicy u 
                             INNER JOIN uzytkownicy_hasla h ON u.id = h.id_uzytkownika 
                             INNER JOIN uzytkownicy_loginy l ON u.id = l.id_uzytkownika 
                             WHERE l.login = ?");
@@ -110,11 +109,22 @@ var T = $('#head').height();
 
     if ($result->num_rows == 1) {   
         $row = $result->fetch_assoc();
-        echo $row['haslo'];
+        //echo $row['haslo'];
         if ($password == $row['haslo']) { // dla bezpieczeństwa powinno się użyc if (password_verify($password, $row['haslo'])) {   ale nie mamy hasowania haseł w bazie danych uwzględnionego
             $_SESSION['user_id'] = $row['id'];
             $_SESSION['username'] = $row['imie'] . ' ' . $row['nazwisko'];
-            header("Location: dodaj.php");
+            $_SESSION['typ_konta'] = $row['typ_konta'];
+            //echo $_SESSION['typ_konta'];
+
+            if($_SESSION['typ_konta'] == 1) {
+                $_SESSION['location'] = "html/panel_nauczyciela/";
+                //echo "Nauczyciel";
+            }
+            else {
+                $_SESSION['location'] = "html/panel_ucznia/";
+                //echo "Uczen";
+            }
+            header ("Location: " . $_SESSION['location'] ."strona_glowna.php");
             exit();
         } else {
             echo "Invalid password.";
