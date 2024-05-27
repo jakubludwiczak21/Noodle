@@ -19,10 +19,10 @@
       
       <ul>
         <h2>Menu</h2>
-        <li><a href="../index.php">Strona główna</a></li>
-        <li><a href="dolacz_kod.php">Dołącz do testu</a></li>
-        <li><a href="moje_testy.php"  class="aktualna-strona">Moje testy</a></li>
-        <li><a href="panel_nauczyciela/panel_nauczyciela.php">Panel nauczyciela</a></li>
+        <li><a href="../uczen/index.php">Strona główna</a></li>
+        <li><a href="../uczen/dolacz_kod.php">Dołącz do testu</a></li>
+        <li><a href="../moje_testy.php"  class="aktualna-strona">Moje testy</a></li>
+        <li><a href="../../index.php">Panel nauczyciela</a></li>
       </ul>
 
 
