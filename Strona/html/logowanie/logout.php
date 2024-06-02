@@ -3,6 +3,6 @@ session_start();
 session_unset();
 session_destroy();
 
-header("Location: ../panel_nauczyciela/panel_nauczyciela.php");
+header("Location: ../../index.php");
 exit();
 ?>
