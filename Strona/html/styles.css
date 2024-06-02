@@ -275,7 +275,6 @@ tr:hover > td{
 .do_wypelnienia{
   display: flex;
   align-items: center;
-  justify-content: center;
   min-width: 300px;
   flex-direction: column;
 
