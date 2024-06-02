@@ -460,6 +460,11 @@ if (!isset($_SESSION['user_id'])) {
         }
     }
 
+    document.addEventListener("DOMContentLoaded", function() {
+        toggleVisibility('testTemplates'); // Ensure the first tab is shown when the page loads
+    });
+
+
     function editResults(testId) {
         // Display the popup
         $("#overlay").show(); // Use existing overlay
