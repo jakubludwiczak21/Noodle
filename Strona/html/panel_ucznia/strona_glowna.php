@@ -41,8 +41,7 @@ if (!isset($_SESSION['user_id'])) {
       </ul>
     </div>
     <div class="main-content" id="main">
-      <h2>Najnowsze testy</h2>
-      &nbsp;
+      <h2 style="text-align:center; margin-top: 2em;">Najnowsze testy</h2>
       <div class="do_wypelnienia">
         
       <table>
@@ -104,7 +103,8 @@ if (!isset($_SESSION['user_id'])) {
       <div class="dol">
       <div class="do_wypelnienia" style="width: 50%;">
         <div> 
-          <h2>Twoje Komunikaty</h2>
+          <h2 style="margin-bottom: 1em;">Twoje Komunikaty</h2>
+            <p1 style="text-align:center; color: orange;">Aktualnie nie posiadasz żadnych komunikatów!</p1>
           
           </div>
         
