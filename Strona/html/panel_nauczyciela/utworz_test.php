@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../panel_nauczyciela/panel_nauczyciela.php");
+    header("Location: ../../index.php");
     exit();
 }
 
@@ -16,7 +16,7 @@ if (!isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Utwórz test</title>
-    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../styles.css">
     <script src="../../jquery-3.7.1min.js"></script>
 </head>
 
@@ -45,10 +45,12 @@ if (!isset($_SESSION['user_id'])) {
     <div class="sidebar" id="menu">
         <ul>
             <h2>Menu</h2>
-            <li><a href="../../index.php">Strona główna</a></li>
-            <li><a href="../dolacz_kod.php">Dołącz do testu</a></li>
-            <li><a href="../moje_testy.php">Moje testy</a></li>
-            <li><a href="../panel_nauczyciela/panel_nauczyciela.php" class="aktualna-strona">Panel nauczyciela</a></li>
+            <li><a href="strona_glowna.php" >Strona główna</a></li>
+        <li><a href="dodaj.php">Dodaj Pytanie</a></li>
+        <li><a href="dodaj_kat.php">Dodaj przedmiot i kategorie</a></li>
+        <li><a href="zarz_pyt.php">Zarządzaj pytaniami</a></li>
+        <li><a href="utworz_test.php" class="aktualna-strona">Utwórz test</a></li>
+        <li><a href="zarz_testami.php">Zarządzaj testami</a></li>
         </ul>
         <ul>
 
@@ -61,7 +63,7 @@ if (!isset($_SESSION['user_id'])) {
     </div>
 
         <div class="main-content" id="main">
-            <div class="innermenu" id="">
+            <!--<div class="innermenu" id="">
                 <ul style="display: flex; justify-content: space-evenly;">
                     <li><a href="dodaj.php">Dodaj Pytanie</a></li>
                     <li><a href="dodaj_kat.php">Dodaj przedmiot i kategorie</a></li>
@@ -69,7 +71,7 @@ if (!isset($_SESSION['user_id'])) {
                     <li><a href="utworz_test.php" class="aktualna-strona">Utwórz test</a></li>
                     <li><a href="zarz_testami.php">Zarządzaj testami</a></li>
                 </ul>
-            </div>
+            </div>-->
             <div class="haslo" style="justify-content: flex-start;">
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <p style="margin-bottom:1em">Utwórz Test</p>

@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../panel_nauczyciela/panel_nauczyciela.php");
+    header("Location: ../../index.php");
     exit();
 }
 
@@ -17,7 +17,7 @@ if (!isset($_SESSION['user_id'])) {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="../../jquery-3.7.1min.js"></script>
 	<title>Noodle™</title>
-	<link rel="stylesheet" href="../../styles.css">
+	<link rel="stylesheet" href="../styles.css">
 </head>
 <?php
 	$servername = "localhost";
@@ -36,26 +36,26 @@ if (!isset($_SESSION['user_id'])) {
       		<h1>Noodle™ - Twoje testy Online</h1>
     		</div>
     		<div class="container">
-      		<div class="sidebar" id="menu">
-        		<ul>
-				<h2>Menu</h2>
-				<li><a href="../../index.php">Strona główna</a></li>
-				<li><a href="../dolacz_kod.php">Dołącz do testu</a></li>
-				<li><a href="../moje_testy.php">Moje testy</a></li>
-				<li><a href="../panel_nauczyciela/panel_nauczyciela.php" class="aktualna-strona">Panel nauczyciela</a></li>
-        		</ul>
-			<ul>
+			<div class="sidebar" id="menu">
+      
+      <ul>
+        <h2>Menu</h2>
+        <li><a href="strona_glowna.php" >Strona główna</a></li>
+        <li><a href="dodaj.php" class="aktualna-strona">Dodaj Pytanie</a></li>
+        <li><a href="dodaj_kat.php">Dodaj przedmiot i kategorie</a></li>
+        <li><a href="zarz_pyt.php">Zarządzaj pytaniami</a></li>
+        <li><a href="utworz_test.php">Utwórz test</a></li>
+        <li><a href="zarz_testami.php">Zarządzaj testami</a></li>
+      </ul>
 
-				<li>
-    				<a href="../logowanie/logout.php">Wyloguj</a>
-				</li>
 
-				<li>
-					<a href="../kontakt.php">Kontakt</a>
-				</li>
-			</ul>
-      		</div>
+      <ul>
+        <li><a href="../logowanie/logout.php">Wyloguj</a></li>
+        <li><a href="../kontakt.php">Kontakt</a></li>
+      </ul>
+    </div>
 			<div class="main-content" id="main">
+				<!--
 				<div class="innermenu" id="">
 					<ul style="display: flex;justify-content: space-evenly;">
 
@@ -66,6 +66,7 @@ if (!isset($_SESSION['user_id'])) {
 						<li><a href="zarz_testami.php">Zarządzaj testami</a></li>
 					</ul>
 				</div>
+				-->
 				<div class="haslo">
 					
 					&nbsp;&nbsp;&nbsp;&nbsp;
