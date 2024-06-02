@@ -45,7 +45,7 @@
                     <input type="submit" name="submit" value="Wyślij" class="wider zatwierdz">
                 </span>
                 <span>
-                    <button type="button" onclick="history.back()" class="confij-kontakt">Cofnij</button>
+                    <button type="button" onclick="history.back()" class="cofnij-kontakt">Cofnij</button>
                 </span>
             </span>
         </form>
