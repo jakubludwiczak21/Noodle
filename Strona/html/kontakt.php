@@ -8,41 +8,48 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 
+<style> 
+
+.cofnij-kontakt {
+    padding: 1em;
+    font-family: calibri;
+    width: 100%;
+    font-size: large;
+    border: 1px solid #70707070;
+    resize: vertical;
+    border-radius: 10px;
+    margin-top: 1em;
+}
+</style> 
+
+
 <body>
 <div class="wrapper">
   <div class="header-content" id="head">
     <h1>Noodle™ - Twoje testy Online</h1>
   </div>
-  <div class="container">
+  <div class="container" style="align-items: center;">
 
-    <div class="sidebar" id="menu">
-      
-      <ul>
-        <h2>Menu</h2>
-        <li><a href="../index.php">Strona główna</a></li>
-        <li><a href="panel_ucznia/dolacz_kod_nologin.php">Dołącz do testu</a></li>
-      </ul>
-
-
-      <ul>
-        <li><a href="kontakt.php" class="aktualna-strona">Kontakt</a></li>
-      </ul>
-    </div>
     <div class="main-content" id="main">
       <div class="haslo">
         <p>Napisz do nas</p>
         <br>
-                  <form>
-                      <input type="text" name="first_name" placeholder="Imię" id="imie" class="full-width-small" onchange="SprawdzImie()" required><input type="text" name="last_name" placeholder="Nazwisko" id="nazwisko" class="full-width-small" onchange="SprawdzNazwisko()" required >
-                      <input type="text" name="subject" placeholder="Temat" class="full-width" id="temat" onchange="SprawdzTemat()" required >
-                      <input type="text" name="email" placeholder="E-mail" class="full-width" id="email" onchange="SprawdzEmail()" required>
-                      <textarea rows="5" name="message" cols="50" placeholder="Twoja Wiadomość" class="full-width" id="wiadomosc" onchange="SprawdzWiadomosc()" required></textarea>
-                      <span class="full-width">
-                          <span class="wider small-width">
-                              <input type="submit" name="submit" value="Wyślij" class="wider zatwierdz">
-                          </span>
-                      </span>
-                  </form>
+        <form>
+            <input type="text" name="first_name" placeholder="Imię" id="imie" class="full-width-small" onchange="SprawdzImie()" required>
+            <input type="text" name="last_name" placeholder="Nazwisko" id="nazwisko" class="full-width-small" onchange="SprawdzNazwisko()" required>
+            <input type="text" name="subject" placeholder="Temat" class="full-width" id="temat" onchange="SprawdzTemat()" required>
+            <input type="text" name="email" placeholder="E-mail" class="full-width" id="email" onchange="SprawdzEmail()" required>
+            <textarea rows="5" name="message" cols="50" placeholder="Twoja Wiadomość" class="full-width" id="wiadomosc" onchange="SprawdzWiadomosc()" required></textarea>
+            <span class="full-width">
+                <span class="wider small-width">
+                    <input type="submit" name="submit" value="Wyślij" class="wider zatwierdz">
+                </span>
+                <span>
+                    <button type="button" onclick="history.back()" class="confij-kontakt">Cofnij</button>
+                </span>
+            </span>
+        </form>
+
         </div>
     </div>
   </div>
