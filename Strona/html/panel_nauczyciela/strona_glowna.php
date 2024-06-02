@@ -43,108 +43,18 @@ if (!isset($_SESSION['user_id'])) {
         <li><a href="../kontakt.php">Kontakt</a></li>
       </ul>
     </div>
-    <div class="main-content" id="main">
-      <h2>Najnowsze testy</h2>
-      &nbsp;
-      <div class="do_wypelnienia">
-        
-      <table>
-				<tbody><tr>
-					<th class="szerokie">Nazwa</th>
-					<th>Data wykonania</th>
-					<th>Nauczyciel</th>
-					<th>Przedmiot</th>
-					<th>Waga</th>
-          <th>Czy kod jest wymagany?</th>
-					<th>Operacje</th>
-				</tr>
-				<tr>
-							<td>Sprawdzian z nut - Klasa III</td>
-							<td>02.04.2024</td>
-							<td>Jan Kowalski</td>
-							<td>Muzyka</td>
-							<td>2</td>
-              <td>Tak</td>
-							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="../kontakt.php">Poproś o dostęp</a></td>
-							</tr>
-        <tr>
-              <td>Budowa Pantofelka i laćka</td>
-              <td>08.04.2024</td>
-              <td>Anna Nowak</td>
-              <td>Przyroda</td>
-              <td>1</td>
-              <td>Nie</td>
-							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="moje_testy.php">Dołącz</a></td>
-							</tr>
-              <tr>
-                <td>Sprawdzian z nut - Klasa III</td>
-                <td>02.04.2024</td>
-                <td>Jan Kowalski</td>
-                <td>Muzyka</td>
-                <td>2</td>
-                <td>Tak</td>
-                <td style="text-align:center;"><a style="width:100%; text-align:center;" href="../kontakt.php">Poproś o dostęp</a></td>
-                </tr>
-          <tr>
-                <td>Budowa Pantofelka i laćka</td>
-                <td>08.04.2024</td>
-                <td>Anna Nowak</td>
-                <td>Przyroda</td>
-                <td>1</td>
-                <td>Nie</td>
-                <td style="text-align:center;"><a style="width:100%; text-align:center;" href="moje_testy.php">Dołącz</a></td>
-                </tr>
 
-										</tbody></table>
-
-
-
-
+      <div class="main-content" id="head">
+        <div style="margin-bottom: 1em;">
+          <h1>Witaj w aplikacji Noodle™ </h1> 
+        </div>
+        <div>
+          <p>Twoim centrum do tworzenia i zarządzania testami online.</p>
+          <p> Noodle™ oferuje prosty i intuicyjny interfejs, który umożliwia nauczycielom, uczniom oraz profesjonalistom łatwe tworzenie, przeprowadzanie i zarządzanie testami edukacyjnymi.</p>
+        </div>
       </div>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      
-      &nbsp;
-      <div class="dol">
-      <div class="do_wypelnienia" style="width: 50%;">
-        <div> 
-          <h2>Twoje Komunikaty</h2>
-          
-          </div>
-        
-      </div>
-              <div class="do_wypelnienia" style="width: 50%;">
-              <h2>Najwyższe wyniki</h2>
-              <table style="width: 80%;">
-              <tbody><tr>
-                <th class="szerokie">Użytkownik</th>
-                <th>Test</th>
-                <th>Wynik</th>
-              </tr>
-              <tr>
-                <td>Kamil W.</td>
-                <td>Algebra - Rozbójnik</td>
-                <td>2/10</td>
-                    </tr>
-              <tr>
-                <td>Ala S.</td>
-                <td>Kwadratura koła</td>
-                <td>21/25</td>
-                    </tr>
-                    <tr>
-                      <td>Kamil W.</td>
-                      <td>Algebra - Rozbójnik</td>
-                      <td>2/10</td>
-                          </tr>
-                    <tr>
-                      <td>Ala S.</td>
-                      <td>Kwadratura koła</td>
-                      <td>21/25</td>
-                          </tr>
-      
-                          </tbody></table>
-                  </div></div>
-  </div>
-  </div>
+
+    </div>
   <div class="footer" id="stopka">
     <p>&copy; Strona testowa. Wszelkie prawa zastrzeżone.</p>
   </div>
