@@ -9,17 +9,23 @@
 </head>
 
 <style> 
-
-.cofnij-kontakt {
-    padding: 1em;
-    font-family: calibri;
-    width: 100%;
-    font-size: large;
-    border: 1px solid #70707070;
-    resize: vertical;
-    border-radius: 10px;
-    margin-top: 1em;
-}
+    .cofnij-kontakt {
+        padding: 1em;
+        font-family: calibri;
+        width: 100%;
+        font-size: large;
+        border: 1px solid orange;
+        resize: vertical;
+        border-radius: 10px;
+        margin-top: 1em;
+    }
+    .cofnij-kontakt:hover {
+        background-color: rgb(210, 210, 210);
+    }
+    
+    input[type="submit" i]:hover {
+        background-color: rgb(210, 210, 210);
+    }
 </style> 
 
 
