@@ -1,3 +1,6 @@
+link do backloga:
+https://github.com/users/MikolaJanczaq/projects/1
+
 # Noodle
 
 ## Opis
