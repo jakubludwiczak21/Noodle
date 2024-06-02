@@ -9,7 +9,10 @@ komputer musi spełniać minimalne wymagania dla XAMPP (Windows 2008, 2012, Vist
 
 komputer musi spełniać minimalne wymagania dla wybranej przeglądarki internetowej np. Google Chrome (Windows 10 lub nowszy albo Windows Server 2016 lub nowszy, procesor Intel Pentium 4 lub nowszy, obsługujący SSE3.)
 
+
 Instrukcja obsługi:
+
+
 Krok 1:
 Pobierz i zainstaluj aplikacje XAMPP
 
