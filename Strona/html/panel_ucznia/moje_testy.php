@@ -1,9 +1,19 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../../index.php");
+    exit();
+}
+
+//echo "Welcome, " . htmlspecialchars($_SESSION['username']) . "!";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="../jquery-3.7.1min.js"></script>
+<script src="../../jquery-3.7.1min.js"></script>
 <title>Noodle™</title>
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -19,15 +29,15 @@
       
       <ul>
         <h2>Menu</h2>
-        <li><a href="../uczen/index.php">Strona główna</a></li>
-        <li><a href="../uczen/dolacz_kod.php">Dołącz do testu</a></li>
-        <li><a href="../moje_testy.php"  class="aktualna-strona">Moje testy</a></li>
-        <li><a href="../../index.php">Panel nauczyciela</a></li>
+        <li><a href="strona_glowna.php">Strona główna</a></li>
+        <li><a href="dolacz_kod.php">Dołącz do testu</a></li>
+        <li><a href="moje_testy.php"  class="aktualna-strona">Moje testy</a></li>
       </ul>
 
 
       <ul>
-        <li><a href="kontakt.php">Kontakt</a></li>
+      <li><a href="../logowanie/logout.php">Wyloguj</a></li>
+        <li><a href="../kontakt.php">Kontakt</a></li>
       </ul>
     </div>
     <div class="main-content" id="main">
@@ -49,7 +59,7 @@
 							<td>Jan Kowalski</td>
 							<td>Muzyka</td>
 							<td>2</td>
-							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="test.php">Dołącz</a></td>
+							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="../test.php">Dołącz</a></td>
 
 							</tr>
         <tr>
@@ -58,7 +68,7 @@
               <td>Anna Nowak</td>
               <td>Przyroda</td>
               <td>1</td>
-							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="test.php">Dołącz</a></td>
+							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="../test.php">Dołącz</a></td>
 							</tr>
 
 										</tbody></table>

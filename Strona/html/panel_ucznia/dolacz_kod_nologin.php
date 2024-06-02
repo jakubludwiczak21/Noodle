@@ -1,13 +1,3 @@
-<?php
-session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../../index.php");
-    exit();
-}
-
-//echo "Welcome, " . htmlspecialchars($_SESSION['username']) . "!";
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,14 +19,12 @@ if (!isset($_SESSION['user_id'])) {
       
       <ul>
         <h2>Menu</h2>
-        <li><a href="strona_glowna.php">Strona główna</a></li>
-        <li ><a href="dolacz_kod.php" class="aktualna-strona">Dołącz do testu</a></li>
-        <li><a href="moje_testy.php" >Moje testy</a></li>
+        <li><a href="../../index.php">Strona główna</a></li>
+        <li ><a href="dolacz_kod_nologin.php" class="aktualna-strona">Dołącz do testu</a></li>
       </ul>
 
 
       <ul>
-        <li><a href="../logowanie/logout.php">Wyloguj</a></li>
         <li><a href="../kontakt.php" >Kontakt</a></li>
       </ul>
     </div>

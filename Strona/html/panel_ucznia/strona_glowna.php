@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../../index.php");
+    exit();
+}
+
+//echo "Welcome, " . htmlspecialchars($_SESSION['username']) . "!";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +15,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="../../jquery-3.7.1min.js"></script>
 <title>Noodle™</title>
-<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body>
@@ -19,15 +29,15 @@
       
       <ul>
         <h2>Menu</h2>
-        <li><a href="index.php" class="aktualna-strona">Strona główna</a></li>
-        <li><a href="html/dolacz_kod.php">Dołącz do testu</a></li>
-        <li><a href="html/moje_testy.php" >Moje testy</a></li>
-        <li><a href="html/panel_nauczyciela/panel_nauczyciela.php">Panel nauczyciela</a></li>
+        <li><a href="strona_glowna.php" class="aktualna-strona">Strona główna</a></li>
+        <li><a href="dolacz_kod.php">Dołącz do testu</a></li>
+        <li><a href="moje_testy.php" >Moje testy</a></li>
       </ul>
 
 
       <ul>
-        <li><a href="html/kontakt.php">Kontakt</a></li>
+        <li><a href="../logowanie/logout.php">Wyloguj</a></li>
+        <li><a href="../kontakt.php">Kontakt</a></li>
       </ul>
     </div>
     <div class="main-content" id="main">
@@ -52,7 +62,7 @@
 							<td>Muzyka</td>
 							<td>2</td>
               <td>Tak</td>
-							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="html/kontakt.php">Poproś o dostęp</a></td>
+							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="../kontakt.php">Poproś o dostęp</a></td>
 							</tr>
         <tr>
               <td>Budowa Pantofelka i laćka</td>
@@ -61,7 +71,7 @@
               <td>Przyroda</td>
               <td>1</td>
               <td>Nie</td>
-							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="html/moje_testy.php">Dołącz</a></td>
+							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="moje_testy.php">Dołącz</a></td>
 							</tr>
               <tr>
                 <td>Sprawdzian z nut - Klasa III</td>
@@ -70,7 +80,7 @@
                 <td>Muzyka</td>
                 <td>2</td>
                 <td>Tak</td>
-                <td style="text-align:center;"><a style="width:100%; text-align:center;" href="html/kontakt.php">Poproś o dostęp</a></td>
+                <td style="text-align:center;"><a style="width:100%; text-align:center;" href="../kontakt.php">Poproś o dostęp</a></td>
                 </tr>
           <tr>
                 <td>Budowa Pantofelka i laćka</td>
@@ -79,7 +89,7 @@
                 <td>Przyroda</td>
                 <td>1</td>
                 <td>Nie</td>
-                <td style="text-align:center;"><a style="width:100%; text-align:center;" href="html/moje_testy.php">Dołącz</a></td>
+                <td style="text-align:center;"><a style="width:100%; text-align:center;" href="moje_testy.php">Dołącz</a></td>
                 </tr>
 
 										</tbody></table>
