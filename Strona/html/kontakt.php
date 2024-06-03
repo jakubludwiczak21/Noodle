@@ -163,7 +163,7 @@ var T = $('#head').height();
                 { 
                         Temat=document.getElementById("temat").value;
                         
-                        if( Temat.length >20 && Temat.length <150)
+                        if( Temat.length > 0 && Temat.length < 150)
                         {
                             document.getElementById('temat').style.borderColor = "green";
                             document.getElementById('temat').style.color = "green";
@@ -184,7 +184,7 @@ var T = $('#head').height();
                 function SprawdzWiadomosc()
                 {
                         Wiadomosc=document.getElementById("wiadomosc").value;
-                        if( Wiadomosc.length >100 && Wiadomosc.length <1000)
+                        if( Wiadomosc.length >10 && Wiadomosc.length <1000)
                         {
                             document.getElementById('wiadomosc').style.borderColor = "green";
                             document.getElementById('wiadomosc').style.color = "green";
