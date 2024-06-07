@@ -320,6 +320,11 @@ if (!isset($_SESSION['user_id'])) {
                 <input type="date" id="endDate" name="endDate" required><br><br>
                 <label for="duration">Czas trwania testu (minuty):</label><br>
                 <input type="number" id="duration" name="duration" min="1" required><br><br>
+                <label for="startTime">Godzina rozpoczęcia:</label><br>
+                <input type="time" id="startTime" name="startTime" required><br><br>
+                <label for="endTime">Godzina zakończenia:</label><br>
+                <input type="time" id="endTime" name="endTime" required><br><br>
+
                 <button type="button" onclick="submitDates()">Aktywuj</button>
                 <button type="button" onclick="closePopup()">Anuluj</button>
             </form>
