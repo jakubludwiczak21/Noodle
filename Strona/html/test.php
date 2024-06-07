@@ -19,7 +19,28 @@
     die("Connection failed: " . $conn->connect_error);
   }
 
-  $id_testu = 12; //$_GET['id_testu'];  zamienic na pobieranie zmiennej za pomoca GET
+  $kod_testu = $_GET['kod'];
+
+  $get_test_id = "SELECT id_testu FROM `testy_przeprowadzane` WHERE kod_testu = '$kod_testu'";
+  $result = $conn->query($get_test_id);
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $id_testu = $row['id_testu'];
+  }
+
+  else {
+    if (isset($_SESSION['user_id'])) {
+      header("Location: panel_ucznia/dolacz_kod.php");
+    }
+
+    else { 
+    header("Location: panel_ucznia/dolacz_kod_nologin.php");
+    }
+
+    exit();
+  }
+
+  //echo $id_testu;
 ?>
 
 
