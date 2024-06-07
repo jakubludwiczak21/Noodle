@@ -18,6 +18,8 @@
   if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
   }
+
+  $id_testu = 12; //$_GET['id_testu'];  zamienic na pobieranie zmiennej za pomoca GET
 ?>
 
 
@@ -70,7 +72,7 @@
       <h2 id="wybierz-pytanie" style="padding: 2em;padding-bottom:1em;text-align:left;width:100%">Wybierz pytanie</h2>
       <div class="rounded-container">
         <?php
-          $count_questions_sql = "SELECT COUNT(id_pytania) AS liczba_pytan FROM testy_pytania WHERE id_testu = 15 GROUP BY id_testu;";
+          $count_questions_sql = "SELECT COUNT(id_pytania) AS liczba_pytan FROM testy_pytania WHERE id_testu = $id_testu GROUP BY id_testu;"; 
           $result = $conn->query($count_questions_sql);
           if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
@@ -87,95 +89,63 @@
 
         <form method="POST" class="test" onsubmit="return confirmSubmission(event)">
           <div class="rounded-container">
-            <div class="pytanie zamkniete">
-              <div class="numerpyt">
-                <h3 style="margin-bottom: 0.5em;margin-top:1em">Pytanie nr <label class="full-width" for="numer">1</label></h3>
-                <h4 style="margin-bottom: 0.5em;margin-top:1em;font-weight:normal">Liczba punktów: <label class="full-width" for="numer">1</label> </h4>
-              </div>
-              <hr style="margin-bottom: 0.75em;">
-              <div class="odpowiedzi">
-                <label for="tresc" style="padding-bottom: 0.5em;font-size:110%">Jaki chlebek lubisz najbardziej?</label><br>
-                <input type="radio" name="1" id="1_1"><label for="1_1">Pszenny</label><br>
-                <input type="radio" name="1" id="1_2"><label for="1_2">Razowy</label><br>
-                <input type="radio" name="1" id="1_3"><label for="1_3">Żytni</label><br>
-                <input type="radio" name="1" id="1_4"><label for="1_4">Tostowy</label><br>
-              </div>
-            </div>
-            <div class="pytanie zamkniete_wiel">
-              <div class="numerpyt">
-                <h3 style="margin-bottom: 0.5em;margin-top:1em">Pytanie nr <label class="full-width" for="numer">2</label></h3>
-                <h4 style="margin-bottom: 0.5em;margin-top:1em;font-weight:normal">Liczba punktów: <label class="full-width" for="numer">1</label> </h4>
-              </div>
-              <hr style="margin-bottom: 0.75em;">
-              <div class="odpowiedzi">
-                <label for="tresc" style="padding-bottom: 0.5em;font-size:110%">Wybierz składniki na idealny chleb:</label><br>
-                <input type="checkbox" name="2" id="2_1"><label for="2_1">Woda</label><br>
-                <input type="checkbox" name="2" id="2_2"><label for="2_2">Mąka</label><br>
-                <input type="checkbox" name="2" id="2_3"><label for="2_3">Cukier</label><br>
-                <input type="checkbox" name="2" id="2_4"><label for="2_4">Mak</label><br>
-                <input type="checkbox" name="2" id="2_5"><label for="2_5">Ziarno</label><br>
-              </div>
-            </div>
-            <div class="pytanie otwarte">
-              <div class="numerpyt">
-                <h3 style="margin-bottom: 0.5em;margin-top:1em">Pytanie nr <label class="full-width" for="numer">3</label></h3>
-                <h4 style="margin-bottom: 0.5em;margin-top:1em;font-weight:normal">Liczba punktów: <label class="full-width" for="numer">2</label> </h4>
-              </div>
-              <hr style="margin-bottom: 0.75em;">
-              <div class="odpowiedzi">
-                <label for="tresc" style="padding-bottom: 0.5em;font-size:110%">Opisz chleb znajdujący się na fotografii:</label><br>
-                <img class="zdjodp" src="../zdjecia/chleb.jpg" alt="3_0">
-                <textarea rows="3" id="3_1" name="3"  cols="50" placeholder="Odpowiedz na pytanie" class="full-width"></textarea>
-              </div>
-            </div>
-            <div class="pytanie zamkniete">
-              <div class="numerpyt">
-                <h3 style="margin-bottom: 0.5em;margin-top:1em">Pytanie nr <label class="full-width" for="numer">4</label></h3>
-                <h4 style="margin-bottom: 0.5em;margin-top:1em;font-weight:normal">Liczba punktów: <label class="full-width" for="numer">3</label> </h4>
-              </div>
-              <hr style="margin-bottom: 0.75em;">
-              <div class="odpowiedzi">
-                <label for="tresc" style="padding-bottom: 0.5em;font-size:110%">Który z poniższych chlebów jest bezglutenowy?</label><br>
-                <img class="zdjodp" src="../zdjecia/bezglutenowy.jpg" alt="4_0">
-                <input type="radio" name="4" id="4_1"><label for="4_1">Pszenny</label><br>
-                <input type="radio" name="4" id="4_2"><label for="4_2">Żytni</label><br>
-                <input type="radio" name="4" id="4_3"><label for="4_3">Bezglutenowy</label><br>
-                <input type="radio" name="4" id="4_4"><label for="4_4">Orkiszowy</label><br>
-              </div>
-            </div>
-            <div class="pytanie zamkniete_wiel">
-              <div class="numerpyt">
-                <h3 style="margin-bottom: 0.5em;margin-top:1em">Pytanie nr <label class="full-width" for="numer">5</label></h3>
-                <h4 style="margin-bottom: 0.5em;margin-top:1em;font-weight:normal">Liczba punktów: <label class="full-width" for="numer">2</label> </h4>
-              </div>
-              <hr style="margin-bottom: 0.75em;">
-              <div class="odpowiedzi">
-                <label for="tresc" style="padding-bottom: 0.5em;font-size:110%">Wybierz składniki do wypieku chleba orkiszowego:</label><br>
-                <input type="checkbox" name="5" id="5_1"><label for="5_1">Mąka orkiszowa</label><br>
-                <input type="checkbox" name="5" id="5_2"><label for="5_2">Drożdże</label><br>
-                <input type="checkbox" name="5" id="5_3"><label for="5_3">Sól</label><br>
-                <input type="checkbox" name="5" id="5_4"><label for="5_4">Woda</label><br>
-                <input type="checkbox" name="5" id="5_5"><label for="5_5">Miód</label><br>
-              </div>
-            </div>
-            <div class="pytanie otwarte">
-              <div class="numerpyt">
-                <h3 style="margin-bottom: 0.5em;margin-top:1em">Pytanie nr <label class="full-width" for="numer">6</label></h3>
-                <h4 style="margin-bottom: 0.5em;margin-top:1em;font-weight:normal">Liczba punktów: <label class="full-width" for="numer">3</label> </h4>
-              </div>
-              <hr style="margin-bottom: 0.75em;">
-              <div class="odpowiedzi">
-                <label for="tresc" style="padding-bottom: 0.5em;font-size:110%">Napisz dokładny przepis na kremówki papieskie</label><br>
-                <textarea rows="3" id="6_1" name="6"  cols="50" placeholder="Odpowiedz na pytanie" class="full-width"></textarea>
-              </div>
-            </div>
+            <?php
+              $get_question = "SELECT p.id AS id, p.tresc, p.typ_pytania , p.zdjecie
+                              FROM pytania p
+                              JOIN testy_pytania tp ON p.id = tp.id_pytania
+                              WHERE tp.id_testu = $id_testu;";
+
+              $result = $conn->query($get_question);
+              if ($result->num_rows > 0) {
+                $num_question = 1;
+                while($question_row = $result->fetch_assoc()) {
+                    echo '<div class="pytanie">
+                            <div class="numerpyt">
+                              <h3 style="margin-bottom: 0.5em;margin-top:1em">Pytanie nr <label class="full-width" for="numer">'. $num_question . '</label></h3>
+                              <h4 style="margin-bottom: 0.5em;margin-top:1em;font-weight:normal">Liczba punktów: <label class="full-width" for="numer"> A BO JA WIEM</label> </h4>
+                            </div>
+                            <hr style="margin-bottom: 0.75em;">
+                            <div class="odpowiedzi">
+                              <label for="tresc" style="padding-bottom: 0.5em;font-size:110%">' . $question_row['tresc'] .  '</label><br>';
+                    if(!is_null($question_row['zdjecie'])){
+                      echo '<img class="zdjodp" src="../zdjecia/' . $question_row['zdjecie'] . '" alt="3_0">';
+                    }
+                    
+                    $get_answers = "SELECT tresc AS odpowiedz FROM odpowiedzi WHERE id_pytania =" . $question_row['id'] . ";";
+                    $answer_result = $conn->query($get_answers);
+                    if ($answer_result->num_rows > 0) {
+                      $answer_num = 1;
+                      while($answer_row = $answer_result->fetch_assoc()) { // mozna zamienic jeszcze te wartosci w if-ach by sprawdzalo najpierw w bazie danych jakie ma wartosci otwarte/zamkniete/...
+                        if($question_row['typ_pytania'] == '4') {
+                          echo '<input type="radio" name="' . $num_question . '" id="' . $num_question . '_' . $answer_num . '"><label for="' . $num_question . '_' . $answer_num . '">' . $answer_row['odpowiedz'] . '</label><br>';
+                        }
+
+                        if($question_row['typ_pytania'] == '3') {
+                          echo '<input type="checkbox" name="' . $num_question . '" id="' . $num_question . '_' . $answer_num . '"><label for="' . $num_question . '_' . $answer_num . '">' . $answer_row['odpowiedz'] . '</label><br>';
+                        }
+
+                        if($question_row['typ_pytania'] == '2') {
+                          echo '<textarea rows="3" id="3_1" name="3"  cols="50" placeholder="Odpowiedz na pytanie" class="full-width"></textarea>';
+                          break;
+                        }
+
+                        $answer_num++;
+                      }
+                    }
+                    
+                    echo '</div>
+                          </div>';
+
+                  $num_question++;            
+              }
+            }
+
+
+            ?>
+            
           </div>
           <input style="width: 50%;" type="submit" value="Zatwierdź" name="zaloguj" class="zaloguj" id="zaloguj">
         </form>
-
-
-      
-
         </div>
    
   </div>
