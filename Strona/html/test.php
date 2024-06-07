@@ -8,6 +8,19 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 
+<?php
+  $servername = "localhost";
+  $username = "root";
+  $password = "";
+  $dbname = "baza";
+
+  $conn = new mysqli($servername, $username, $password, $dbname);
+  if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+  }
+?>
+
+
 <body>
 <div class="wrapper">
   <div class="header-content" id="head">
@@ -56,12 +69,16 @@
         
       <h2 id="wybierz-pytanie" style="padding: 2em;padding-bottom:1em;text-align:left;width:100%">Wybierz pytanie</h2>
       <div class="rounded-container">
-        <div class="number-box" data-target="1">1</div>
-        <div class="number-box" data-target="2">2</div>
-        <div class="number-box" data-target="3">3</div>
-        <div class="number-box" data-target="4">4</div>
-        <div class="number-box" data-target="5">5</div>
-        <div class="number-box" data-target="6">6</div>
+        <?php
+          $count_questions_sql = "SELECT COUNT(id_pytania) AS liczba_pytan FROM testy_pytania WHERE id_testu = 15 GROUP BY id_testu;";
+          $result = $conn->query($count_questions_sql);
+          if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            for($x=1; $x <= $row['liczba_pytan']; $x++) {
+              echo '<div class="number-box" data-target="' . $x . '">' . $x . '</div>';
+            }
+          }  
+        ?>
       </div>
 
 
