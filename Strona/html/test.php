@@ -41,6 +41,29 @@
   }
 
   //echo $id_testu;
+
+
+  $get_type = "SELECT id, nazwa_typu FROM typ_pytania;";
+  
+  $zamkniete=0;
+  $otwarte=0;
+  $wielokrotnego=0;
+
+
+  $type_result = $conn->query($get_type);
+  if ($type_result->num_rows > 0) {
+    while($row = $type_result->fetch_assoc()) {
+      if($row['nazwa_typu'] == 'Zamkniete') {
+        $zamkniete = $row['id'];
+      }
+      elseif($row['nazwa_typu'] == 'Otwarte') {
+        $otwarte = $row['id'];
+      }
+      elseif($row['nazwa_typu'] == 'Wielokrotnego') {
+        $wielokrotnego = $row['id'];
+      }
+    }
+  }
 ?>
 
 
@@ -111,6 +134,7 @@
         <form method="POST" class="test" onsubmit="return confirmSubmission(event)">
           <div class="rounded-container">
             <?php
+            echo $zamkniete;
               $get_question = "SELECT p.id AS id, p.tresc, p.typ_pytania , p.zdjecie
                               FROM pytania p
                               JOIN testy_pytania tp ON p.id = tp.id_pytania
@@ -136,16 +160,16 @@
                     $answer_result = $conn->query($get_answers);
                     if ($answer_result->num_rows > 0) {
                       $answer_num = 1;
-                      while($answer_row = $answer_result->fetch_assoc()) { // mozna zamienic jeszcze te wartosci w if-ach by sprawdzalo najpierw w bazie danych jakie ma wartosci otwarte/zamkniete/...
-                        if($question_row['typ_pytania'] == '4') {
+                      while($answer_row = $answer_result->fetch_assoc()) {
+                        if($question_row['typ_pytania'] == $zamkniete) {
                           echo '<input type="radio" name="' . $num_question . '" id="' . $num_question . '_' . $answer_num . '"><label for="' . $num_question . '_' . $answer_num . '">' . $answer_row['odpowiedz'] . '</label><br>';
                         }
 
-                        if($question_row['typ_pytania'] == '3') {
+                        if($question_row['typ_pytania'] == $wielokrotnego) {
                           echo '<input type="checkbox" name="' . $num_question . '" id="' . $num_question . '_' . $answer_num . '"><label for="' . $num_question . '_' . $answer_num . '">' . $answer_row['odpowiedz'] . '</label><br>';
                         }
 
-                        if($question_row['typ_pytania'] == '2') {
+                        if($question_row['typ_pytania'] == $otwarte) {
                           echo '<textarea rows="3" id="3_1" name="3"  cols="50" placeholder="Odpowiedz na pytanie" class="full-width"></textarea>';
                           break;
                         }
