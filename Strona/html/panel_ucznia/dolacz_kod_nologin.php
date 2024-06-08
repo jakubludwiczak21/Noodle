@@ -33,6 +33,8 @@
         <p>Dołącz do testu</p>
         <br>
                 <form method="GET" action="../test.php">
+                    <label class="full-width" for="kod_osoby">Kod osoby</label>
+                    <input class="full-width" type="text" name="kod_osoby" id="kod_osoby" required>
                     <label class="full-width" for="kod">Kod testu</label>
                     <input class="full-width" type="text" name="kod" id="kod" required>
                     <div style="display: flex;padding-left:10%;align-items: center;"><label style="padding-left:10%;" for="zaloguj" ><a href="../kontakt.php">Problem z dołączeniem?</a></label></div>
@@ -65,3 +67,4 @@ var T = $('#head').height();
 </script>
 </body>
 </html>
+
