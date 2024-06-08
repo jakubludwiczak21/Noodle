@@ -9,6 +9,7 @@
 </head>
 
 <?php
+  session_start();
   $servername = "localhost";
   $username = "root";
   $password = "";
@@ -40,14 +41,16 @@
     exit();
   }
 
-  //echo $id_testu;
 
+  if (!isset($_SESSION['user_id'])) {
+    $kod_osoby = $_GET['kod_osoby'];
+  }
+  else {
+    $kod_osoby = NULL;
+  }
 
   $get_type = "SELECT id, nazwa_typu FROM typ_pytania;";
   
-  $zamkniete=0;
-  $otwarte=0;
-  $wielokrotnego=0;
 
 
   $type_result = $conn->query($get_type);
@@ -64,6 +67,34 @@
       }
     }
   }
+
+  // przesylanie odpowiedzi
+
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $id_osoby = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+
+  $stmt = $conn->prepare("INSERT INTO odpowiedzi_podane (id_testu, id_osoby, kod_osoby, id_odpowiedz, id_pytania) VALUES (?, ?, ?, ?, ?)");
+
+  foreach ($_POST as $question_id => $answer) {
+    if (is_array($answer)) {
+      foreach ($answer as $single_answer) {
+        
+
+        $stmt->bind_param("iisii", $id_testu, $id_osoby, $kod_osoby, $single_answer, $question_id);
+        $stmt->execute();
+      }
+    } else {
+      $stmt->bind_param("iisii", $id_testu, $id_osoby, $kod_osoby, $answer, $question_id);
+      $stmt->execute();
+    }
+  }
+
+  $stmt->close();
+  header("Location: panel_ucznia/moje_testy.php");
+  exit();
+}
+
+
 ?>
 
 
@@ -134,7 +165,6 @@
         <form method="POST" class="test" onsubmit="return confirmSubmission(event)">
           <div class="rounded-container">
             <?php
-            echo $zamkniete;
               $get_question = "SELECT p.id AS id, p.tresc, p.typ_pytania , p.zdjecie
                               FROM pytania p
                               JOIN testy_pytania tp ON p.id = tp.id_pytania
@@ -298,7 +328,7 @@ $(document).ready(function() {
     if (confirm(message)) {
         console.log("User confirmed submission, redirecting to 'moje_testy.php'.");
         event.target.submit();
-        window.location.href = "moje_testy.php";
+        //window.location.href = "panel_ucznia/moje_testy.php"; <-- to nie pozwala na przeslanie danych do bazy
     } else {
         console.log("Submission cancelled, scrolling to top.");
         var scrollToPosition = calculateScrollOffset('#wybierz-pytanie');
@@ -328,9 +358,6 @@ $('.test').on('submit', confirmSubmission);
   $(".teststicky").css('top', M + "px");
 });
 </script>
-
-
-
 
 </body>
 </html>
