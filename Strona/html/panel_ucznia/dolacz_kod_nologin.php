@@ -41,7 +41,7 @@
                     <input type="submit" value="Zatwierdź">
                 </form>
         </div>
-        <p><a href="../test.php">Przykładowy test (Link Roboczy)</a></p>
+        
   </div>
   </div>
   <div class="footer" id="stopka">
