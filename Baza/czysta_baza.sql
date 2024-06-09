@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Maj 27, 2024 at 12:09 AM
+-- Generation Time: Cze 10, 2024 at 12:05 AM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -88,7 +88,8 @@ CREATE TABLE `odpowiedzi_podane` (
   `id_testu` int(11) NOT NULL,
   `id_osoby` int(11) DEFAULT NULL,
   `kod_osoby` varchar(255) DEFAULT NULL,
-  `id_odpowiedz` int(11) NOT NULL,
+  `id_odpowiedz` int(11) DEFAULT NULL,
+  `tresc_odpowiedzi` varchar(500) DEFAULT NULL,
   `id_pytania` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -163,8 +164,9 @@ CREATE TABLE `testy_przeprowadzane` (
   `id` int(11) NOT NULL,
   `id_testu` int(11) NOT NULL,
   `autor` int(11) NOT NULL,
-  `od` date DEFAULT NULL,
-  `do` date DEFAULT NULL
+  `od` datetime DEFAULT NULL,
+  `do` datetime DEFAULT NULL,
+  `kod_testu` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -210,8 +212,7 @@ CREATE TABLE `typ_pytania` (
 
 INSERT INTO `typ_pytania` (`id`, `nazwa_typu`) VALUES
 (2, 'Otwarte'),
-(1, 'Test'),
-(3, 'Wielokrotnego w'),
+(6, 'Wielokrotnego'),
 (4, 'Zamkniete');
 
 -- --------------------------------------------------------
@@ -226,15 +227,6 @@ CREATE TABLE `uzytkownicy` (
   `nazwisko` varchar(50) NOT NULL,
   `typ_konta` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `uzytkownicy`
---
-
-INSERT INTO `uzytkownicy` (`id`, `imie`, `nazwisko`, `typ_konta`) VALUES
-(1, 'Jan', 'Kowalski', 1),
-(2, 'Anna', 'Nowak', 0),
-(3, 'Piotr', 'Zieliński', 1);
 
 -- --------------------------------------------------------
 
@@ -318,7 +310,8 @@ ALTER TABLE `pytania`
 -- Indeksy dla tabeli `testy_przeprowadzane`
 --
 ALTER TABLE `testy_przeprowadzane`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `kod_testu` (`kod_testu`);
 
 --
 -- Indeksy dla tabeli `testy_stworzone`
@@ -366,13 +359,13 @@ ALTER TABLE `grupy`
 -- AUTO_INCREMENT for table `kategoria`
 --
 ALTER TABLE `kategoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `odpowiedzi`
 --
 ALTER TABLE `odpowiedzi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=239;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=314;
 
 --
 -- AUTO_INCREMENT for table `poziom`
@@ -384,37 +377,37 @@ ALTER TABLE `poziom`
 -- AUTO_INCREMENT for table `przedmioty`
 --
 ALTER TABLE `przedmioty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `pytania`
 --
 ALTER TABLE `pytania`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
 
 --
 -- AUTO_INCREMENT for table `testy_przeprowadzane`
 --
 ALTER TABLE `testy_przeprowadzane`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `testy_stworzone`
 --
 ALTER TABLE `testy_stworzone`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `typ_pytania`
 --
 ALTER TABLE `typ_pytania`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `uzytkownicy`
 --
 ALTER TABLE `uzytkownicy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
