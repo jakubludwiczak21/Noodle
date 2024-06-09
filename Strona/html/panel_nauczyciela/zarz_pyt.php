@@ -160,9 +160,9 @@ if (!isset($_SESSION['user_id'])) {
 
 							
 							<select id="prywatnosc" name="prywatnosc">
-								<option value="0">Brak</option>
-								<option value="tylkoja">Tylko dla mnie</option>
-								<option value="wszyscy">Dla wszystkich</option>
+								<option value="2" <?php echo isset($_GET['prywatnosc']) && $_GET['prywatnosc'] == '2' ? 'selected' : '' ?>>Wszystkie</option>
+								<option value="1" <?php echo isset($_GET['prywatnosc']) && $_GET['prywatnosc'] == '1' ? 'selected' : '' ?>>Tylko dla mnie</option>
+								<option value="0" <?php echo isset($_GET['prywatnosc']) && $_GET['prywatnosc'] == '0' ? 'selected' : '' ?>>Dla wszystkich</option>
 							</select>
 
 							<hr class="full-width" style="width: 90%; margin: auto;">
@@ -214,9 +214,19 @@ if (!isset($_SESSION['user_id'])) {
 										$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
 										$sql .= " poziom.trudnosc_nazwa = '" . $_GET['poziom'] . "'";
 									}
-									if (isset($_GET['prywatnosc']) && $_GET['prywatnosc'] != '0') {
-										$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
-										$sql .= " pytania.prywatnosc = '" . $_GET['prywatnosc'] . "'";
+									if (isset($_GET['prywatnosc'])) {
+										$prywatnosc = $_GET['prywatnosc'];
+									
+										if ($prywatnosc == '1' || $prywatnosc == '0') {
+											$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
+											$sql .= " pytania.prywatnosc = '$prywatnosc'";
+										} elseif ($prywatnosc == 'Tylko dla mnie') {
+											$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
+											$sql .= " pytania.prywatnosc = '1'";
+										} elseif ($prywatnosc == 'Dla wszystkich') {
+											$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
+											$sql .= " pytania.prywatnosc = '0'";
+										}
 									}
 									if (isset($_GET['tresc']) && $_GET['tresc'] != '') {
 										$sql .= (strpos($sql, 'WHERE') === false) ? " WHERE" : " AND";
