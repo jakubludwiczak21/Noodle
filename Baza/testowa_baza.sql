@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Maj 27, 2024 at 12:25 AM
+-- Generation Time: Cze 09, 2024 at 12:42 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -137,6 +137,7 @@ CREATE TABLE `odpowiedzi_podane` (
   `id_osoby` int(11) DEFAULT NULL,
   `kod_osoby` varchar(255) DEFAULT NULL,
   `id_odpowiedz` int(11) NOT NULL,
+  `tresc_odpowiedzi` varchar(500) DEFAULT NULL,
   `id_pytania` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -217,16 +218,16 @@ CREATE TABLE `pytania` (
 --
 
 INSERT INTO `pytania` (`id`, `tresc`, `przedmiot_id`, `kategoria_id`, `poziom_id`, `zdjecie`, `autor`, `prywatnosc`, `typ_pytania`) VALUES
-(111, 'Co to jest algebra?', 26, 28, 1, NULL, 1, 0, 1),
+(111, 'Co to jest algebra?', 26, 28, 1, 'chleb.jpg', 1, 0, 4),
 (112, 'Wyjaśnij pojęcie mechaniki klasycznej.', 27, 29, 2, NULL, 2, 0, 2),
-(113, 'Podaj wzór na reakcję chemiczną H2O.', 28, 30, 1, NULL, 1, 0, 1),
-(114, 'Jakie są główne części rośliny?', 29, 31, 1, NULL, 3, 0, 1),
+(113, 'Podaj wzór na reakcję chemiczną H2O.', 28, 30, 1, NULL, 1, 0, 4),
+(114, 'Jakie są główne części rośliny?', 29, 31, 1, NULL, 3, 0, 4),
 (115, 'Co to jest programowanie obiektowe?', 30, 32, 3, NULL, 2, 0, 2),
-(116, 'Rozwiąż równanie kwadratowe x^2 - 4x + 4 = 0.', 26, 28, 2, NULL, 1, 0, 1),
+(116, 'Rozwiąż równanie kwadratowe x^2 - 4x + 4 = 0.', 26, 28, 2, NULL, 1, 0, 4),
 (117, 'Wyjaśnij zasadę zachowania pędu.', 27, 29, 3, NULL, 2, 0, 2),
-(118, 'Podaj właściwości kwasów organicznych.', 28, 30, 2, NULL, 3, 0, 1),
+(118, 'Podaj właściwości kwasów organicznych.', 28, 30, 2, NULL, 3, 0, 4),
 (119, 'Wymień funkcje liści w roślinach.', 29, 31, 1, NULL, 2, 0, 2),
-(120, 'Jakie są podstawowe typy zmiennych w Javie?', 30, 32, 1, NULL, 1, 0, 1);
+(120, 'Jakie są podstawowe typy zmiennych w Javie?', 30, 32, 1, NULL, 1, 0, 4);
 
 -- --------------------------------------------------------
 
@@ -239,19 +240,20 @@ CREATE TABLE `testy_przeprowadzane` (
   `id_testu` int(11) NOT NULL,
   `autor` int(11) NOT NULL,
   `od` date DEFAULT NULL,
-  `do` date DEFAULT NULL
+  `do` date DEFAULT NULL,
+  `kod_testu` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `testy_przeprowadzane`
 --
 
-INSERT INTO `testy_przeprowadzane` (`id`, `id_testu`, `autor`, `od`, `do`) VALUES
-(1, 10, 1, '2024-06-01', '2024-05-25'),
-(2, 11, 2, '2024-06-05', '2024-05-26'),
-(3, 12, 3, '2024-06-10', '2024-05-27'),
-(4, 13, 1, '2024-06-15', '2024-06-25'),
-(5, 14, 2, '2024-06-20', '2024-06-30');
+INSERT INTO `testy_przeprowadzane` (`id`, `id_testu`, `autor`, `od`, `do`, `kod_testu`) VALUES
+(1, 10, 1, '2024-05-14', '2024-05-25', '1234567'),
+(2, 11, 2, '2024-05-05', '2024-05-26', 'alamakota'),
+(3, 12, 3, '2024-05-23', '2024-05-27', 'costamwie'),
+(4, 13, 1, '2024-06-15', '2024-06-25', 'kolezka'),
+(5, 14, 2, '2024-06-20', '2024-06-30', 'cos');
 
 -- --------------------------------------------------------
 
@@ -327,8 +329,7 @@ CREATE TABLE `typ_pytania` (
 
 INSERT INTO `typ_pytania` (`id`, `nazwa_typu`) VALUES
 (2, 'Otwarte'),
-(1, 'Test'),
-(3, 'Wielokrotnego w'),
+(6, 'Wielokrotnego'),
 (4, 'Zamkniete');
 
 -- --------------------------------------------------------
@@ -355,7 +356,9 @@ INSERT INTO `uzytkownicy` (`id`, `imie`, `nazwisko`, `typ_konta`) VALUES
 (4, 'Karolina', 'Nowicka', 0),
 (5, 'Tomasz', 'Wiśniewski', 1),
 (6, 'Magdalena', 'Wójcik', 0),
-(7, 'test', 'test', 1);
+(7, 'test', 'test', 1),
+(8, 'uczen', 'testowy', 0),
+(9, 'nauczyciel', 'testowy', 1);
 
 -- --------------------------------------------------------
 
@@ -376,7 +379,9 @@ INSERT INTO `uzytkownicy_hasla` (`id_uzytkownika`, `haslo`) VALUES
 (4, 'knowicka'),
 (5, 'twisniewski'),
 (6, 'mwojcik'),
-(7, 'test');
+(7, 'test'),
+(8, 'test'),
+(9, 'test');
 
 -- --------------------------------------------------------
 
@@ -396,8 +401,10 @@ CREATE TABLE `uzytkownicy_loginy` (
 INSERT INTO `uzytkownicy_loginy` (`id_uzytkownika`, `login`) VALUES
 (4, 'karolina.nowicka'),
 (6, 'magdalena.wojcik'),
+(9, 'nauczyciel'),
 (7, 'test'),
-(5, 'tomasz.wisniewski');
+(5, 'tomasz.wisniewski'),
+(8, 'uczen');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -459,7 +466,8 @@ ALTER TABLE `pytania`
 -- Indeksy dla tabeli `testy_przeprowadzane`
 --
 ALTER TABLE `testy_przeprowadzane`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `kod_testu` (`kod_testu`);
 
 --
 -- Indeksy dla tabeli `testy_stworzone`
@@ -549,13 +557,13 @@ ALTER TABLE `testy_stworzone`
 -- AUTO_INCREMENT for table `typ_pytania`
 --
 ALTER TABLE `typ_pytania`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `uzytkownicy`
 --
 ALTER TABLE `uzytkownicy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
