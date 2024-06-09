@@ -303,7 +303,7 @@ $('#liczba').on('input', function() {
 		$_prywatnosc = ($_POST['prywatnosc'] == 'tylkoja') ? 1 : 0;
 		
 		//wersja robocza
-		$_zdjecie = '';
+		$_zdjecie = null;
 		$_autor = $_SESSION['user_id'];
 
 		switch ($_POST['poziom']) {
@@ -334,7 +334,7 @@ $('#liczba').on('input', function() {
 
 		$_liczba_odpowiedzi = $_POST['liczba'];
 
-		$sql_add = "INSERT INTO `pytania` (`id`, `tresc`, `przedmiot_id`, `kategoria_id`, `poziom_id`, `zdjecie`, `autor`, `prywatnosc`, `typ_pytania`) VALUES (NULL, '$_tresc', '$_przedmiot_id', '$_kategoria_id', '$_poziom', '$_zdjecie', '$_autor', '$_prywatnosc', '$_typ')";
+		$sql_add = "INSERT INTO `pytania` (`id`, `tresc`, `przedmiot_id`, `kategoria_id`, `poziom_id`, `zdjecie`, `autor`, `prywatnosc`, `typ_pytania`) VALUES (NULL, '$_tresc', '$_przedmiot_id', '$_kategoria_id', '$_poziom', NULL, '$_autor', '$_prywatnosc', '$_typ')";
 	
 
 		if($result = $conn->query($sql_add)) {

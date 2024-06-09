@@ -194,7 +194,7 @@
                   echo '<div class="pytanie">
                           <div class="numerpyt">
                             <h3 style="margin-bottom: 0.5em;margin-top:1em">Pytanie nr <label class="full-width" for="numer">'. $num_question . '</label></h3>
-                            <h4 style="margin-bottom: 0.5em;margin-top:1em;font-weight:normal">Liczba punktów: <label class="full-width" for="numer"> A BO JA WIEM</label> </h4>
+                            <h4 style="margin-bottom: 0.5em;margin-top:1em;font-weight:normal">Liczba punktów: <label class="full-width" for="numer"> 1 </label> </h4>
                           </div>
                           <hr style="margin-bottom: 0.75em;">
                           <div class="odpowiedzi">
