@@ -119,9 +119,9 @@ if (!isset($_SESSION['user_id'])) {
                         </tr>
                     </thead>
                         <tbody>
-
+                            
                             <?php
-
+                                // WYŚWIETLANIE SZABLONÓW TESTÓw KTÓRE MOŻNA AKTYWOWAĆ
 
                                 $servername = "localhost";
                                 $username = "root";
@@ -189,6 +189,8 @@ if (!isset($_SESSION['user_id'])) {
                     </thead>
                     <tbody>
                         <?php
+                            // WYŚWIETLANIE TESTÓW JUŻ AKTYWOWANYCH I DO KTÓRYCH MOŻNA DOŁĄCZYĆ
+                            
                             $servername = "localhost";
                             $username = "root";
                             $password = "";
@@ -256,6 +258,7 @@ if (!isset($_SESSION['user_id'])) {
                     </thead>
                     <tbody>
                         <?php
+                            // WYŚWIETLANIE TESTÓW KTÓRE JUŻ SIĘ ZAKOŃCZYŁY 
                             $servername = "localhost";
                             $username = "root";
                             $password = "";
