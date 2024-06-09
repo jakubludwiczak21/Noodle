@@ -97,10 +97,10 @@ if (!isset($_SESSION['user_id'])) {
 									$sql = "SELECT * FROM przedmioty";
 									$result = $conn->query($sql);
 
-									echo '<option value="0" ' . ($selected == '0' ? 'selected' : '') . '>Brak</option>'; 
+									echo '<option value="0" ' . ($selected == '0' ? 'selected' : '') . '>Wybierz przedmiot</option>'; 
 									if ($result->num_rows > 0) {
 										while($row = $result->fetch_assoc()) {
-											echo '<option value="' . $row['nazwa'] . '" ' . ($selected == $row['nazwa'] ? 'selected' : '') . '>' . $row['nazwa'] . '</option>';
+											echo '<option value="' . $row['id'] . '" ' . ($selected == $row['id'] ? 'selected' : '') . '>' . $row['nazwa'] . '</option>';
 										}
 									} else {
 										echo '<option value="">Brak przedmiotów</option>';
@@ -112,22 +112,26 @@ if (!isset($_SESSION['user_id'])) {
 
 							<label for="kategoria">Kategoria:</label>
 							<select id="kategoria" name="kategoria" style="grid-column: 5 / 7;" required>
-								<?php
-									$selected = isset($_GET['kategoria']) ? $_GET['kategoria'] : '0'; 
-									$sql = "SELECT * FROM kategoria";
-									$result = $conn->query($sql);
-
-									echo '<option value="0" ' . ($selected == '0' ? 'selected' : '') . '>Brak</option>'; 
-									if ($result->num_rows > 0) {
-										while($row = $result->fetch_assoc()) {
-											echo '<option value="' . $row['nazwa'] . '" ' . ($selected == $row['nazwa'] ? 'selected' : '') . '>' . $row['nazwa'] . '</option>';
-										}
-									} else {
-										echo '<option value="">Brak przedmiotów</option>';
-									}
-								?>
 							</select>
-
+							<script>
+							$(document).ready(function() {
+								$('#przedmiot').on('change', function() {
+									var przedmiotId = $(this).val();
+									if (przedmiotId) {
+										$.ajax({
+											type: 'POST',
+											url: 'get_kategorie.php', // Plik PHP do pobierania kategorii na podstawie przedmiotu
+											data: { przedmiot_id: przedmiotId },
+											success: function(response) {
+												$('#kategoria').html(response);
+											}
+										});
+									} else {
+										$('#kategoria').html('<option value="">Wybierz kategorię</option>');
+									}
+								});
+							});
+							</script>
 							<label for="poziom">Trudność:</label>
 							<select id="poziom" name="poziom" style="grid-column: 2 / 4;"required>
 								<option value="latwe">Łatwe</option>
@@ -255,8 +259,8 @@ $('#liczba').on('input', function() {
 		$_tresc = $_POST['tresc'];
 
 
-		$get_przedmiot = $_POST['przedmiot'];
-		$select_query = "SELECT id FROM Przedmioty WHERE nazwa = '$get_przedmiot'";
+		$get_przedmiot_id = $_POST['przedmiot'];
+		$select_query = "SELECT id FROM przedmioty WHERE id = '$get_przedmiot_id'";
 		$result = $conn->query($select_query);
 
 		if ($result) {
@@ -264,15 +268,13 @@ $('#liczba').on('input', function() {
 				$row = $result->fetch_assoc();
 				$_przedmiot_id = $row['id'];
 			} else {
-				$insert_query = "INSERT INTO `przedmioty` (`nazwa`) VALUES ('$get_przedmiot')";
-				if ($conn->query($insert_query) === TRUE) {
-					$_przedmiot_id = $conn->insert_id;
-				} else {
-					echo "Error: " . $conn->error;
-				}
+				// Jeśli przedmiot o podanym ID nie istnieje, możemy zakończyć proces i wyświetlić odpowiedni komunikat błędu.
+				echo "Error: Przedmiot o podanym ID nie istnieje.";
+				exit();
 			}
 		} else {
 			echo "Error: " . $conn->error;
+			exit();
 		}
 
 		echo $_przedmiot_id;
