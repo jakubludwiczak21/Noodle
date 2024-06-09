@@ -322,46 +322,82 @@ if(isset($_POST['category_add'])) {
 
 
 if (isset($_POST['delete_subject'])) {
-	$record_id = $_POST['subject_id'];
+    $record_id = $_POST['subject_id'];
 
-	$sql = "DELETE FROM przedmioty WHERE przedmioty.id = $record_id";
+    // Przygotowanie zapytania SQL z użyciem prepared statements
+    $sql = "DELETE FROM przedmioty WHERE przedmioty.id = ?";
 
-	if ($conn->query($sql)) {
-		echo "Category deleted successfully";
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param('i', $record_id);
+
+        try {
+            if ($stmt->execute()) {
+                echo "Subject deleted successfully";
+                echo "<meta http-equiv='refresh' content='0'>";
+            } else {
+				echo "<meta http-equiv='refresh' content='0'>";
+                echo "<script>alert('Nie można usunąć przedmiotu z powiązanymi kategoriami: " . addslashes($stmt->error) . "');</script>";
+            }
+        } catch (mysqli_sql_exception $e) {
+            // Sprawdź, czy błąd jest związany z kluczem obcym
+            if ($e->getCode() == 1451) {
+				echo "<meta http-equiv='refresh' content='0'>";
+                echo "<script>alert('Nie można usunąć przedmiotu z powiązanymi kategoriami.');</script>";
+            } else {
+				echo "<meta http-equiv='refresh' content='0'>";
+                echo "<script>alert('Wystąpił błąd: " . addslashes($e->getMessage()) . "');</script>";
+            }
+        }
+
+        $stmt->close();
+    } else {
 		echo "<meta http-equiv='refresh' content='0'>";
-		
-	} 
-	else {
-		echo "Nie można usunąć kategorii z powiązanymi pytaniami: " . $conn->error;
-	}
+        echo "<script>alert('Błąd podczas przygotowywania zapytania: " . addslashes($conn->error) . "');</script>";
+    }
 
-	$conn->close();
-} 
-else {
-	//echo "No record ID provided";
+    $conn->close();
+} else {
+    //echo "No record ID provided";
 }
 
 
 
 if (isset($_POST['delete_category'])) {
-        $record_id = $_POST['category_id'];
+    $record_id = $_POST['category_id'];
 
-        $sql = "DELETE FROM kategoria WHERE kategoria.id = $record_id";
+    // Przygotowanie zapytania SQL z użyciem prepared statements
+    $sql = "DELETE FROM kategoria WHERE kategoria.id = ?";
 
-        if ($conn->query($sql)) {
-            echo "Category deleted successfully";
-			echo "<meta http-equiv='refresh' content='0'>";
-			
-        } 
-		else {
-            echo "Nie można usunąć kategorii z powiązanymi pytaniami: " . $conn->error;
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param('i', $record_id);
+
+        try {
+            if ($stmt->execute()) {
+                echo "Category deleted successfully";
+                echo "<meta http-equiv='refresh' content='0'>";
+            } else {
+				echo "<meta http-equiv='refresh' content='0'>";
+                echo "<script>alert('Nie można usunąć kategorii z powiązanymi pytaniami: " . addslashes($stmt->error) . "');</script>";
+            }
+        } catch (mysqli_sql_exception $e) {
+            // Sprawdź, czy błąd jest związany z kluczem obcym
+            if ($e->getCode() == 1451) {
+				echo "<meta http-equiv='refresh' content='0'>";
+                echo "<script>alert('Nie można usunąć kategorii z powiązanymi pytaniami.');</script>";
+            } else {
+				echo "<meta http-equiv='refresh' content='0'>";
+                echo "<script>alert('Wystąpił błąd: " . addslashes($e->getMessage()) . "');</script>";
+            }
         }
 
-        $conn->close();
-		echo "<meta http-equiv='refresh' content='0'>";
-    } 
-	else {
-        //echo "No record ID provided";
+        $stmt->close();
+    } else {
+        echo "<script>alert('Błąd podczas przygotowywania zapytania: " . addslashes($conn->error) . "');</script>";
     }
+
+    $conn->close();
+    echo "<meta http-equiv='refresh' content='0'>";
+}
+
 	
 ?>
