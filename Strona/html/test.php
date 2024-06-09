@@ -49,9 +49,11 @@
 
   if (!isset($_SESSION['user_id'])) {
     $kod_osoby = $_GET['kod_osoby'];
+    $id_osoby = null;
   }
   else {
     $kod_osoby = NULL;
+    $id_osoby = $_SESSION['user_id'];
   }
 
   $get_type = "SELECT id, nazwa_typu FROM typ_pytania;";
@@ -76,27 +78,35 @@
   // przesylanie odpowiedzi
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $id_osoby = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-
-  $stmt = $conn->prepare("INSERT INTO odpowiedzi_podane (id_testu, id_osoby, kod_osoby, id_odpowiedz, id_pytania) VALUES (?, ?, ?, ?, ?)");
-
-  foreach ($_POST as $question_id => $answer) {
-    if (is_array($answer)) {
-      foreach ($answer as $single_answer) {
-        
-
-        $stmt->bind_param("iisii", $id_testu, $id_osoby, $kod_osoby, $single_answer, $question_id);
-        $stmt->execute();
+  
+    $stmt_closed = $conn->prepare("INSERT INTO odpowiedzi_podane (id_testu, id_osoby, kod_osoby, id_odpowiedz, id_pytania) VALUES (?, ?, ?, ?, ?)");
+    $stmt_open = $conn->prepare("INSERT INTO odpowiedzi_podane (id_testu, id_osoby, kod_osoby, tresc_odpowiedzi, id_pytania) VALUES (?, ?, ?, ?, ?)");
+  
+    foreach ($_POST as $question_id => $answer) {
+      $question_type_query = $conn->query("SELECT typ_pytania FROM pytania WHERE id = $question_id");
+      $question_type_row = $question_type_query->fetch_assoc();
+      $question_type = $question_type_row['typ_pytania'];
+  
+      if ($question_type == $zamkniete || $question_type == $wielokrotnego) {
+        if (is_array($answer)) {
+          foreach ($answer as $single_answer) {
+            $stmt_closed->bind_param("iisii", $id_testu, $id_osoby, $kod_osoby, $single_answer, $question_id);
+            $stmt_closed->execute();
+          }
+        } else {
+          $stmt_closed->bind_param("iisii", $id_testu, $id_osoby, $kod_osoby, $answer, $question_id);
+          $stmt_closed->execute();
+        }
+      } elseif ($question_type == $otwarte) {
+        $stmt_open->bind_param("iissi", $id_testu, $id_osoby, $kod_osoby, $answer, $question_id);
+        $stmt_open->execute();
       }
-    } else {
-      $stmt->bind_param("iisii", $id_testu, $id_osoby, $kod_osoby, $answer, $question_id);
-      $stmt->execute();
     }
-  }
-
-  $stmt->close();
-  header("Location: panel_ucznia/moje_testy.php");
-  exit();
+  
+    $stmt_closed->close();
+    $stmt_open->close();
+    header("Location: panel_ucznia/moje_testy.php");
+    exit();
 }
 
 
@@ -181,50 +191,46 @@
               if ($result->num_rows > 0) {
                 $num_question = 1;
                 while($question_row = $result->fetch_assoc()) {
-                    echo '<div class="pytanie">
-                            <div class="numerpyt">
-                              <h3 style="margin-bottom: 0.5em;margin-top:1em">Pytanie nr <label class="full-width" for="numer">'. $num_question . '</label></h3>
-                              <h4 style="margin-bottom: 0.5em;margin-top:1em;font-weight:normal">Liczba punktów: <label class="full-width" for="numer"> A BO JA WIEM</label> </h4>
-                            </div>
-                            <hr style="margin-bottom: 0.75em;">
-                            <div class="odpowiedzi">
-                              <label for="tresc" style="padding-bottom: 0.5em;font-size:110%">' . $question_row['tresc'] .  '</label><br>';
-                    if(!is_null($question_row['zdjecie'])){
-                      echo '<img class="zdjodp" src="../zdjecia/' . $question_row['zdjecie'] . '" alt="3_0">';
-                    }
-                    
-                    $get_answers = "SELECT tresc AS odpowiedz FROM odpowiedzi WHERE id_pytania =" . $question_row['id'] . ";";
-                    $answer_result = $conn->query($get_answers);
-                    if ($answer_result->num_rows > 0) {
-                      $answer_num = 1;
-                      while($answer_row = $answer_result->fetch_assoc()) {
-                        if($question_row['typ_pytania'] == $zamkniete) {
-                          echo '<input type="radio" name="' . $num_question . '" id="' . $num_question . '_' . $answer_num . '"><label for="' . $num_question . '_' . $answer_num . '">' . $answer_row['odpowiedz'] . '</label><br>';
-                        }
+                  echo '<div class="pytanie">
+                          <div class="numerpyt">
+                            <h3 style="margin-bottom: 0.5em;margin-top:1em">Pytanie nr <label class="full-width" for="numer">'. $num_question . '</label></h3>
+                            <h4 style="margin-bottom: 0.5em;margin-top:1em;font-weight:normal">Liczba punktów: <label class="full-width" for="numer"> A BO JA WIEM</label> </h4>
+                          </div>
+                          <hr style="margin-bottom: 0.75em;">
+                          <div class="odpowiedzi">
+                            <label for="tresc" style="padding-bottom: 0.5em;font-size:110%">' . $question_row['tresc'] .  '</label><br>';
+                  if (!is_null($question_row['zdjecie'])) {
+                    echo '<img class="zdjodp" src="../zdjecia/' . $question_row['zdjecie'] . '" alt="3_0">';
+                  }
 
-                        if($question_row['typ_pytania'] == $wielokrotnego) {
-                          echo '<input type="checkbox" name="' . $num_question . '" id="' . $num_question . '_' . $answer_num . '"><label for="' . $num_question . '_' . $answer_num . '">' . $answer_row['odpowiedz'] . '</label><br>';
-                        }
-
-                        if($question_row['typ_pytania'] == $otwarte) {
-                          echo '<textarea rows="3" id="3_1" name="3"  cols="50" placeholder="Odpowiedz na pytanie" class="full-width"></textarea>';
-                          break;
-                        }
-
-                        $answer_num++;
+                  $get_answers = "SELECT id, tresc AS odpowiedz FROM odpowiedzi WHERE id_pytania =" . $question_row['id'] . ";";
+                  $answer_result = $conn->query($get_answers);
+                  if ($answer_result->num_rows > 0) {
+                    $answer_num = 1;
+                    while ($answer_row = $answer_result->fetch_assoc()) {
+                      if ($question_row['typ_pytania'] == $zamkniete) {
+                        echo '<input type="radio" name="' . $question_row['id'] . '" value="' . $answer_row['id'] . '" id="' . $num_question . '_' . $answer_num . '"><label for="' . $num_question . '_' . $answer_num . '">' . $answer_row['odpowiedz'] . '</label><br>';
                       }
+
+                      if ($question_row['typ_pytania'] == $wielokrotnego) {
+                        echo '<input type="checkbox" name="' . $question_row['id'] . '[]" value="' . $answer_row['id'] . '" id="' . $num_question . '_' . $answer_num . '"><label for="' . $num_question . '_' . $answer_num . '">' . $answer_row['odpowiedz'] . '</label><br>';
+                      }
+
+                      $answer_num++;
                     }
-                    
-                    echo '</div>
-                          </div>';
+                  }
 
-                  $num_question++;            
+                  if ($question_row['typ_pytania'] == $otwarte) {
+                    echo '<textarea rows="3" id="3_1" name="' . $question_row['id'] . '"  cols="50" placeholder="Odpowiedz na pytanie" class="full-width"></textarea>';
+                  }
+
+                  echo '</div>
+                        </div>';
+
+                  $num_question++;
+                }
               }
-            }
-
-
             ?>
-            
           </div>
           <input style="width: 50%;" type="submit" value="Zatwierdź" name="zaloguj" class="zaloguj" id="zaloguj">
         </form>
