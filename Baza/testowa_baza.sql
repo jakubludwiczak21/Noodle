@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Cze 09, 2024 at 12:42 PM
+-- Generation Time: Cze 10, 2024 at 12:00 AM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -61,6 +61,8 @@ CREATE TABLE `kategoria` (
 INSERT INTO `kategoria` (`id`, `nazwa`) VALUES
 (28, 'Algebra'),
 (31, 'Botanika'),
+(36, 'Chleb'),
+(37, 'Gramatyka'),
 (29, 'Mechanika'),
 (30, 'Organiczna'),
 (32, 'Programowanie');
@@ -85,7 +87,9 @@ INSERT INTO `kategoria_przedmiot` (`id_kategorii`, `id_przedmiotu`) VALUES
 (29, 27),
 (30, 28),
 (31, 29),
-(32, 30);
+(32, 30),
+(36, 33),
+(37, 34);
 
 -- --------------------------------------------------------
 
@@ -105,14 +109,6 @@ CREATE TABLE `odpowiedzi` (
 --
 
 INSERT INTO `odpowiedzi` (`id`, `id_pytania`, `tresc`, `poprawnosc`) VALUES
-(239, 111, 'Algebra to dział matematyki.', 1),
-(240, 111, 'Algebra to rodzaj muzyki.', 0),
-(241, 112, 'Mechanika klasyczna zajmuje się ruchem ciał.', 1),
-(242, 112, 'Mechanika klasyczna to styl tańca.', 0),
-(243, 113, 'Wzór na wodę to H2O.', 1),
-(244, 113, 'Wzór na wodę to CO2.', 0),
-(245, 114, 'Główne części rośliny to korzeń, łodyga, liście.', 1),
-(246, 114, 'Główne części rośliny to korzeń, gałęzie, kwiaty.', 0),
 (247, 115, 'Programowanie obiektowe to modelowanie problemów za pomocą obiektów.', 1),
 (248, 115, 'Programowanie obiektowe to pisanie programów bez komputera.', 0),
 (249, 116, 'Równanie ma jedno rozwiązanie: x = 2.', 1),
@@ -124,7 +120,47 @@ INSERT INTO `odpowiedzi` (`id`, `id_pytania`, `tresc`, `poprawnosc`) VALUES
 (255, 119, 'Liście uczestniczą w fotosyntezie.', 1),
 (256, 119, 'Liście chronią roślinę przed zimnem.', 0),
 (257, 120, 'Podstawowe typy zmiennych w Javie to int, double, char.', 1),
-(258, 120, 'Podstawowe typy zmiennych w Javie to string, array, list.', 0);
+(258, 120, 'Podstawowe typy zmiennych w Javie to string, array, list.', 0),
+(265, 124, 'Oktawian August', 0),
+(266, 124, 'Max Weber', 0),
+(267, 124, 'Adam Mickiewicz', 0),
+(268, 124, 'Mikołaj Kopernik', 1),
+(269, 125, '1835 roku', 0),
+(270, 125, '1892 roku', 0),
+(271, 125, '1912 roku', 1),
+(272, 125, '1948 roku', 0),
+(273, 126, '39,9 kg chleba', 0),
+(274, 126, '45,3 kg kg chleba', 1),
+(275, 126, '89,5 kg chleba', 0),
+(276, 126, '110,2 kg chleba', 0),
+(277, 127, '50–100 °C', 0),
+(278, 127, '100–150 °C', 0),
+(279, 127, '200–250 °C', 1),
+(280, 127, '250–300 °C', 0),
+(281, 128, 'warka', 0),
+(282, 128, 'paja', 0),
+(283, 128, 'skibka', 1),
+(284, 128, 'pajola', 0),
+(285, 129, 'w Jaworze', 1),
+(286, 129, 'w Grójcu', 0),
+(287, 129, 'w Gdańsku', 0),
+(288, 129, 'w Elblągu', 0),
+(289, 130, '50 piekarni', 0),
+(290, 130, '100 piekarni', 0),
+(291, 130, '150 piekarni', 0),
+(292, 130, '300 piekarni', 0),
+(302, 134, 'Yoda', 0),
+(303, 134, 'z niego', 1),
+(304, 135, 'P= 1/2*d*d', 1),
+(305, 135, 'P= a*b+h', 0),
+(306, 135, 'P= a*a*a', 0),
+(307, 136, 'Zwykłym', 0),
+(308, 136, 'Dziesiętnym', 1),
+(309, 137, 'Kto, jak, ile?', 0),
+(310, 137, 'Jaki, jaka, jakie?', 0),
+(311, 137, 'Który, ile?', 1),
+(312, 138, 'Przyimki, przysłówki, spójniki', 0),
+(313, 138, 'Czasowniki, przysłówki', 0);
 
 -- --------------------------------------------------------
 
@@ -136,7 +172,7 @@ CREATE TABLE `odpowiedzi_podane` (
   `id_testu` int(11) NOT NULL,
   `id_osoby` int(11) DEFAULT NULL,
   `kod_osoby` varchar(255) DEFAULT NULL,
-  `id_odpowiedz` int(11) NOT NULL,
+  `id_odpowiedz` int(11) DEFAULT NULL,
   `tresc_odpowiedzi` varchar(500) DEFAULT NULL,
   `id_pytania` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -181,7 +217,9 @@ INSERT INTO `przedmioty` (`id`, `nazwa`) VALUES
 (28, 'Chemia'),
 (27, 'Fizyka'),
 (30, 'Informatyka'),
-(26, 'Matematyka');
+(34, 'Język Polski'),
+(26, 'Matematyka'),
+(33, 'Piekarstwo');
 
 -- --------------------------------------------------------
 
@@ -218,16 +256,24 @@ CREATE TABLE `pytania` (
 --
 
 INSERT INTO `pytania` (`id`, `tresc`, `przedmiot_id`, `kategoria_id`, `poziom_id`, `zdjecie`, `autor`, `prywatnosc`, `typ_pytania`) VALUES
-(111, 'Co to jest algebra?', 26, 28, 1, 'chleb.jpg', 1, 0, 4),
-(112, 'Wyjaśnij pojęcie mechaniki klasycznej.', 27, 29, 2, NULL, 2, 0, 2),
-(113, 'Podaj wzór na reakcję chemiczną H2O.', 28, 30, 1, NULL, 1, 0, 4),
-(114, 'Jakie są główne części rośliny?', 29, 31, 1, NULL, 3, 0, 4),
 (115, 'Co to jest programowanie obiektowe?', 30, 32, 3, NULL, 2, 0, 2),
 (116, 'Rozwiąż równanie kwadratowe x^2 - 4x + 4 = 0.', 26, 28, 2, NULL, 1, 0, 4),
 (117, 'Wyjaśnij zasadę zachowania pędu.', 27, 29, 3, NULL, 2, 0, 2),
 (118, 'Podaj właściwości kwasów organicznych.', 28, 30, 2, NULL, 3, 0, 4),
 (119, 'Wymień funkcje liści w roślinach.', 29, 31, 1, NULL, 2, 0, 2),
-(120, 'Jakie są podstawowe typy zmiennych w Javie?', 30, 32, 1, NULL, 1, 0, 4);
+(120, 'Jakie są podstawowe typy zmiennych w Javie?', 30, 32, 1, NULL, 1, 0, 4),
+(124, 'Kto stworzył dzieło pt. \"Obrachunek wypieku chleba\"?', 33, 36, 1, NULL, 9, 1, 4),
+(125, 'Maszynę do krojenia chleba wynaleziono już w:', 33, 36, 1, NULL, 9, 1, 4),
+(126, 'W 2015 r. przeciętny Polak zjadł ok.:', 33, 36, 1, NULL, 9, 1, 4),
+(127, 'Chleb wypieka się w piecu piekarskim w temperaturze:', 33, 36, 1, NULL, 9, 1, 4),
+(128, 'W Poznaniu na kawałek chleba mówi się:', 33, 36, 1, NULL, 9, 1, 4),
+(129, 'W jakim mieście organizuje się coroczne Międzynarodowe Targi Chleba?', 33, 36, 1, NULL, 9, 1, 4),
+(130, 'Za czasów Oktawiana Augusta w starożytnym Rzymie istniało:', 33, 36, 1, NULL, 9, 1, 4),
+(134, 'zdjecie', 28, 30, 1, NULL, 9, 1, 4),
+(135, 'Jak obliczamy pole rombu?', 26, 28, 1, NULL, 9, 1, 4),
+(136, 'Ułamek 28,3128 jest ułamkiem:', 26, 28, 1, NULL, 9, 1, 4),
+(137, 'Na jakie pytania odpowiada liczebnik?', 34, 37, 1, NULL, 9, 1, 4),
+(138, 'Nieodmienne części mowy to:', 34, 37, 1, NULL, 9, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -239,8 +285,8 @@ CREATE TABLE `testy_przeprowadzane` (
   `id` int(11) NOT NULL,
   `id_testu` int(11) NOT NULL,
   `autor` int(11) NOT NULL,
-  `od` date DEFAULT NULL,
-  `do` date DEFAULT NULL,
+  `od` datetime DEFAULT NULL,
+  `do` datetime DEFAULT NULL,
   `kod_testu` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -249,11 +295,12 @@ CREATE TABLE `testy_przeprowadzane` (
 --
 
 INSERT INTO `testy_przeprowadzane` (`id`, `id_testu`, `autor`, `od`, `do`, `kod_testu`) VALUES
-(1, 10, 1, '2024-05-14', '2024-05-25', '1234567'),
-(2, 11, 2, '2024-05-05', '2024-05-26', 'alamakota'),
-(3, 12, 3, '2024-05-23', '2024-05-27', 'costamwie'),
-(4, 13, 1, '2024-06-15', '2024-06-25', 'kolezka'),
-(5, 14, 2, '2024-06-20', '2024-06-30', 'cos');
+(6, 16, 9, '2024-06-10 04:20:00', '2024-06-24 17:44:00', 'Aktywujemy16'),
+(8, 16, 9, '2024-06-20 17:50:00', '2024-07-17 20:50:00', 'Aktywujemy8'),
+(9, 17, 9, '2024-06-09 06:27:00', '2024-06-18 19:27:00', 'Wiedzaochl9'),
+(10, 18, 9, '2024-06-09 18:33:00', '2024-06-12 21:33:00', 'Liderekpie10'),
+(11, 15, 9, '2024-05-14 05:39:00', '2024-05-28 18:39:00', 'Testujemyt11'),
+(12, 19, 9, '2024-06-08 03:52:00', '2024-07-03 18:52:00', 'Szstoklasi12');
 
 -- --------------------------------------------------------
 
@@ -283,7 +330,23 @@ INSERT INTO `testy_pytania` (`id_testu`, `id_pytania`) VALUES
 (14, 120),
 (15, 116),
 (15, 117),
-(15, 111);
+(15, 111),
+(16, 117),
+(16, 118),
+(16, 119),
+(16, 120),
+(17, 124),
+(17, 125),
+(17, 126),
+(17, 127),
+(17, 128),
+(17, 129),
+(17, 130),
+(18, 131),
+(19, 135),
+(19, 136),
+(19, 137),
+(19, 138);
 
 -- --------------------------------------------------------
 
@@ -305,12 +368,8 @@ CREATE TABLE `testy_stworzone` (
 --
 
 INSERT INTO `testy_stworzone` (`id`, `autor`, `przedmiot`, `prywatnosc`, `tytuł`, `data_stworzenia`) VALUES
-(10, 1, 26, 0, 'Test z algebry', '2024-05-27'),
-(11, 2, 27, 0, 'Test z fizyki', '2024-05-27'),
-(12, 3, 28, 0, 'Test z chemii', '2024-05-27'),
-(13, 1, 29, 0, 'Test z biologii', '2024-05-27'),
-(14, 2, 30, 0, 'Test z informatyki', '2024-05-27'),
-(15, 7, 28, 0, 'Testujemy test', '2024-05-27');
+(17, 9, 33, 0, 'Wiedza o chlebie', '2024-06-09'),
+(19, 9, 26, 1, 'Szóstoklasisty sprawdzian', '2024-06-09');
 
 -- --------------------------------------------------------
 
@@ -515,13 +574,13 @@ ALTER TABLE `grupy`
 -- AUTO_INCREMENT for table `kategoria`
 --
 ALTER TABLE `kategoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `odpowiedzi`
 --
 ALTER TABLE `odpowiedzi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=261;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=314;
 
 --
 -- AUTO_INCREMENT for table `poziom`
@@ -533,25 +592,25 @@ ALTER TABLE `poziom`
 -- AUTO_INCREMENT for table `przedmioty`
 --
 ALTER TABLE `przedmioty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `pytania`
 --
 ALTER TABLE `pytania`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
 
 --
 -- AUTO_INCREMENT for table `testy_przeprowadzane`
 --
 ALTER TABLE `testy_przeprowadzane`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `testy_stworzone`
 --
 ALTER TABLE `testy_stworzone`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `typ_pytania`
