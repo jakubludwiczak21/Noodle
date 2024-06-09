@@ -157,9 +157,9 @@ if (!isset($_SESSION['user_id'])) {
                                                 <td>' . $row['data_stwo'] . '</td>
                                                 <td>' . ($row['prywatnosc'] === '1' ? 'Tylko dla mnie' : 'Dla wszystkich') . '</td>
                                                 <td>
-                                                    <button class="test-action-button1" onclick="activateTest(1)">Aktywuj test</button>
-                                                    <button class="test-action-button2" onclick="editTest(1)">Edytuj</button>
-                                                    <button class="test-action-button3" onclick="deleteTest(1)">Usuń</button>
+                                                    <button class="test-action-button1" onclick="activateTest(' .  $row['id'] . ')">Aktywuj test</button>
+                                                    <button class="test-action-button2" onclick="editTest(' .  $row['id'] . ')">Edytuj</button>
+                                                    <button class="test-action-button3" onclick="deleteTest(' .  $row['id'] . ')">Usuń</button>
                                                 </td>                        
                                             </form></td>    
                                             </tr>';
@@ -184,6 +184,7 @@ if (!isset($_SESSION['user_id'])) {
                             <th>Od</th>
                             <th>Do</th>
                             <th>Czas trwania</th>
+                            <th>Kod testu</th>
                             <th>Akcje</th>
                         </tr>
                     </thead>
@@ -206,7 +207,8 @@ if (!isset($_SESSION['user_id'])) {
                                                 testy_stworzone.tytuł AS tytul, 
                                                 przedmioty.nazwa AS przedmiot,
                                                 testy_przeprowadzane.od AS od,
-                                                testy_przeprowadzane.do AS do 
+                                                testy_przeprowadzane.do AS do,
+                                                kod_testu AS kod
                                         FROM testy_przeprowadzane 
                                         INNER JOIN testy_stworzone ON testy_stworzone.id = testy_przeprowadzane.id_testu 
                                         INNER JOIN przedmioty ON testy_stworzone.przedmiot = przedmioty.id
@@ -227,6 +229,7 @@ if (!isset($_SESSION['user_id'])) {
                                             <td>' . $row['od'] . '</td>
                                             <td>' . $row['do'] . '</td>
                                             <td> Czas trwania do poprawy </td>
+                                            <td>' . $row['kod'] . '</td>
                                             <td>
                                                 <button class="test-action-button2" onclick="editResults(1)">Zobacz/Edytuj wyniki</button>
                                                 <button class="test-action-button3" onclick="deleteTest(1)">Usuń</button>
@@ -327,8 +330,8 @@ if (!isset($_SESSION['user_id'])) {
                 <input type="time" id="startTime" name="startTime" required><br><br>
                 <label for="endTime">Godzina zakończenia:</label><br>
                 <input type="time" id="endTime" name="endTime" required><br><br>
-
-                <button type="button" onclick="submitDates()">Aktywuj</button>
+                
+                <button type="button" onclick="submitDates(id_testu)">Aktywuj</button>
                 <button type="button" onclick="closePopup()">Anuluj</button>
             </form>
         </div>
@@ -385,6 +388,7 @@ if (!isset($_SESSION['user_id'])) {
 		var stopkaHeight = $('#stopka').height() + parseInt($('#stopka').css('padding-top')) + parseInt($('#stopka').css('padding-bottom'));
 		var menuMargin = parseInt($('#menu').css('margin-top')) + parseInt($('#menu').css('margin-bottom'));
 		var H = headHeight + stopkaHeight + menuMargin;
+        let id_testu;
 		$("#menu").css('min-height', "calc(100vh - " + H + "px)");
 		
 		var T = $('#head').height();
@@ -396,6 +400,7 @@ if (!isset($_SESSION['user_id'])) {
         }
 
         function deleteTest(testId) {
+            
             const confirmation = confirm('Czy na pewno chcesz usunąć test o ID: ' + testId + '?');
             if (confirmation) {
                 alert('Test usunięty');
@@ -404,31 +409,60 @@ if (!isset($_SESSION['user_id'])) {
         }
 
         function activateTest(testId) {
-            $("#overlay").show(); 
-            $("#datePopup").show(); 
+            console.log("aktywacja Test ID: ", testId); // Debug: Log the testId
+            id_testu = testId;
+            console.log("Guwno ", id_testu);
+            $("#overlay").show();
+            $("#datePopup").show();
+    
             $("#dateForm").off('submit').on('submit', function(e) {
                 e.preventDefault();
-                submitDates(testId); 
+        
+                submitDates(id_testu);
             });
         }
 
         function submitDates(testId) {
+            console.log("Guwno z pizdy ", id_testu);
+            console.log("Test ID: ", testId);
+            console.log("Guwno ", id_testu);
+
             var startDate = $("#startDate").val();
             var endDate = $("#endDate").val();
             var duration = $("#duration").val();
+            var startTime = $("#startTime").val();
+            var endTime = $("#endTime").val();
+
             if (new Date(startDate) > new Date(endDate)) {
                 alert("The end date must be after the start date.");
                 return;
             }
-            // Here you can add AJAX to send these dates to the server
-            alert('Test with ID ' + testId + ' activated from ' + startDate + ' to ' + endDate);
-            $("#overlay").hide(); // Hide the overlay after submitting
-            $("#datePopup").hide(); // Hide the popup after submitting
+
+            $.ajax({
+                url: 'aktywuj_test.php',
+                type: 'POST',
+                data: {
+                    test_id: testId,
+                    start_date: startDate,
+                    end_date: endDate,
+                    duration: duration,
+                    start_time: startTime,
+                    end_time: endTime
+                },
+                success: function(response) {
+                    alert(response);
+                    $("#overlay").hide();
+                    $("#datePopup").hide();
+                },
+                error: function(xhr, status, error) {
+                    alert("An error occurred: " + error);
+                }
+            });
         }
 
         function closePopup() {
-            $("#overlay").hide(); // Hide the overlay
-            $("#datePopup").hide(); // Hide the popup
+            $("#overlay").hide();
+            $("#datePopup").hide();
         }
 
         document.addEventListener("DOMContentLoaded", function() {
