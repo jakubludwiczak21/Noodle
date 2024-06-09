@@ -27,6 +27,11 @@
   if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $id_testu = $row['id_testu'];
+
+    $get_test_title = $conn->query("SELECT tytuł FROM testy_stworzone WHERE id = '$id_testu';");
+    $title_row = $get_test_title->fetch_assoc();
+    $test_title = $title_row['tytuł'];
+
   }
 
   else {
@@ -122,7 +127,9 @@
     <div class="main-content" id="main">
     <div class="teststicky">
                 <div style="display: flex; justify-content: left;align-items:center;max-width:70%;">
-                    <h2>Jakim rodzajem chleba jesteś? - TEST KOŃCOWY</h2>
+                  <?php
+                    echo "<h2>" . $test_title . "</h2>";
+                  ?>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items:center;min-width:30%;">
                     <div class="rounded-button">
