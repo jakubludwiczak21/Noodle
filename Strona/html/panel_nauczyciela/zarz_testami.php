@@ -58,6 +58,21 @@ if (!isset($_SESSION['user_id'])) {
         .popup2 button:hover {
             background-color: #ff9900; 
         }
+        #datePopup, #resultsPopup {
+        display: none;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        overflow-y: auto; /* Enable vertical scrolling */
+        max-height: 80%; /* Limit height and enable scrolling if content exceeds */
+        max-width: 80%; /* Optional: Limit width */
+    }
+
     </style>
 
 </head>
@@ -317,20 +332,103 @@ if (!isset($_SESSION['user_id'])) {
     	</div>
 
         <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:50;"></div>
-        <div id="datePopup" style="display:none; position:fixed; left:50%; top:50%; transform:translate(-50%, -50%); z-index:100; background:white; padding:20px; border-radius:8px;">
+        <div id="datePopup">
             <h2 class="h2-popup">Ustaw daty testu:</h2>
             <form id="dateForm">
-                <label for="startDate">Data rozpoczęcia:</label><br>
-                <input type="date" id="startDate" name="startDate" required><br><br>
-                <label for="endDate">Data zakończenia:</label><br>
-                <input type="date" id="endDate" name="endDate" required><br><br>
+                <label for="startDate">Data rozpoczęcia:</label>
+                <label for="endDate">Data zakończenia:</label>
+                <input type="date" id="startDate" name="startDate" required>
+                <input type="date" id="endDate" name="endDate" required>
                 <label for="duration">Czas trwania testu (minuty):</label><br>
-                <input type="number" id="duration" name="duration" min="1" required><br><br>
-                <label for="startTime">Godzina rozpoczęcia:</label><br>
-                <input type="time" id="startTime" name="startTime" required><br><br>
-                <label for="endTime">Godzina zakończenia:</label><br>
-                <input type="time" id="endTime" name="endTime" required><br><br>
-                
+                <input type="number" id="duration" name="duration" min="1" required style="grid-column: 1/3";>
+                <label for="startTime">Godzina rozpoczęcia:</label>
+                <label for="endTime">Godzina zakończenia:</label>
+                <input type="time" id="startTime" name="startTime" required>
+
+                <input type="time" id="endTime" name="endTime" required>
+                <hr style="grid-column: 1/3;"> 
+                <h2 class="h2-popup" style="grid-column: 1/3">Przypisz grupę testu:</h2>
+                <table id="grupy" style="grid-column: 1/3;">
+        <thead>
+            <tr>
+                <th>Nazwa Grupy</th>
+                <th>Przypisanie do testu</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+                $servername = "localhost";
+                $username = "root";
+                $password = "";
+                $dbname = "baza";
+
+                $conn = new mysqli($servername, $username, $password, $dbname);
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
+                $sql = "SELECT id, nazwa FROM grupy";
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        echo '
+                        <tr>
+                            <td style="width:80%">' . $row['nazwa'] . '</td>
+                            <td>
+                                <input type="checkbox" name="groups[]" value="' . $row['id'] . '">
+                            </td>
+                        </tr>';
+                    }
+                } else {
+                    echo '<tr><td>Brak grup do wyświetlenia.</td></tr>';
+                }
+                $conn->close();
+            ?>
+        </tbody>
+    </table>
+    <hr style="grid-column: 1/3;"> 
+                <h2 class="h2-popup" style="grid-column: 1/3">Przypisz osobe testu:</h2>
+                <table id="uczniowe" style="grid-column: 1/3;">
+        <thead>
+            <tr>
+                <th colspan="2">Osoba</th>
+                <th>Przypisanie do testu</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+                $servername = "localhost";
+                $username = "root";
+                $password = "";
+                $dbname = "baza";
+
+                $conn = new mysqli($servername, $username, $password, $dbname);
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
+                $sql = "SELECT id, imie, nazwisko FROM uzytkownicy where typ_konta=0";
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        echo '
+                        <tr>
+                            <td style="width:50%">' . $row['imie'] . '</td>
+                            <td style="width:50%">' . $row['nazwisko'] . '</td>
+                            <td>
+                                <input type="checkbox" name="students[]" value="' . $row['id'] . '">
+                            </td>
+                        </tr>';
+                    }
+                } else {
+                    echo '<tr><td>Brak osób do wyświetlenia.</td></tr>';
+                }
+                $conn->close();
+            ?>
+        </tbody>
+    </table>
                 <button type="button" onclick="submitDates(id_testu)">Aktywuj</button>
                 <button type="button" onclick="closePopup()">Anuluj</button>
             </form>
@@ -418,7 +516,7 @@ if (!isset($_SESSION['user_id'])) {
             $("#dateForm").off('submit').on('submit', function(e) {
                 e.preventDefault();
         
-                submitDates(id_testu);
+                submitDates(testId);
             });
         }
 
@@ -428,36 +526,39 @@ if (!isset($_SESSION['user_id'])) {
             console.log("Guwno ", id_testu);
 
             var startDate = $("#startDate").val();
-            var endDate = $("#endDate").val();
-            var duration = $("#duration").val();
-            var startTime = $("#startTime").val();
-            var endTime = $("#endTime").val();
-
+    var endDate = $("#endDate").val();
+    var duration = $("#duration").val();
+    var startTime = $("#startTime").val();
+    var endTime = $("#endTime").val();
+    var groups = $("input[name='groups[]']:checked").map(function() { return this.value; }).get();
+    var students = $("input[name='students[]']:checked").map(function() { return this.value; }).get();
             if (new Date(startDate) > new Date(endDate)) {
                 alert("The end date must be after the start date.");
                 return;
             }
 
             $.ajax({
-                url: 'aktywuj_test.php',
-                type: 'POST',
-                data: {
-                    test_id: testId,
-                    start_date: startDate,
-                    end_date: endDate,
-                    duration: duration,
-                    start_time: startTime,
-                    end_time: endTime
-                },
-                success: function(response) {
-                    alert(response);
-                    $("#overlay").hide();
-                    $("#datePopup").hide();
-                },
-                error: function(xhr, status, error) {
-                    alert("An error occurred: " + error);
-                }
-            });
+        url: 'aktywuj_test.php',
+        type: 'POST',
+        data: {
+            test_id: testId, // Pass testId here
+            start_date: startDate,
+            end_date: endDate,
+            duration: duration,
+            start_time: startTime,
+            end_time: endTime,
+            groups: groups,
+            students: students
+        },
+        success: function(response) {
+            alert(response);
+            $("#overlay").hide();
+            $("#datePopup").hide();
+        },
+        error: function(xhr, status, error) {
+            alert("An error occurred: " + error);
+        }
+    });
         }
 
         function closePopup() {
