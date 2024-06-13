@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Cze 10, 2024 at 12:00 AM
--- Wersja serwera: 10.4.32-MariaDB
--- Wersja PHP: 8.2.12
+-- Czas generowania: 13 Cze 2024, 17:50
+-- Wersja serwera: 10.4.21-MariaDB
+-- Wersja PHP: 8.0.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `baza`
+-- Baza danych: `baza`
 --
 
 -- --------------------------------------------------------
@@ -30,7 +30,15 @@ SET time_zone = "+00:00";
 CREATE TABLE `grupy` (
   `id` int(11) NOT NULL,
   `nazwa` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `grupy`
+--
+
+INSERT INTO `grupy` (`id`, `nazwa`) VALUES
+(3, 'grupa1'),
+(5, 'grupa2');
 
 -- --------------------------------------------------------
 
@@ -41,7 +49,18 @@ CREATE TABLE `grupy` (
 CREATE TABLE `grupy_przypisania` (
   `id_grupy` int(11) DEFAULT NULL,
   `id_osoby` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `grupy_przypisania`
+--
+
+INSERT INTO `grupy_przypisania` (`id_grupy`, `id_osoby`) VALUES
+(3, 2),
+(3, 4),
+(5, 2),
+(5, 6),
+(3, 8);
 
 -- --------------------------------------------------------
 
@@ -52,10 +71,10 @@ CREATE TABLE `grupy_przypisania` (
 CREATE TABLE `kategoria` (
   `id` int(11) NOT NULL,
   `nazwa` varchar(40) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `kategoria`
+-- Zrzut danych tabeli `kategoria`
 --
 
 INSERT INTO `kategoria` (`id`, `nazwa`) VALUES
@@ -76,10 +95,10 @@ INSERT INTO `kategoria` (`id`, `nazwa`) VALUES
 CREATE TABLE `kategoria_przedmiot` (
   `id_kategorii` int(11) NOT NULL,
   `id_przedmiotu` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `kategoria_przedmiot`
+-- Zrzut danych tabeli `kategoria_przedmiot`
 --
 
 INSERT INTO `kategoria_przedmiot` (`id_kategorii`, `id_przedmiotu`) VALUES
@@ -102,10 +121,10 @@ CREATE TABLE `odpowiedzi` (
   `id_pytania` int(11) NOT NULL,
   `tresc` varchar(250) NOT NULL,
   `poprawnosc` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `odpowiedzi`
+-- Zrzut danych tabeli `odpowiedzi`
 --
 
 INSERT INTO `odpowiedzi` (`id`, `id_pytania`, `tresc`, `poprawnosc`) VALUES
@@ -175,7 +194,7 @@ CREATE TABLE `odpowiedzi_podane` (
   `id_odpowiedz` int(11) DEFAULT NULL,
   `tresc_odpowiedzi` varchar(500) DEFAULT NULL,
   `id_pytania` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -186,10 +205,10 @@ CREATE TABLE `odpowiedzi_podane` (
 CREATE TABLE `poziom` (
   `id` int(11) NOT NULL,
   `trudnosc_nazwa` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `poziom`
+-- Zrzut danych tabeli `poziom`
 --
 
 INSERT INTO `poziom` (`id`, `trudnosc_nazwa`) VALUES
@@ -206,13 +225,14 @@ INSERT INTO `poziom` (`id`, `trudnosc_nazwa`) VALUES
 CREATE TABLE `przedmioty` (
   `id` int(11) NOT NULL,
   `nazwa` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `przedmioty`
+-- Zrzut danych tabeli `przedmioty`
 --
 
 INSERT INTO `przedmioty` (`id`, `nazwa`) VALUES
+(35, '0'),
 (29, 'Biologia'),
 (28, 'Chemia'),
 (27, 'Fizyka'),
@@ -231,7 +251,28 @@ CREATE TABLE `przypisania` (
   `id_testu` int(11) NOT NULL,
   `id_osoby` int(11) DEFAULT NULL,
   `id_grupy` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `przypisania`
+--
+
+INSERT INTO `przypisania` (`id_testu`, `id_osoby`, `id_grupy`) VALUES
+(14, NULL, 3),
+(15, NULL, 3),
+(15, NULL, 5),
+(16, NULL, 3),
+(16, 8, NULL),
+(17, NULL, 3),
+(17, 6, NULL),
+(19, NULL, 3),
+(19, 6, NULL),
+(20, NULL, 3),
+(20, 6, NULL),
+(20, 8, NULL),
+(21, NULL, 5),
+(22, NULL, 5),
+(22, 8, NULL);
 
 -- --------------------------------------------------------
 
@@ -249,10 +290,10 @@ CREATE TABLE `pytania` (
   `autor` int(11) NOT NULL,
   `prywatnosc` tinyint(1) NOT NULL,
   `typ_pytania` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `pytania`
+-- Zrzut danych tabeli `pytania`
 --
 
 INSERT INTO `pytania` (`id`, `tresc`, `przedmiot_id`, `kategoria_id`, `poziom_id`, `zdjecie`, `autor`, `prywatnosc`, `typ_pytania`) VALUES
@@ -288,10 +329,10 @@ CREATE TABLE `testy_przeprowadzane` (
   `od` datetime DEFAULT NULL,
   `do` datetime DEFAULT NULL,
   `kod_testu` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `testy_przeprowadzane`
+-- Zrzut danych tabeli `testy_przeprowadzane`
 --
 
 INSERT INTO `testy_przeprowadzane` (`id`, `id_testu`, `autor`, `od`, `do`, `kod_testu`) VALUES
@@ -300,7 +341,17 @@ INSERT INTO `testy_przeprowadzane` (`id`, `id_testu`, `autor`, `od`, `do`, `kod_
 (9, 17, 9, '2024-06-09 06:27:00', '2024-06-18 19:27:00', 'Wiedzaochl9'),
 (10, 18, 9, '2024-06-09 18:33:00', '2024-06-12 21:33:00', 'Liderekpie10'),
 (11, 15, 9, '2024-05-14 05:39:00', '2024-05-28 18:39:00', 'Testujemyt11'),
-(12, 19, 9, '2024-06-08 03:52:00', '2024-07-03 18:52:00', 'Szstoklasi12');
+(12, 19, 9, '2024-06-08 03:52:00', '2024-07-03 18:52:00', 'Szstoklasi12'),
+(13, 17, 7, '2024-06-13 16:09:00', '2024-06-26 21:09:00', 'Wiedzaochl13'),
+(14, 17, 7, '2024-06-13 20:01:00', '2024-06-22 21:01:00', 'Wiedzaochl14'),
+(15, 19, 7, '2024-06-13 20:18:00', '2024-06-19 22:18:00', 'Szstoklasi15'),
+(16, 19, 7, '2024-06-13 21:17:00', '2024-06-26 22:17:00', 'Szstoklasi16'),
+(17, 20, 8, '2024-06-13 20:20:00', '2024-06-14 21:20:00', 'chuj17'),
+(18, 21, 7, '2024-06-13 22:30:00', '2024-06-14 23:30:00', 'test18'),
+(19, 22, 7, '2024-06-13 22:37:00', '2024-06-24 23:37:00', 'nowy19'),
+(20, 22, 7, '2024-06-13 22:37:00', '2024-06-24 23:37:00', 'nowy20'),
+(21, 23, 7, '2024-06-13 18:41:00', '2024-06-18 20:41:00', 'tyl21'),
+(22, 17, 7, '2024-06-13 20:45:00', '2024-07-01 22:45:00', 'Wiedzaochl22');
 
 -- --------------------------------------------------------
 
@@ -311,10 +362,10 @@ INSERT INTO `testy_przeprowadzane` (`id`, `id_testu`, `autor`, `od`, `do`, `kod_
 CREATE TABLE `testy_pytania` (
   `id_testu` int(11) NOT NULL,
   `id_pytania` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `testy_pytania`
+-- Zrzut danych tabeli `testy_pytania`
 --
 
 INSERT INTO `testy_pytania` (`id_testu`, `id_pytania`) VALUES
@@ -346,7 +397,41 @@ INSERT INTO `testy_pytania` (`id_testu`, `id_pytania`) VALUES
 (19, 135),
 (19, 136),
 (19, 137),
-(19, 138);
+(19, 138),
+(10, 111),
+(10, 116),
+(11, 112),
+(11, 117),
+(12, 113),
+(12, 118),
+(13, 114),
+(13, 119),
+(14, 115),
+(14, 120),
+(15, 116),
+(15, 117),
+(15, 111),
+(16, 117),
+(16, 118),
+(16, 119),
+(16, 120),
+(17, 124),
+(17, 125),
+(17, 126),
+(17, 127),
+(17, 128),
+(17, 129),
+(17, 130),
+(18, 131),
+(19, 135),
+(19, 136),
+(19, 137),
+(19, 138),
+(20, 117),
+(20, 138),
+(21, 119),
+(22, 118),
+(23, 124);
 
 -- --------------------------------------------------------
 
@@ -361,15 +446,19 @@ CREATE TABLE `testy_stworzone` (
   `prywatnosc` tinyint(1) NOT NULL,
   `tytuł` varchar(50) DEFAULT NULL,
   `data_stworzenia` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `testy_stworzone`
+-- Zrzut danych tabeli `testy_stworzone`
 --
 
 INSERT INTO `testy_stworzone` (`id`, `autor`, `przedmiot`, `prywatnosc`, `tytuł`, `data_stworzenia`) VALUES
 (17, 9, 33, 0, 'Wiedza o chlebie', '2024-06-09'),
-(19, 9, 26, 1, 'Szóstoklasisty sprawdzian', '2024-06-09');
+(19, 9, 26, 1, 'Szóstoklasisty sprawdzian', '2024-06-09'),
+(20, 9, 27, 0, 'chuj', '2024-06-13'),
+(21, 7, 29, 0, 'test', '2024-06-13'),
+(22, 7, 27, 0, 'nowy', '2024-06-13'),
+(23, 7, 35, 1, 'tyl', '2024-06-13');
 
 -- --------------------------------------------------------
 
@@ -380,10 +469,10 @@ INSERT INTO `testy_stworzone` (`id`, `autor`, `przedmiot`, `prywatnosc`, `tytuł
 CREATE TABLE `typ_pytania` (
   `id` int(11) NOT NULL,
   `nazwa_typu` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `typ_pytania`
+-- Zrzut danych tabeli `typ_pytania`
 --
 
 INSERT INTO `typ_pytania` (`id`, `nazwa_typu`) VALUES
@@ -402,10 +491,10 @@ CREATE TABLE `uzytkownicy` (
   `imie` varchar(30) NOT NULL,
   `nazwisko` varchar(50) NOT NULL,
   `typ_konta` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `uzytkownicy`
+-- Zrzut danych tabeli `uzytkownicy`
 --
 
 INSERT INTO `uzytkownicy` (`id`, `imie`, `nazwisko`, `typ_konta`) VALUES
@@ -428,13 +517,14 @@ INSERT INTO `uzytkownicy` (`id`, `imie`, `nazwisko`, `typ_konta`) VALUES
 CREATE TABLE `uzytkownicy_hasla` (
   `id_uzytkownika` int(11) NOT NULL,
   `haslo` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `uzytkownicy_hasla`
+-- Zrzut danych tabeli `uzytkownicy_hasla`
 --
 
 INSERT INTO `uzytkownicy_hasla` (`id_uzytkownika`, `haslo`) VALUES
+(2, 'test'),
 (4, 'knowicka'),
 (5, 'twisniewski'),
 (6, 'mwojcik'),
@@ -451,13 +541,14 @@ INSERT INTO `uzytkownicy_hasla` (`id_uzytkownika`, `haslo`) VALUES
 CREATE TABLE `uzytkownicy_loginy` (
   `id_uzytkownika` int(11) NOT NULL,
   `login` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `uzytkownicy_loginy`
+-- Zrzut danych tabeli `uzytkownicy_loginy`
 --
 
 INSERT INTO `uzytkownicy_loginy` (`id_uzytkownika`, `login`) VALUES
+(2, 'anowak'),
 (4, 'karolina.nowicka'),
 (6, 'magdalena.wojcik'),
 (9, 'nauczyciel'),
@@ -561,88 +652,88 @@ ALTER TABLE `uzytkownicy_loginy`
   ADD UNIQUE KEY `login` (`login`) USING BTREE;
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT dla zrzuconych tabel
 --
 
 --
--- AUTO_INCREMENT for table `grupy`
+-- AUTO_INCREMENT dla tabeli `grupy`
 --
 ALTER TABLE `grupy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `kategoria`
+-- AUTO_INCREMENT dla tabeli `kategoria`
 --
 ALTER TABLE `kategoria`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
--- AUTO_INCREMENT for table `odpowiedzi`
+-- AUTO_INCREMENT dla tabeli `odpowiedzi`
 --
 ALTER TABLE `odpowiedzi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=314;
 
 --
--- AUTO_INCREMENT for table `poziom`
+-- AUTO_INCREMENT dla tabeli `poziom`
 --
 ALTER TABLE `poziom`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `przedmioty`
+-- AUTO_INCREMENT dla tabeli `przedmioty`
 --
 ALTER TABLE `przedmioty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
--- AUTO_INCREMENT for table `pytania`
+-- AUTO_INCREMENT dla tabeli `pytania`
 --
 ALTER TABLE `pytania`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
 
 --
--- AUTO_INCREMENT for table `testy_przeprowadzane`
+-- AUTO_INCREMENT dla tabeli `testy_przeprowadzane`
 --
 ALTER TABLE `testy_przeprowadzane`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
--- AUTO_INCREMENT for table `testy_stworzone`
+-- AUTO_INCREMENT dla tabeli `testy_stworzone`
 --
 ALTER TABLE `testy_stworzone`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- AUTO_INCREMENT for table `typ_pytania`
+-- AUTO_INCREMENT dla tabeli `typ_pytania`
 --
 ALTER TABLE `typ_pytania`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `uzytkownicy`
+-- AUTO_INCREMENT dla tabeli `uzytkownicy`
 --
 ALTER TABLE `uzytkownicy`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- Constraints for dumped tables
+-- Ograniczenia dla zrzutów tabel
 --
 
 --
--- Constraints for table `kategoria_przedmiot`
+-- Ograniczenia dla tabeli `kategoria_przedmiot`
 --
 ALTER TABLE `kategoria_przedmiot`
   ADD CONSTRAINT `kategoria_przedmiot_ibfk_1` FOREIGN KEY (`id_kategorii`) REFERENCES `kategoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `kategoria_przedmiot_ibfk_2` FOREIGN KEY (`id_przedmiotu`) REFERENCES `przedmioty` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `odpowiedzi`
+-- Ograniczenia dla tabeli `odpowiedzi`
 --
 ALTER TABLE `odpowiedzi`
   ADD CONSTRAINT `odpowiedzi_ibfk_1` FOREIGN KEY (`id_pytania`) REFERENCES `pytania` (`id`);
 
 --
--- Constraints for table `pytania`
+-- Ograniczenia dla tabeli `pytania`
 --
 ALTER TABLE `pytania`
   ADD CONSTRAINT `pytania_ibfk_1` FOREIGN KEY (`przedmiot_id`) REFERENCES `przedmioty` (`id`),
@@ -651,13 +742,13 @@ ALTER TABLE `pytania`
   ADD CONSTRAINT `pytania_ibfk_4` FOREIGN KEY (`autor`) REFERENCES `uzytkownicy` (`id`);
 
 --
--- Constraints for table `uzytkownicy_hasla`
+-- Ograniczenia dla tabeli `uzytkownicy_hasla`
 --
 ALTER TABLE `uzytkownicy_hasla`
   ADD CONSTRAINT `uzytkownicy_hasla_ibfk_1` FOREIGN KEY (`id_uzytkownika`) REFERENCES `uzytkownicy` (`id`);
 
 --
--- Constraints for table `uzytkownicy_loginy`
+-- Ograniczenia dla tabeli `uzytkownicy_loginy`
 --
 ALTER TABLE `uzytkownicy_loginy`
   ADD CONSTRAINT `uzytkownicy_loginy_ibfk_1` FOREIGN KEY (`id_uzytkownika`) REFERENCES `uzytkownicy` (`id`);
