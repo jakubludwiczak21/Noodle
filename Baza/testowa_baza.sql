@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 13 Cze 2024, 17:50
+-- Czas generowania: 13 Cze 2024, 19:03
 -- Wersja serwera: 10.4.21-MariaDB
 -- Wersja PHP: 8.0.10
 
@@ -346,11 +346,6 @@ INSERT INTO `testy_przeprowadzane` (`id`, `id_testu`, `autor`, `od`, `do`, `kod_
 (14, 17, 7, '2024-06-13 20:01:00', '2024-06-22 21:01:00', 'Wiedzaochl14'),
 (15, 19, 7, '2024-06-13 20:18:00', '2024-06-19 22:18:00', 'Szstoklasi15'),
 (16, 19, 7, '2024-06-13 21:17:00', '2024-06-26 22:17:00', 'Szstoklasi16'),
-(17, 20, 8, '2024-06-13 20:20:00', '2024-06-14 21:20:00', 'chuj17'),
-(18, 21, 7, '2024-06-13 22:30:00', '2024-06-14 23:30:00', 'test18'),
-(19, 22, 7, '2024-06-13 22:37:00', '2024-06-24 23:37:00', 'nowy19'),
-(20, 22, 7, '2024-06-13 22:37:00', '2024-06-24 23:37:00', 'nowy20'),
-(21, 23, 7, '2024-06-13 18:41:00', '2024-06-18 20:41:00', 'tyl21'),
 (22, 17, 7, '2024-06-13 20:45:00', '2024-07-01 22:45:00', 'Wiedzaochl22');
 
 -- --------------------------------------------------------
@@ -431,7 +426,8 @@ INSERT INTO `testy_pytania` (`id_testu`, `id_pytania`) VALUES
 (20, 138),
 (21, 119),
 (22, 118),
-(23, 124);
+(23, 124),
+(24, 120);
 
 -- --------------------------------------------------------
 
@@ -454,11 +450,7 @@ CREATE TABLE `testy_stworzone` (
 
 INSERT INTO `testy_stworzone` (`id`, `autor`, `przedmiot`, `prywatnosc`, `tytuł`, `data_stworzenia`) VALUES
 (17, 9, 33, 0, 'Wiedza o chlebie', '2024-06-09'),
-(19, 9, 26, 1, 'Szóstoklasisty sprawdzian', '2024-06-09'),
-(20, 9, 27, 0, 'chuj', '2024-06-13'),
-(21, 7, 29, 0, 'test', '2024-06-13'),
-(22, 7, 27, 0, 'nowy', '2024-06-13'),
-(23, 7, 35, 1, 'tyl', '2024-06-13');
+(19, 9, 26, 1, 'Szóstoklasisty sprawdzian', '2024-06-09');
 
 -- --------------------------------------------------------
 
@@ -524,7 +516,7 @@ CREATE TABLE `uzytkownicy_hasla` (
 --
 
 INSERT INTO `uzytkownicy_hasla` (`id_uzytkownika`, `haslo`) VALUES
-(2, 'test'),
+(2, 'anowak'),
 (4, 'knowicka'),
 (5, 'twisniewski'),
 (6, 'mwojcik'),
@@ -548,7 +540,7 @@ CREATE TABLE `uzytkownicy_loginy` (
 --
 
 INSERT INTO `uzytkownicy_loginy` (`id_uzytkownika`, `login`) VALUES
-(2, 'anowak'),
+(2, 'anna.nowak'),
 (4, 'karolina.nowicka'),
 (6, 'magdalena.wojcik'),
 (9, 'nauczyciel'),
@@ -701,7 +693,7 @@ ALTER TABLE `testy_przeprowadzane`
 -- AUTO_INCREMENT dla tabeli `testy_stworzone`
 --
 ALTER TABLE `testy_stworzone`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT dla tabeli `typ_pytania`
