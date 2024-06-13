@@ -337,15 +337,14 @@ if (!isset($_SESSION['user_id'])) {
             <form id="dateForm">
                 <label for="startDate">Data rozpoczęcia:</label>
                 <label for="endDate">Data zakończenia:</label>
-                <input type="date" id="startDate" name="startDate" required>
-                <input type="date" id="endDate" name="endDate" required>
+                <input type="date" id="startDate" name="startDate" required style="resize: none;">
+                <input type="date" id="endDate" name="endDate" required style="resize: none;">
                 <label for="duration">Czas trwania testu (minuty):</label><br>
                 <input type="number" id="duration" name="duration" min="1" required style="grid-column: 1/3";>
                 <label for="startTime">Godzina rozpoczęcia:</label>
                 <label for="endTime">Godzina zakończenia:</label>
-                <input type="time" id="startTime" name="startTime" required>
-
-                <input type="time" id="endTime" name="endTime" required>
+                <input type="time" id="startTime" name="startTime" required style="resize: none;">
+                <input type="time" id="endTime" name="endTime" required style="resize: none;">
                 <hr style="grid-column: 1/3;"> 
                 <h2 class="h2-popup" style="grid-column: 1/3">Przypisz grupę do testu:</h2>
                 <table id="grupy" style="grid-column: 1/3;">
