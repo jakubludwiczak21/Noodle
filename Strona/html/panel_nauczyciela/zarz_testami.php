@@ -333,7 +333,7 @@ if (!isset($_SESSION['user_id'])) {
 
         <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:50;"></div>
         <div id="datePopup">
-            <h2 class="h2-popup">Ustaw daty testu:</h2>
+            <h2 class="h2-popup">Ustaw okres obowiązywania testu:</h2>
             <form id="dateForm">
                 <label for="startDate">Data rozpoczęcia:</label>
                 <label for="endDate">Data zakończenia:</label>
@@ -347,7 +347,7 @@ if (!isset($_SESSION['user_id'])) {
 
                 <input type="time" id="endTime" name="endTime" required>
                 <hr style="grid-column: 1/3;"> 
-                <h2 class="h2-popup" style="grid-column: 1/3">Przypisz grupę testu:</h2>
+                <h2 class="h2-popup" style="grid-column: 1/3">Przypisz grupę do testu:</h2>
                 <table id="grupy" style="grid-column: 1/3;">
         <thead>
             <tr>
@@ -388,7 +388,7 @@ if (!isset($_SESSION['user_id'])) {
         </tbody>
     </table>
     <hr style="grid-column: 1/3;"> 
-                <h2 class="h2-popup" style="grid-column: 1/3">Przypisz osobe testu:</h2>
+                <h2 class="h2-popup" style="grid-column: 1/3">Przypisz osobę do testu:</h2>
                 <table id="uczniowe" style="grid-column: 1/3;">
         <thead>
             <tr>
