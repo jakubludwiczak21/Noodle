@@ -6,7 +6,81 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-//echo "Welcome, " . htmlspecialchars($_SESSION['username']) . "!";
+$user_id = $_SESSION['user_id']; // Get the logged-in user's ID
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "baza";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Query to get the groups the user belongs to
+$sql_groups = "
+    SELECT id_grupy
+    FROM grupy_przypisania
+    WHERE id_osoby = ?
+";
+
+$stmt_groups = $conn->prepare($sql_groups);
+if (!$stmt_groups) {
+    die("Query preparation failed: " . $conn->error);
+}
+$stmt_groups->bind_param("i", $user_id);
+$stmt_groups->execute();
+$result_groups = $stmt_groups->get_result();
+
+$group_ids = [];
+while ($row = $result_groups->fetch_assoc()) {
+    $group_ids[] = $row['id_grupy'];
+}
+$stmt_groups->close();
+
+// Convert group IDs to a comma-separated string for SQL IN clause
+$group_ids_str = implode(",", $group_ids);
+
+if (empty($group_ids)) {
+    $group_ids_str = 'NULL'; // If no groups, prevent SQL error
+}
+
+// Query to get the tests assigned to the user or their groups
+$sql = "
+    SELECT 
+        tp.id AS test_id,
+        ts.tytuł AS test_title,
+        tp.od AS start_time,
+        tp.do AS end_time,
+        u.imie AS teacher_first_name,
+        u.nazwisko AS teacher_last_name,
+        pr.nazwa AS subject_name
+    FROM przypisania p
+    JOIN testy_przeprowadzane tp ON p.id_testu = tp.id
+    JOIN testy_stworzone ts ON tp.id_testu = ts.id
+    JOIN uzytkownicy u ON tp.autor = u.id
+    JOIN przedmioty pr ON ts.przedmiot = pr.id
+    WHERE (p.id_osoby = ? OR p.id_grupy IN ($group_ids_str))
+    AND tp.do >= NOW()
+    GROUP BY tp.id
+";
+
+$stmt = $conn->prepare($sql);
+if (!$stmt) {
+    die("Query preparation failed: " . $conn->error);
+}
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$assigned_tests = [];
+while ($row = $result->fetch_assoc()) {
+    $assigned_tests[] = $row;
+}
+
+$stmt->close();
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,6 +119,36 @@ if (!isset($_SESSION['user_id'])) {
       &nbsp;
       <div class="do_wypelnienia">
       <table>
+        <tr>
+          <th class="szerokie">Nazwa</th>
+          <th>Aktywny od</th>
+          <th>Aktywny do</th>
+          <th>Nauczyciel</th>
+          <th>Przedmiot</th>
+          <th>Operacje</th>
+        </tr>
+        <?php if (empty($assigned_tests)): ?>
+          <tr><td colspan="6">Brak testów do wyświetlenia.</td></tr>
+        <?php else: ?>
+          <?php foreach ($assigned_tests as $test): ?>
+            <tr>
+              <td><?php echo htmlspecialchars($test['test_title']); ?></td>
+              <td><?php echo htmlspecialchars($test['start_time']); ?></td>
+              <td><?php echo htmlspecialchars($test['end_time']); ?></td>
+              <td><?php echo htmlspecialchars($test['teacher_first_name'] . ' ' . $test['teacher_last_name']); ?></td>
+              <td><?php echo htmlspecialchars($test['subject_name']); ?></td>
+              <td style="text-align:center;">
+                <a style="width:100%; text-align:center;" href="../test.php?id=<?php echo $test['test_id']; ?>">Dołącz</a>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        <?php endif; ?>
+      </table>
+
+
+
+      <!--
+      <table>
 				<tbody><tr>
 					<th class="szerokie">Nazwa</th>
 					<th>Data wykonania</th>
@@ -71,7 +175,7 @@ if (!isset($_SESSION['user_id'])) {
 							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="../test.php">Dołącz</a></td>
 							</tr>
 
-										</tbody></table>
+										</tbody></table>-->
 
 
 
