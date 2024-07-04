@@ -54,43 +54,50 @@ if (!isset($_SESSION['user_id'])) {
           <th>Czy kod jest wymagany?</th>
 					<th>Operacje</th>
 				</tr>
-				<tr>
-							<td>Sprawdzian z nut - Klasa III</td>
-							<td>02.04.2024</td>
-							<td>Jan Kowalski</td>
-							<td>Muzyka</td>
-							<td>2</td>
-              <td>Tak</td>
-							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="../kontakt.php">Poproś o dostęp</a></td>
-							</tr>
-        <tr>
-              <td>Budowa Pantofelka i laćka</td>
-              <td>08.04.2024</td>
-              <td>Anna Nowak</td>
-              <td>Przyroda</td>
-              <td>1</td>
-              <td>Nie</td>
-							<td style="text-align:center;"><a style="width:100%; text-align:center;" href="moje_testy.php">Dołącz</a></td>
-							</tr>
-              <tr>
-                <td>Sprawdzian z nut - Klasa III</td>
-                <td>02.04.2024</td>
-                <td>Jan Kowalski</td>
-                <td>Muzyka</td>
-                <td>2</td>
-                <td>Tak</td>
-                <td style="text-align:center;"><a style="width:100%; text-align:center;" href="../kontakt.php">Poproś o dostęp</a></td>
-                </tr>
-          <tr>
-                <td>Budowa Pantofelka i laćka</td>
-                <td>08.04.2024</td>
-                <td>Anna Nowak</td>
-                <td>Przyroda</td>
-                <td>1</td>
-                <td>Nie</td>
-                <td style="text-align:center;"><a style="width:100%; text-align:center;" href="moje_testy.php">Dołącz</a></td>
-                </tr>
 
+        <?php
+
+          $user_id = $_SESSION['user_id'];
+          
+          $servername = "localhost";
+          $username = "root";
+          $password = "";
+          $dbname = "baza";
+
+          $conn = new mysqli($servername, $username, $password, $dbname);
+          if ($conn->connect_error) {
+              die("Connection failed: " . $conn->connect_error);
+          }
+
+
+          $sql = "SELECT tp.id, ts.tytuł, tp.do, u.imie, u.nazwisko, pr.nazwa AS nazwa_przedmiotu
+          FROM testy_przeprowadzane tp
+          JOIN uzytkownicy u ON u.id = tp.autor
+          JOIN testy_stworzone ts ON ts.id = tp.id_testu
+          JOIN przedmioty pr ON pr.id = ts.przedmiot
+          WHERE tp.do < CURRENT_DATE();";
+
+          $result = $conn->query($sql);
+
+          if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                echo '
+                  <tr>
+							      <td>'. $row['tytuł'] .'</td>
+							      <td>'. $row['do'] .'</td>
+                    <td>'. $row['imie'] . ' ' . $row['nazwisko'] .'</td>
+                    <td>'. $row['nazwa_przedmiotu'] .'</td>
+                    <td>2</td>
+                    <td>Tak</td>
+                    <td style="text-align:center;"><a style="width:100%; text-align:center;" href="../kontakt.php">Poproś o dostęp</a></td>
+							    </tr>
+                
+                ';
+
+            }
+          }
+
+        ?>
 										</tbody></table>
 
 
