@@ -51,7 +51,7 @@ if (!isset($_SESSION['user_id'])) {
 					<th>Nauczyciel</th>
 					<th>Przedmiot</th>
 					<th>Waga</th>
-          <th>Kod dostępu</th>
+          <th>Czy kod jest wymagany?</th>
 					<th>Operacje</th>
 				</tr>
 
@@ -132,7 +132,7 @@ if (!isset($_SESSION['user_id'])) {
                     <td>'. $row['teacher_first_name'] . ' ' . $row['teacher_last_name'] .'</td>
                     <td>'. $row['subject_name'] .'</td>
                     <td>2</td>
-                    <td>'. $row['code'] .'</td>
+                    <td>Tak</td>
                     <td style="text-align:center;"><a style="width:100%; text-align:center;" href="dolacz_kod.php?kod=' . $row['code'] . '">Dołącz</a></td>							    
                   </tr>
                   ';
