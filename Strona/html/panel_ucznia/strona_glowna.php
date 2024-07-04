@@ -51,7 +51,7 @@ if (!isset($_SESSION['user_id'])) {
 					<th>Nauczyciel</th>
 					<th>Przedmiot</th>
 					<th>Waga</th>
-          <th>Czy kod jest wymagany?</th>
+          <th>Kod dostępu</th>
 					<th>Operacje</th>
 				</tr>
 
@@ -69,40 +69,79 @@ if (!isset($_SESSION['user_id'])) {
               die("Connection failed: " . $conn->connect_error);
           }
 
+          $sql_groups = "
+          SELECT id_grupy
+          FROM grupy_przypisania
+          WHERE id_osoby = ?
+          ";
 
-          $sql = "SELECT tp.id, ts.tytuł, tp.do, u.imie, u.nazwisko, pr.nazwa AS nazwa_przedmiotu
-          FROM testy_przeprowadzane tp
-          JOIN uzytkownicy u ON u.id = tp.autor
-          JOIN testy_stworzone ts ON ts.id = tp.id_testu
-          JOIN przedmioty pr ON pr.id = ts.przedmiot
-          WHERE tp.do < CURRENT_DATE();";
+          $stmt_groups = $conn->prepare($sql_groups);
+          if (!$stmt_groups) {
+          die("Query preparation failed: " . $conn->error);
+          }
+          $stmt_groups->bind_param("i", $user_id);
+          $stmt_groups->execute();
+          $result_groups = $stmt_groups->get_result();
 
-          $result = $conn->query($sql);
+          $group_ids = [];
+          while ($row = $result_groups->fetch_assoc()) {
+          $group_ids[] = $row['id_grupy'];
+          }
+          $stmt_groups->close();
 
-          if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                echo '
-                  <tr>
-							      <td>'. $row['tytuł'] .'</td>
-							      <td>'. $row['do'] .'</td>
-                    <td>'. $row['imie'] . ' ' . $row['nazwisko'] .'</td>
-                    <td>'. $row['nazwa_przedmiotu'] .'</td>
-                    <td>2</td>
-                    <td>Tak</td>
-                    <td style="text-align:center;"><a style="width:100%; text-align:center;" href="../kontakt.php">Poproś o dostęp</a></td>
-							    </tr>
-                
-                ';
+          $group_ids_str = implode(",", $group_ids);
 
-            }
+          if (empty($group_ids)) {
+          $group_ids_str = 'NULL'; 
           }
 
+          $sql = "
+          SELECT 
+              tp.id AS test_id,
+              ts.tytuł AS test_title,
+              tp.od AS start_time,
+              tp.do AS end_time,
+              tp.kod_testu AS code,
+              u.imie AS teacher_first_name,
+              u.nazwisko AS teacher_last_name,
+              pr.nazwa AS subject_name
+          FROM przypisania p
+          JOIN testy_przeprowadzane tp ON p.id_testu = tp.id
+          JOIN testy_stworzone ts ON tp.id_testu = ts.id
+          JOIN uzytkownicy u ON tp.autor = u.id
+          JOIN przedmioty pr ON ts.przedmiot = pr.id
+          WHERE (p.id_osoby = ? OR p.id_grupy IN ($group_ids_str))
+          AND tp.do >= NOW()
+          GROUP BY tp.id
+          ";
+
+          $stmt = $conn->prepare($sql);
+          if (!$stmt) {
+          die("Query preparation failed: " . $conn->error);
+          }
+          $stmt->bind_param("i", $user_id);
+          $stmt->execute();
+          $result = $stmt->get_result();
+
+          $assigned_tests = [];
+          while ($row = $result->fetch_assoc()) {
+                echo '
+                  <tr>
+							      <td>'. $row['test_title'] .'</td>
+							      <td>'. $row['end_time'] .'</td>
+                    <td>'. $row['teacher_first_name'] . ' ' . $row['teacher_last_name'] .'</td>
+                    <td>'. $row['subject_name'] .'</td>
+                    <td>2</td>
+                    <td>'. $row['code'] .'</td>
+                    <td style="text-align:center;"><a style="width:100%; text-align:center;" href="dolacz_kod.php?kod=' . $row['code'] . '">Dołącz</a></td>							    
+                  </tr>
+                  ';
+                #<td style="text-align:center;"><a style="width:100%; text-align:center;" href="../kontakt.php">Poproś o dostęp</a></td>
+
+          }
+          
         ?>
-										</tbody></table>
-
-
-
-
+        </tbody></table>
       </div>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       
