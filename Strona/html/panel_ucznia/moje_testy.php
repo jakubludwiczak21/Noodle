@@ -53,6 +53,7 @@ $sql = "
         ts.tytuł AS test_title,
         tp.od AS start_time,
         tp.do AS end_time,
+        tp.kod_testu AS code,
         u.imie AS teacher_first_name,
         u.nazwisko AS teacher_last_name,
         pr.nazwa AS subject_name
@@ -138,7 +139,7 @@ $conn->close();
               <td><?php echo htmlspecialchars($test['teacher_first_name'] . ' ' . $test['teacher_last_name']); ?></td>
               <td><?php echo htmlspecialchars($test['subject_name']); ?></td>
               <td style="text-align:center;">
-                <a style="width:100%; text-align:center;" href="../test.php?id=<?php echo $test['test_id']; ?>">Dołącz</a>
+                <a style="width:100%; text-align:center;" href="dolacz_kod.php?kod=<?php echo $test['code']; ?>">Dołącz</a>
               </td>
             </tr>
           <?php endforeach; ?>
