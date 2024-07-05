@@ -80,8 +80,6 @@ while ($row = $result->fetch_assoc()) {
     $assigned_tests[] = $row;
 }
 
-$stmt->close();
-$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -196,6 +194,52 @@ $conn->close();
                 <th>Ocena</th>
                 <th>Punkty</th>
               </tr>
+            <?php
+              $sql= "SELECT 
+                            tp.id AS test_id,
+                            ts.tytuł AS test_title,
+                            tp.od AS start_time,
+                            tp.do AS end_time,
+                            tp.kod_testu AS code,
+                            u.imie AS teacher_first_name,
+                            u.nazwisko AS teacher_last_name,
+                            pr.nazwa AS subject_name
+                        FROM przypisania p
+                        JOIN testy_przeprowadzane tp ON p.id_testu = tp.id
+                        JOIN testy_stworzone ts ON tp.id_testu = ts.id
+                        JOIN uzytkownicy u ON tp.autor = u.id
+                        JOIN przedmioty pr ON ts.przedmiot = pr.id
+                        WHERE (p.id_osoby = ? OR p.id_grupy IN ($group_ids_str))
+                        AND tp.do < NOW()
+                        GROUP BY tp.id
+                    ";
+
+                    $stmt = $conn->prepare($sql);
+                    if (!$stmt) {
+                        die("Query preparation failed: " . $conn->error);
+                    }
+                    $stmt->bind_param("i", $user_id);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    $assigned_tests = [];
+                    while ($row = $result->fetch_assoc()) {
+                      echo '<tr>
+                              <td>' . $row['test_title'] .'</td>
+                              <td>' . $row['end_time'] .'</td>
+                              <td>' . $row['teacher_first_name'] . ' ' . $row['teacher_last_name'] .'</td>
+                              <td>' . $row['subject_name'] .'</td>
+                              <td>2</td>
+                              <td>5</td>
+                              <td>2/10</td>
+                            </tr>
+                            ';
+                    }
+
+                    $stmt->close();
+                    $conn->close();
+                    ?>
+              <!--
               <tr>
                 <td>Dział 3 - Polska 1944-1989</td>
                 <td>28.03.2024</td>
@@ -215,7 +259,7 @@ $conn->close();
                     <td>1</td>
                     <td>12/30</td>
                     </tr>
-      
+          -->$
                           </tbody></table>
                   </div>
   </div>
