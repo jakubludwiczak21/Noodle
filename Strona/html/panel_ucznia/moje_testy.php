@@ -259,7 +259,7 @@ while ($row = $result->fetch_assoc()) {
                     <td>1</td>
                     <td>12/30</td>
                     </tr>
-          -->$
+          -->
                           </tbody></table>
                   </div>
   </div>
