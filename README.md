@@ -8,7 +8,8 @@ https://github.com/users/MikolaJanczaq/projects/1
 Noodle to aplikacja webowa stworzona do tworzenia oraz przeprowadzania testów.
 
 ## Wymagania systemowe
-
+Program przeznaczona na komputery osobiste o rozdzielczości poziomej 1280px.
+W przeciwnym wypadku poprawne działanie programu nie jest gwarantowane.
 Aby uruchomić Noodle, komputer musi spełniać następujące wymagania systemowe:
 
 ### XAMPP
